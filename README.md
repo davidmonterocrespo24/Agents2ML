@@ -334,4 +334,26 @@ OSS/Apache License
 
 ---
 
+
 **Built with ❤️ using AutoGen, H2O AutoML, FastAPI, Docker, and gpt-oss:120b (Ollama/Hugging Face)**
+
+---
+
+## Gallery
+
+Below are screenshots of the system in action:
+
+<p align="center">
+   <img src="img/Screenshot%202025-09-09%20181102.png" alt="Screenshot 1" width="600"/>
+   <img src="img/Screenshot%202025-09-09%20181117.png" alt="Screenshot 2" width="600"/>
+   <img src="img/Screenshot%202025-09-09%20181237.png" alt="Screenshot 3" width="600"/>
+   <img src="img/Screenshot%202025-09-09%20181245.png" alt="Screenshot 4" width="600"/>
+   <img src="img/Screenshot%202025-09-09%20181257.png" alt="Screenshot 5" width="600"/>
+   <img src="img/Screenshot%202025-09-09%20181311.png" alt="Screenshot 6" width="600"/>
+   <img src="img/Screenshot%202025-09-09%20181321.png" alt="Screenshot 7" width="600"/>
+   <img src="img/Screenshot%202025-09-09%20181355.png" alt="Screenshot 8" width="600"/>
+   <img src="img/Screenshot%202025-09-09%20181557.png" alt="Screenshot 9" width="600"/>
+   <img src="img/Screenshot%202025-09-09%20181608.png" alt="Screenshot 10" width="600"/>
+   <img src="img/Screenshot%202025-09-09%20181628.png" alt="Screenshot 11" width="600"/>
+   <img src="img/Screenshot%202025-09-09%20181714.png" alt="Screenshot 12" width="600"/>
+</p>
