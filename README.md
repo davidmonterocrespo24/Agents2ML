@@ -1,5 +1,7 @@
 # Multi-Agent AutoML System
-
+<p align="center">
+   <img src="img/Screenshot%202025-09-09%20181102.png" alt="Screenshot 1" width="600"/>
+   </p>
 A complete automated Machine Learning system that uses **7 specialized AI agents** to transform raw data into production-ready ML models. Users can upload datasets, define objectives, and automatically obtain trained models using H2O AutoML. The system uses the open-source model `gpt-oss:120b` via Ollama or Hugging Face API, and does not require the OpenAI API.
 
 ## 🎯 What does this system do?
