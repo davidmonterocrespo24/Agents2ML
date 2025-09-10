@@ -1,101 +1,101 @@
 # DataProcessorAgent
 
-## 🎯 Descripción General
+## 🎯 Overview
 
-El **DataProcessorAgent** es el primer agente especializado en el pipeline de Machine Learning y actúa como el **experto en análisis de datos**. Su responsabilidad principal es analizar, validar y procesar datasets cargados por usuarios, proporcionando información detallada sobre la estructura, calidad y características de los datos.
+The **DataProcessorAgent** is the first specialized agent in the Machine Learning pipeline and acts as the **data analysis expert**. Its main responsibility is to analyze, validate, and process datasets uploaded by users, providing detailed information about the structure, quality, and characteristics of the data.
 
-## 🔧 Funcionalidades Principales
+## 🔧 Main Functionalities
 
-### 📊 **Análisis Automático de Datasets**
-- Detección automática de separadores de columnas (`,`, `;`, `\t`, etc.)
-- Identificación de separadores decimales (`.` vs `,`)
-- Detección automática de encoding (UTF-8, Latin-1, etc.)
-- Validación de integridad del archivo CSV
+### 📊 **Automatic Dataset Analysis**
+- Automatic detection of column separators (`,`, `;`, `\t`, etc.)
+- Identification of decimal separators (`.` vs `,`)
+- Automatic encoding detection (UTF-8, Latin-1, etc.)
+- CSV file integrity validation
 
-### 🔍 **Inspección de Estructura**
-- Análisis de tipos de datos por columna
-- Identificación de columnas numéricas, categóricas y temporales
-- Detección de valores nulos y su distribución
-- Identificación de outliers y valores anómalos
+### 🔍 **Structure Inspection**
+- Analysis of data types per column
+- Identification of numeric, categorical, and temporal columns
+- Detection of null values and their distribution
+- Identification of outliers and anomalous values
 
-### 🎯 **Identificación de Objetivos**
-- Sugerencia automática de columnas objetivo (target)
-- Clasificación del tipo de problema ML (regresión, clasificación, series temporales)
-- Identificación de variables predictoras relevantes
+### 🎯 **Objective Identification**
+- Automatic suggestion of target columns
+- Classification of ML problem type (regression, classification, time series)
+- Identification of relevant predictor variables
 
-### 📈 **Análisis Estadístico**
-- Estadísticas descriptivas completas
-- Distribuciones de frecuencia
-- Correlaciones entre variables
-- Análisis de tendencias temporales (si aplica)
+### 📈 **Statistical Analysis**
+- Complete descriptive statistics
+- Frequency distributions
+- Variable correlations
+- Temporal trend analysis (if applicable)
 
-## 🛠️ Herramientas Disponibles
+## 🛠️ Available Tools
 
-El DataProcessorAgent utiliza dos herramientas especializadas en un proceso de dos pasos:
+The DataProcessorAgent uses two specialized tools in a two-step process:
 
 ### **1. get_sample_func**
-**Propósito**: Inspección inicial del archivo
-- Obtiene una muestra pequeña del archivo (primeras líneas)
-- Permite identificar formato antes de procesamiento completo
-- Evita errores de lectura por parámetros incorrectos
+**Purpose**: Initial file inspection
+- Gets a small sample of the file (first lines)
+- Allows format identification before complete processing
+- Avoids reading errors due to incorrect parameters
 
-**Uso**:
+**Usage**:
 ```python
-# El agente llama internamente:
+# The agent calls internally:
 sample = get_sample_func(file_path)
-# Retorna: Primeras 5-10 líneas del archivo como texto
+# Returns: First 5-10 lines of file as text
 ```
 
 ### **2. read_and_analyze_func**
-**Propósito**: Análisis completo del dataset
-- Lee el archivo completo con parámetros detectados
-- Realiza análisis estadístico profundo
-- Genera reporte completo de calidad de datos
+**Purpose**: Complete dataset analysis
+- Reads complete file with detected parameters
+- Performs deep statistical analysis
+- Generates complete data quality report
 
-**Parámetros**:
-- `separator`: Separador de columnas detectado
-- `decimal`: Separador decimal identificado
-- Otros parámetros de pandas según necesidad
+**Parameters**:
+- `separator`: Detected column separator
+- `decimal`: Identified decimal separator
+- Other pandas parameters as needed
 
-## 📋 Proceso de Análisis
+## 📋 Analysis Process
 
-### **Paso 1: Inspección Inicial**
+### **Step 1: Initial Inspection**
 ```mermaid
 flowchart TD
-    A[Recibir archivo CSV] --> B[Obtener muestra]
-    B --> C[Detectar separadores]
-    C --> D[Identificar encoding]
-    D --> E[Validar formato]
-    E --> F[Preparar parámetros]
+    A[Receive CSV file] --> B[Get sample]
+    B --> C[Detect separators]
+    C --> D[Identify encoding]
+    D --> E[Validate format]
+    E --> F[Prepare parameters]
 ```
 
-### **Paso 2: Análisis Completo**
+### **Step 2: Complete Analysis**
 ```mermaid
 flowchart TD
-    A[Leer archivo completo] --> B[Análisis de tipos]
-    B --> C[Estadísticas descriptivas]
-    C --> D[Detección de outliers]
-    D --> E[Análisis de correlaciones]
-    E --> F[Identificar target]
-    F --> G[Generar reporte]
+    A[Read complete file] --> B[Type analysis]
+    B --> C[Descriptive statistics]
+    C --> D[Outlier detection]
+    D --> E[Correlation analysis]
+    E --> F[Identify target]
+    F --> G[Generate report]
 ```
 
-## 📊 Ejemplo de Análisis
+## 📊 Analysis Example
 
-### **Input: Dataset de Ventas**
+### **Input: Sales Dataset**
 ```csv
-fecha,ventas,mes,dia_semana,promocion
+date,sales,month,day_of_week,promotion
 2023-01-01,1234.56,1,6,0
 2023-01-02,1345.78,1,0,1
 2023-01-03,1156.90,1,1,0
 ...
 ```
 
-### **Output: Reporte de Análisis**
+### **Output: Analysis Report**
 ```json
 {
   "file_info": {
-    "filename": "ventas.csv",
+    "filename": "sales.csv",
     "rows": 365,
     "columns": 5,
     "size_mb": 0.05,
@@ -104,13 +104,13 @@ fecha,ventas,mes,dia_semana,promocion
     "decimal": "."
   },
   "column_analysis": {
-    "fecha": {
+    "date": {
       "type": "datetime",
       "null_count": 0,
       "unique_count": 365,
       "format": "YYYY-MM-DD"
     },
-    "ventas": {
+    "sales": {
       "type": "numeric",
       "null_count": 0,
       "min": 856.23,
@@ -119,19 +119,19 @@ fecha,ventas,mes,dia_semana,promocion
       "std": 123.67,
       "outliers": 3
     },
-    "mes": {
+    "month": {
       "type": "categorical",
       "null_count": 0,
       "unique_values": [1,2,3,4,5,6,7,8,9,10,11,12],
       "mode": 6
     },
-    "dia_semana": {
+    "day_of_week": {
       "type": "categorical", 
       "null_count": 0,
       "unique_values": [0,1,2,3,4,5,6],
       "distribution": "uniform"
     },
-    "promocion": {
+    "promotion": {
       "type": "binary",
       "null_count": 0,
       "true_ratio": 0.2,
@@ -140,9 +140,9 @@ fecha,ventas,mes,dia_semana,promocion
   },
   "ml_recommendations": {
     "problem_type": "time_series_regression",
-    "target_column": "ventas",
-    "predictor_columns": ["mes", "dia_semana", "promocion"],
-    "temporal_column": "fecha",
+    "target_column": "sales",
+    "predictor_columns": ["month", "day_of_week", "promotion"],
+    "temporal_column": "date",
     "suggested_algorithms": ["AutoML", "GBM", "RandomForest"]
   },
   "data_quality": {
@@ -150,7 +150,7 @@ fecha,ventas,mes,dia_semana,promocion
     "consistency": 0.98,
     "accuracy": 0.95,
     "issues": [
-      "3 outliers in 'ventas' column",
+      "3 outliers in 'sales' column",
       "Consider feature engineering for temporal patterns"
     ],
     "recommendations": [
@@ -162,48 +162,48 @@ fecha,ventas,mes,dia_semana,promocion
 }
 ```
 
-## 🎯 Configuración del Agente
+## 🎯 Agent Configuration
 
-### **Prompt del Sistema**
-El DataProcessorAgent utiliza un prompt especializado que le instruye sobre:
-- Proceso de análisis en dos pasos
-- Mejores prácticas de análisis de datos
-- Identificación de problemas comunes
-- Generación de reportes estructurados
+### **System Prompt**
+The DataProcessorAgent uses a specialized prompt that instructs it on:
+- Two-step analysis process
+- Data analysis best practices
+- Common problem identification
+- Structured report generation
 
-### **Modelo de Lenguaje**
-- **Modelo**: gpt-oss:120b (via Ollama o Hugging Face)
-- **Temperatura**: 0.1 (respuestas determinísticas)
-- **Max Tokens**: 4000 (para análisis detallados)
+### **Language Model**
+- **Model**: gpt-oss:120b (via Ollama or Hugging Face)
+- **Temperature**: 0.1 (deterministic responses)
+- **Max Tokens**: 4000 (for detailed analysis)
 
-## 🔄 Integración con Otros Agentes
+## 🔄 Integration with Other Agents
 
-### **Flujo de Comunicación**
+### **Communication Flow**
 ```mermaid
 sequenceDiagram
     participant U as UserProxyAgent
     participant DP as DataProcessorAgent
     participant MB as ModelBuilderAgent
     
-    U->>DP: Analizar dataset
-    DP->>DP: Inspeccionar muestra
-    DP->>DP: Análisis completo
-    DP->>U: Reporte de análisis
-    U->>MB: Enviar análisis para construcción
+    U->>DP: Analyze dataset
+    DP->>DP: Inspect sample
+    DP->>DP: Complete analysis
+    DP->>U: Analysis report
+    U->>MB: Send analysis for construction
 ```
 
-### **Datos Compartidos**
-- **A ModelBuilderAgent**: Tipo de problema, columnas objetivo, tipos de datos
-- **A UserProxyAgent**: Estado del análisis, problemas encontrados
-- **A AnalystAgent**: Métricas de calidad de datos
+### **Shared Data**
+- **To ModelBuilderAgent**: Problem type, target columns, data types
+- **To UserProxyAgent**: Analysis status, found problems
+- **To AnalystAgent**: Data quality metrics
 
-## 🐛 Manejo de Errores
+## 🐛 Error Handling
 
-### **Errores Comunes y Soluciones**
+### **Common Errors and Solutions**
 
-#### **Error: Archivo no encontrado**
+#### **Error: File not found**
 ```python
-# Error handling interno del agente
+# Internal agent error handling
 if not os.path.exists(file_path):
     return {
         "error": "File not found",
@@ -212,9 +212,9 @@ if not os.path.exists(file_path):
     }
 ```
 
-#### **Error: Formato no reconocido**
+#### **Error: Unrecognized format**
 ```python
-# Intentos múltiples de lectura
+# Multiple reading attempts
 separators = [',', ';', '\t', '|']
 for sep in separators:
     try:
@@ -226,9 +226,9 @@ for sep in separators:
         continue
 ```
 
-#### **Error: Encoding incorrecto**
+#### **Error: Incorrect encoding**
 ```python
-# Detección automática de encoding
+# Automatic encoding detection
 encodings = ['utf-8', 'latin-1', 'cp1252', 'iso-8859-1']
 for encoding in encodings:
     try:
@@ -240,14 +240,14 @@ for encoding in encodings:
         continue
 ```
 
-## 📊 Métricas y Monitoreo
+## 📊 Metrics and Monitoring
 
-### **Métricas de Rendimiento**
-- **Tiempo de análisis**: Típicamente 30-60 segundos
-- **Precisión de detección**: >95% para formatos estándar
-- **Cobertura de tipos**: Numérico, categórico, temporal, texto
+### **Performance Metrics**
+- **Analysis time**: Typically 30-60 seconds
+- **Detection accuracy**: >95% for standard formats
+- **Type coverage**: Numeric, categorical, temporal, text
 
-### **Logs de Actividad**
+### **Activity Logs**
 ```json
 {
   "timestamp": "2024-01-01T10:30:00Z",
@@ -265,11 +265,11 @@ for encoding in encodings:
 }
 ```
 
-## 🔧 Personalización y Extensión
+## 🔧 Customization and Extension
 
-### **Añadir Nuevos Tipos de Datos**
+### **Add New Data Types**
 ```python
-# Extender detección de tipos
+# Extend type detection
 def detect_custom_types(column):
     if column.name.endswith('_id'):
         return 'identifier'
@@ -277,57 +277,57 @@ def detect_custom_types(column):
         return 'email'
     elif 'phone' in column.name.lower():
         return 'phone'
-    # ... más detecciones personalizadas
+    # ... more custom detections
 ```
 
-### **Configurar Umbrales**
+### **Configure Thresholds**
 ```python
-# Configuración personalizable
+# Customizable configuration
 ANALYSIS_CONFIG = {
-    "outlier_threshold": 3.0,  # Desviaciones estándar
-    "null_warning_threshold": 0.05,  # 5% valores nulos
-    "correlation_threshold": 0.7,  # Correlación alta
-    "sample_size": 1000  # Filas para análisis inicial
+    "outlier_threshold": 3.0,  # Standard deviations
+    "null_warning_threshold": 0.05,  # 5% null values
+    "correlation_threshold": 0.7,  # High correlation
+    "sample_size": 1000  # Rows for initial analysis
 }
 ```
 
 ## 📚 Best Practices
 
-### **Para Desarrolladores**
-1. **Validar entrada**: Siempre verificar formato antes de análisis completo
-2. **Manejo robusto**: Implementar fallbacks para formatos no estándar
-3. **Performance**: Usar muestreo para datasets grandes
-4. **Logging**: Registrar todos los pasos para debugging
+### **For Developers**
+1. **Validate input**: Always verify format before complete analysis
+2. **Robust handling**: Implement fallbacks for non-standard formats
+3. **Performance**: Use sampling for large datasets
+4. **Logging**: Record all steps for debugging
 
-### **Para Usuarios**
-1. **Formato consistente**: Usar separadores estándar (coma)
-2. **Encoding**: Preferir UTF-8 cuando sea posible
-3. **Headers**: Incluir nombres de columna descriptivos
-4. **Calidad**: Minimizar valores nulos y inconsistencias
+### **For Users**
+1. **Consistent format**: Use standard separators (comma)
+2. **Encoding**: Prefer UTF-8 when possible
+3. **Headers**: Include descriptive column names
+4. **Quality**: Minimize null values and inconsistencies
 
 ## 🔍 Troubleshooting
 
-### **Problema: Análisis muy lento**
+### **Problem: Very slow analysis**
 ```python
-# Solución: Configurar muestreo
+# Solution: Configure sampling
 SAMPLE_CONFIG = {
-    "max_rows": 10000,  # Limitar filas para análisis
-    "sample_ratio": 0.1  # Usar 10% del dataset si es muy grande
+    "max_rows": 10000,  # Limit rows for analysis
+    "sample_ratio": 0.1  # Use 10% of dataset if too large
 }
 ```
 
-### **Problema: Detección incorrecta de tipos**
+### **Problem: Incorrect type detection**
 ```python
-# Solución: Configuración manual de tipos
+# Solution: Manual type configuration
 TYPE_HINTS = {
     'id': 'string',
-    'fecha': 'datetime',
-    'categoria': 'categorical'
+    'date': 'datetime',
+    'category': 'categorical'
 }
 ```
 
 ---
 
-El **DataProcessorAgent** es fundamental para el éxito del pipeline, ya que la calidad del análisis inicial determina la efectividad de todos los pasos posteriores.
+The **DataProcessorAgent** is fundamental for pipeline success, as the quality of initial analysis determines the effectiveness of all subsequent steps.
 
-**Siguiente**: [ModelBuilderAgent](model_builder_agent.md)
+**Next**: [ModelBuilderAgent](model_builder_agent.md)

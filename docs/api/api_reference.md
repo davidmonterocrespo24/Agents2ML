@@ -1,18 +1,18 @@
 # API Reference
 
-## 🎯 Introducción
+## 🎯 Introduction
 
-La **API REST del Sistema Multi-Agent AutoML** proporciona endpoints completos para integrar las capacidades de Machine Learning automatizado en aplicaciones externas. La API está construida con **FastAPI** y ofrece documentación interactiva automática.
+The **Multi-Agent AutoML System REST API** provides comprehensive endpoints for integrating automated Machine Learning capabilities into external applications. The API is built with **FastAPI** and offers automatic interactive documentation.
 
-## 🌐 Información General
+## 🌐 General Information
 
 ### **Base URL**
 ```
 http://localhost:8006
 ```
 
-### **Formato de Respuesta**
-Todas las respuestas utilizan formato JSON con la siguiente estructura estándar:
+### **Response Format**
+All responses use JSON format with the following standard structure:
 
 ```json
 {
@@ -23,22 +23,22 @@ Todas las respuestas utilizan formato JSON con la siguiente estructura estándar
 }
 ```
 
-### **Códigos de Estado HTTP**
-- `200` - Éxito
-- `201` - Recurso creado
-- `400` - Error en la petición
-- `404` - Recurso no encontrado
-- `500` - Error interno del servidor
+### **HTTP Status Codes**
+- `200` - Success
+- `201` - Resource created
+- `400` - Request error
+- `404` - Resource not found
+- `500` - Internal server error
 
-### **Autenticación**
-Actualmente el sistema no requiere autenticación. Para entornos de producción, se recomienda implementar autenticación JWT o API keys.
+### **Authentication**
+Currently the system doesn't require authentication. For production environments, it's recommended to implement JWT authentication or API keys.
 
-## 📊 Endpoints Principales
+## 📊 Main Endpoints
 
 ### **1. Health Check**
 
 #### `GET /health`
-Verifica el estado del sistema y todos los agentes.
+Verifies system status and all agents.
 
 **Response:**
 ```json
@@ -67,13 +67,13 @@ Verifica el estado del sistema y todos los agentes.
 ### **2. File Upload**
 
 #### `POST /upload`
-Sube un dataset CSV al sistema.
+Uploads a CSV dataset to the system.
 
 **Request:**
 ```bash
 curl -X POST "http://localhost:8006/upload" \
   -H "Content-Type: multipart/form-data" \
-  -F "file=@ventas.csv"
+  -F "file=@sales.csv"
 ```
 
 **Response:**
@@ -82,10 +82,10 @@ curl -X POST "http://localhost:8006/upload" \
   "success": true,
   "data": {
     "file_id": "file_abc123",
-    "filename": "ventas.csv",
+    "filename": "sales.csv",
     "size": 1024000,
     "rows_estimated": 10000,
-    "upload_path": "uploads/file_abc123_ventas.csv"
+    "upload_path": "uploads/file_abc123_sales.csv"
   },
   "message": "File uploaded successfully",
   "timestamp": "2024-01-01T10:30:00Z"
@@ -95,14 +95,14 @@ curl -X POST "http://localhost:8006/upload" \
 ### **3. Pipeline Management**
 
 #### `POST /pipeline/start`
-Inicia un nuevo pipeline de Machine Learning.
+Starts a new Machine Learning pipeline.
 
 **Request Body:**
 ```json
 {
-  "file_path": "uploads/file_abc123_ventas.csv",
-  "user_objective": "Predice las ventas futuras para los próximos 30 días",
-  "pipeline_name": "prediccion_ventas_q1_2024"
+  "file_path": "uploads/file_abc123_sales.csv",
+  "user_objective": "Predict future sales for the next 30 days",
+  "pipeline_name": "sales_prediction_q1_2024"
 }
 ```
 
@@ -127,7 +127,7 @@ Inicia un nuevo pipeline de Machine Learning.
 ```
 
 #### `GET /pipeline/status/{pipeline_id}`
-Obtiene el estado actual de un pipeline.
+Gets current status of a pipeline.
 
 **Response:**
 ```json
@@ -168,12 +168,12 @@ Obtiene el estado actual de un pipeline.
 ```
 
 #### `GET /pipeline/logs/{pipeline_id}`
-Obtiene los logs detallados de un pipeline.
+Gets detailed logs of a pipeline.
 
 **Query Parameters:**
 - `level` (optional): `info`, `debug`, `warning`, `error`
-- `agent` (optional): Filtrar por agente específico
-- `limit` (optional): Número máximo de logs (default: 100)
+- `agent` (optional): Filter by specific agent
+- `limit` (optional): Maximum number of logs (default: 100)
 
 **Response:**
 ```json
@@ -199,7 +199,7 @@ Obtiene los logs detallados de un pipeline.
         "message": "Dataset analysis completed",
         "details": {
           "columns": 5,
-          "target_column": "ventas",
+          "target_column": "sales",
           "problem_type": "time_series_regression"
         }
       }
@@ -212,7 +212,7 @@ Obtiene los logs detallados de un pipeline.
 ```
 
 #### `DELETE /pipeline/{pipeline_id}`
-Cancela un pipeline en ejecución.
+Cancels a running pipeline.
 
 **Response:**
 ```json
@@ -231,7 +231,7 @@ Cancela un pipeline en ejecución.
 ### **4. Results and Models**
 
 #### `GET /pipeline/{pipeline_id}/results`
-Obtiene los resultados completos de un pipeline terminado.
+Gets complete results of a finished pipeline.
 
 **Response:**
 ```json
@@ -249,10 +249,10 @@ Obtiene los resultados completos de un pipeline terminado.
         "training_time": "8.5 minutes"
       },
       "feature_importance": [
-        {"feature": "fecha", "importance": 0.45},
-        {"feature": "mes", "importance": 0.25},
-        {"feature": "promocion", "importance": 0.20},
-        {"feature": "dia_semana", "importance": 0.10}
+        {"feature": "date", "importance": 0.45},
+        {"feature": "month", "importance": 0.25},
+        {"feature": "promotion", "importance": 0.20},
+        {"feature": "day_of_week", "importance": 0.10}
       ],
       "predictions": {
         "file_path": "results/pipeline_def456/predictions.csv",
@@ -272,7 +272,7 @@ Obtiene los resultados completos de un pipeline terminado.
 ```
 
 #### `GET /models/{model_id}`
-Obtiene información detallada de un modelo específico.
+Gets detailed information of a specific model.
 
 **Response:**
 ```json
@@ -299,7 +299,7 @@ Obtiene información detallada de un modelo específico.
     "training_data": {
       "rows": 8500,
       "features": 4,
-      "target": "ventas"
+      "target": "sales"
     },
     "file_path": "models/model_ghi789.zip",
     "size_mb": 15.7
@@ -312,15 +312,15 @@ Obtiene información detallada de un modelo específico.
 ### **5. Predictions**
 
 #### `POST /models/{model_id}/predict`
-Realiza predicciones usando un modelo entrenado.
+Makes predictions using a trained model.
 
 **Request Body:**
 ```json
 {
   "data": [
-    {"mes": 1, "dia_semana": 1, "promocion": 0},
-    {"mes": 1, "dia_semana": 2, "promocion": 1},
-    {"mes": 1, "dia_semana": 3, "promocion": 0}
+    {"month": 1, "day_of_week": 1, "promotion": 0},
+    {"month": 1, "day_of_week": 2, "promotion": 1},
+    {"month": 1, "day_of_week": 3, "promotion": 0}
   ],
   "include_confidence": true
 }
@@ -334,7 +334,7 @@ Realiza predicciones usando un modelo entrenado.
     "model_id": "model_ghi789",
     "predictions": [
       {
-        "input": {"mes": 1, "dia_semana": 1, "promocion": 0},
+        "input": {"month": 1, "day_of_week": 1, "promotion": 0},
         "prediction": 1234.56,
         "confidence_interval": {
           "lower": 1189.23,
@@ -343,7 +343,7 @@ Realiza predicciones usando un modelo entrenado.
         }
       },
       {
-        "input": {"mes": 1, "dia_semana": 2, "promocion": 1},
+        "input": {"month": 1, "day_of_week": 2, "promotion": 1},
         "prediction": 1345.78,
         "confidence_interval": {
           "lower": 1300.45,
@@ -360,13 +360,13 @@ Realiza predicciones usando un modelo entrenado.
 ```
 
 #### `POST /models/{model_id}/batch-predict`
-Realiza predicciones en lote desde un archivo CSV.
+Makes batch predictions from a CSV file.
 
 **Request:**
 ```bash
 curl -X POST "http://localhost:8006/models/model_ghi789/batch-predict" \
   -H "Content-Type: multipart/form-data" \
-  -F "file=@nuevos_datos.csv"
+  -F "file=@new_data.csv"
 ```
 
 **Response:**
@@ -393,36 +393,36 @@ curl -X POST "http://localhost:8006/models/model_ghi789/batch-predict" \
 ### **6. File Downloads**
 
 #### `GET /download/{file_type}/{identifier}`
-Descarga archivos generados por el sistema.
+Downloads files generated by the system.
 
-**Parámetros:**
+**Parameters:**
 - `file_type`: `model`, `predictions`, `visualization`, `logs`
-- `identifier`: ID del pipeline, modelo o archivo específico
+- `identifier`: Pipeline, model, or specific file ID
 
-**Ejemplos:**
+**Examples:**
 ```bash
-# Descargar modelo entrenado
+# Download trained model
 GET /download/model/model_ghi789
 
-# Descargar predicciones
+# Download predictions
 GET /download/predictions/pipeline_def456
 
-# Descargar visualización
+# Download visualization
 GET /download/visualization/pipeline_def456/trend_chart.png
 
-# Descargar logs
+# Download logs
 GET /download/logs/pipeline_def456
 ```
 
 ### **7. System Management**
 
 #### `GET /pipelines`
-Lista todos los pipelines del sistema.
+Lists all pipelines in the system.
 
 **Query Parameters:**
 - `status` (optional): `running`, `completed`, `failed`, `cancelled`
-- `limit` (optional): Número máximo de pipelines (default: 50)
-- `offset` (optional): Offset para paginación (default: 0)
+- `limit` (optional): Maximum number of pipelines (default: 50)
+- `offset` (optional): Offset for pagination (default: 0)
 
 **Response:**
 ```json
@@ -432,12 +432,12 @@ Lista todos los pipelines del sistema.
     "pipelines": [
       {
         "pipeline_id": "pipeline_def456",
-        "name": "prediccion_ventas_q1_2024",
+        "name": "sales_prediction_q1_2024",
         "status": "completed",
         "created_at": "2024-01-01T10:30:00Z",
         "completed_at": "2024-01-01T10:50:00Z",
         "duration_minutes": 20,
-        "user_objective": "Predice las ventas futuras para los próximos 30 días"
+        "user_objective": "Predict future sales for the next 30 days"
       }
     ],
     "total_count": 15,
@@ -449,7 +449,7 @@ Lista todos los pipelines del sistema.
 ```
 
 #### `GET /models`
-Lista todos los modelos entrenados.
+Lists all trained models.
 
 **Response:**
 ```json
@@ -478,9 +478,9 @@ Lista todos los modelos entrenados.
 ### **Real-time Pipeline Updates**
 
 #### `WS /ws/pipeline/{pipeline_id}`
-Recibe actualizaciones en tiempo real del estado del pipeline.
+Receives real-time updates of pipeline status.
 
-**Conexión:**
+**Connection:**
 ```javascript
 const ws = new WebSocket('ws://localhost:8006/ws/pipeline/pipeline_def456');
 
@@ -490,7 +490,7 @@ ws.onmessage = function(event) {
 };
 ```
 
-**Mensajes recibidos:**
+**Received messages:**
 ```json
 {
   "type": "progress_update",
@@ -519,14 +519,14 @@ ws.onmessage = function(event) {
 }
 ```
 
-## 🔧 Cliente Python
+## 🔧 Python Client
 
-### **Instalación**
+### **Installation**
 ```bash
 pip install requests websocket-client
 ```
 
-### **Ejemplo de Cliente**
+### **Client Example**
 ```python
 import requests
 import json
@@ -564,44 +564,44 @@ class AutoMLClient:
         response = requests.post(f"{self.base_url}/models/{model_id}/predict", json=payload)
         return response.json()
 
-# Uso del cliente
+# Client usage
 client = AutoMLClient()
 
-# 1. Subir archivo
-upload_result = client.upload_file("ventas.csv")
+# 1. Upload file
+upload_result = client.upload_file("sales.csv")
 file_path = upload_result["data"]["upload_path"]
 
-# 2. Iniciar pipeline
+# 2. Start pipeline
 pipeline_result = client.start_pipeline(
     file_path=file_path,
-    objective="Predice ventas futuras para 30 días",
-    name="prediccion_ventas_2024"
+    objective="Predict future sales for 30 days",
+    name="sales_prediction_2024"
 )
 pipeline_id = pipeline_result["data"]["pipeline_id"]
 
-# 3. Monitorear progreso
+# 3. Monitor progress
 import time
 while True:
     status = client.get_pipeline_status(pipeline_id)
     if status["data"]["status"] == "completed":
         break
-    print(f"Progreso: {status['data']['progress_percentage']}%")
+    print(f"Progress: {status['data']['progress_percentage']}%")
     time.sleep(30)
 
-# 4. Obtener resultados
+# 4. Get results
 results = client.get_results(pipeline_id)
 model_id = results["data"]["model_id"]
 
-# 5. Hacer predicciones
+# 5. Make predictions
 predictions = client.predict(model_id, [
-    {"mes": 1, "dia_semana": 1, "promocion": 0}
+    {"month": 1, "day_of_week": 1, "promotion": 0}
 ])
-print(f"Predicción: {predictions['data']['predictions'][0]['prediction']}")
+print(f"Prediction: {predictions['data']['predictions'][0]['prediction']}")
 ```
 
-## 🔍 Códigos de Error
+## 🔍 Error Codes
 
-### **Errores de Cliente (400-499)**
+### **Client Errors (400-499)**
 
 #### `400 - Bad Request`
 ```json
@@ -635,7 +635,7 @@ print(f"Predicción: {predictions['data']['predictions'][0]['prediction']}")
 }
 ```
 
-### **Errores de Servidor (500-599)**
+### **Server Errors (500-599)**
 
 #### `500 - Internal Server Error`
 ```json
@@ -657,38 +657,38 @@ print(f"Predicción: {predictions['data']['predictions'][0]['prediction']}")
 
 ## 📊 Rate Limiting
 
-### **Límites Actuales**
-- **File Upload**: 10 archivos por minuto por IP
-- **Pipeline Creation**: 3 pipelines por minuto por IP
-- **API Calls**: 100 requests por minuto por IP
-- **WebSocket Connections**: 5 conexiones simultáneas por IP
+### **Current Limits**
+- **File Upload**: 10 files per minute per IP
+- **Pipeline Creation**: 3 pipelines per minute per IP
+- **API Calls**: 100 requests per minute per IP
+- **WebSocket Connections**: 5 simultaneous connections per IP
 
-### **Headers de Rate Limiting**
+### **Rate Limiting Headers**
 ```
 X-RateLimit-Limit: 100
 X-RateLimit-Remaining: 95
 X-RateLimit-Reset: 1640995200
 ```
 
-## 🔒 Consideraciones de Seguridad
+## 🔒 Security Considerations
 
-### **Validación de Archivos**
-- Máximo tamaño: 100MB por archivo
-- Tipos permitidos: `.csv`, `.xlsx`, `.json`
-- Validación de contenido para prevenir inyección
+### **File Validation**
+- Maximum size: 100MB per file
+- Allowed types: `.csv`, `.xlsx`, `.json`
+- Content validation to prevent injection
 
-### **Sanitización**
-- Nombres de archivos sanitizados
-- Validación de parámetros de entrada
-- Escape de caracteres especiales en logs
+### **Sanitization**
+- Sanitized filenames
+- Input parameter validation
+- Special character escaping in logs
 
-### **Recursos**
-- Timeout de 30 minutos por pipeline
-- Límites de memoria por ejecución
-- Cleanup automático de archivos temporales
+### **Resources**
+- 30-minute timeout per pipeline
+- Memory limits per execution
+- Automatic cleanup of temporary files
 
 ---
 
-Esta API proporciona acceso completo a todas las capacidades del Sistema Multi-Agent AutoML, permitiendo integración seamless en aplicaciones existentes.
+This API provides complete access to all Multi-Agent AutoML System capabilities, enabling seamless integration into existing applications.
 
-**Documentación Interactiva**: Disponible en `http://localhost:8006/docs` cuando el sistema está en ejecución.
+**Interactive Documentation**: Available at `http://localhost:8006/docs` when the system is running.

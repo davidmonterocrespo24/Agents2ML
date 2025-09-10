@@ -1,27 +1,27 @@
-# Arquitectura del Sistema Multi-Agent AutoML
+# Multi-Agent AutoML System Architecture
 
-## 🏗️ Visión General de la Arquitectura
+## 🏗️ Architecture Overview
 
-El Sistema Multi-Agent AutoML está construido con una **arquitectura modular y distribuida** que permite escalabilidad, mantenibilidad y extensibilidad. El sistema utiliza un enfoque de **microservicios con agentes especializados** que colaboran para completar el pipeline de Machine Learning.
+The Multi-Agent AutoML System is built with a **modular and distributed architecture** that enables scalability, maintainability, and extensibility. The system uses a **microservices approach with specialized agents** that collaborate to complete the Machine Learning pipeline.
 
-## 🎯 Principios de Diseño
+## 🎯 Design Principles
 
-### 🔄 **Separación de Responsabilidades**
-- Cada agente tiene una función específica y bien definida
-- Comunicación entre agentes a través de interfaces estándar
-- Acoplamiento débil entre componentes
+### 🔄 **Separation of Concerns**
+- Each agent has a specific and well-defined function
+- Communication between agents through standard interfaces
+- Loose coupling between components
 
-### 🛡️ **Seguridad por Diseño**
-- Ejecución aislada en contenedores Docker
-- Validación de entrada en todos los puntos
-- Logs detallados para auditoría
+### 🛡️ **Security by Design**
+- Isolated execution in Docker containers
+- Input validation at all points
+- Detailed logs for auditing
 
-### 📈 **Escalabilidad Horizontal**
-- Arquitectura stateless permite múltiples instancias
-- Cola de trabajos para manejar carga
-- Base de datos optimizada para concurrencia
+### 📈 **Horizontal Scalability**
+- Stateless architecture allows multiple instances
+- Job queue for load handling
+- Database optimized for concurrency
 
-## 🏛️ Arquitectura de Alto Nivel
+## 🏛️ High-Level Architecture
 
 ```mermaid
 graph TB
@@ -73,88 +73,88 @@ graph TB
     VA --> LLM
 ```
 
-## 🎭 Los 7 Agentes Especializados
+## 🎭 The 7 Specialized Agents
 
 ### 🤝 **UserProxyAgent**
-**Rol**: Coordinador general del sistema
-- **Responsabilidades**:
-  - Orquestación del flujo de trabajo
-  - Comunicación entre agentes
-  - Gestión de errores y reintentos
-  - Reporte de progreso al usuario
+**Role**: General system coordinator
+- **Responsibilities**:
+  - Workflow orchestration
+  - Inter-agent communication
+  - Error handling and retries
+  - Progress reporting to user
 
 ### 📊 **DataProcessorAgent**
-**Rol**: Especialista en análisis de datos
-- **Responsabilidades**:
-  - Detección automática de separadores y encoding
-  - Análisis estadístico del dataset
-  - Identificación de tipos de datos
-  - Detección de valores nulos y outliers
-  - Sugerencia de columnas objetivo
+**Role**: Data analysis specialist
+- **Responsibilities**:
+  - Automatic separator and encoding detection
+  - Statistical dataset analysis
+  - Data type identification
+  - Null values and outliers detection
+  - Target column suggestion
 
 ### 🧠 **ModelBuilderAgent**
-**Rol**: Arquitecto de modelos ML
-- **Responsabilidades**:
-  - Generación de código Python para H2O AutoML
-  - Selección de algoritmos apropiados
-  - Configuración de hiperparámetros
-  - Optimización del pipeline de entrenamiento
+**Role**: ML model architect
+- **Responsibilities**:
+  - Python code generation for H2O AutoML
+  - Appropriate algorithm selection
+  - Hyperparameter configuration
+  - Training pipeline optimization
 
 ### ⚡ **CodeExecutorAgent**
-**Rol**: Ejecutor seguro de código
-- **Responsabilidades**:
-  - Ejecución de código en contenedores Docker
-  - Instalación automática de dependencias
-  - Monitoreo de recursos y timeout
-  - Captura de logs y errores
+**Role**: Secure code executor
+- **Responsibilities**:
+  - Code execution in Docker containers
+  - Automatic dependency installation
+  - Resource and timeout monitoring
+  - Log and error capture
 
 ### 🔍 **AnalystAgent**
-**Rol**: Inspector de calidad
-- **Responsabilidades**:
-  - Validación de código generado
-  - Evaluación de resultados de modelos
-  - Análisis de métricas de rendimiento
-  - Generación de recomendaciones
+**Role**: Quality inspector
+- **Responsibilities**:
+  - Generated code validation
+  - Model results evaluation
+  - Performance metrics analysis
+  - Recommendation generation
 
 ### 🎯 **PredictionAgent**
-**Rol**: Generador de predicciones
-- **Responsabilidades**:
-  - Carga de modelos entrenados
-  - Generación de datos futuros
-  - Aplicación de modelos para predicciones
-  - Cálculo de intervalos de confianza
+**Role**: Prediction generator
+- **Responsibilities**:
+  - Trained model loading
+  - Future data generation
+  - Model application for predictions
+  - Confidence interval calculation
 
 ### 📈 **VisualizationAgent**
-**Rol**: Creador de visualizaciones
-- **Responsabilidades**:
-  - Generación de gráficos profesionales
-  - Combinación de datos históricos y predicciones
-  - Exportación en múltiples formatos
-  - Optimización para diferentes dispositivos
+**Role**: Visualization creator
+- **Responsibilities**:
+  - Professional chart generation
+  - Historical and prediction data combination
+  - Multiple format export
+  - Device optimization
 
-## 🔄 Flujo de Datos del Sistema
+## 🔄 System Data Flow
 
-### **Fase 1: Ingesta y Análisis**
+### **Phase 1: Ingestion and Analysis**
 ```mermaid
 sequenceDiagram
-    participant U as Usuario
+    participant U as User
     participant API as REST API
     participant PO as Pipeline Orchestrator
     participant DPA as DataProcessorAgent
     participant DB as Database
     
-    U->>API: Upload CSV + Objetivo
-    API->>PO: Crear Pipeline
-    PO->>DPA: Analizar Dataset
-    DPA->>DPA: Detectar formato y estructura
-    DPA->>DPA: Análisis estadístico
-    DPA->>DB: Guardar análisis
-    DPA->>PO: Reporte completado
-    PO->>API: Status actualizado
-    API->>U: Análisis completado
+    U->>API: Upload CSV + Objective
+    API->>PO: Create Pipeline
+    PO->>DPA: Analyze Dataset
+    DPA->>DPA: Detect format and structure
+    DPA->>DPA: Statistical analysis
+    DPA->>DB: Save analysis
+    DPA->>PO: Report completed
+    PO->>API: Status updated
+    API->>U: Analysis completed
 ```
 
-### **Fase 2: Entrenamiento de Modelos**
+### **Phase 2: Model Training**
 ```mermaid
 sequenceDiagram
     participant PO as Pipeline Orchestrator
@@ -163,17 +163,17 @@ sequenceDiagram
     participant AA as AnalystAgent
     participant H2O as H2O AutoML
     
-    PO->>MBA: Generar código de entrenamiento
-    MBA->>MBA: Crear script Python + H2O
-    MBA->>CEA: Ejecutar código
-    CEA->>H2O: Entrenar modelos
-    H2O->>CEA: Modelos entrenados
-    CEA->>AA: Validar resultados
-    AA->>AA: Evaluar métricas
-    AA->>PO: Validación completada
+    PO->>MBA: Generate training code
+    MBA->>MBA: Create Python script + H2O
+    MBA->>CEA: Execute code
+    CEA->>H2O: Train models
+    H2O->>CEA: Trained models
+    CEA->>AA: Validate results
+    AA->>AA: Evaluate metrics
+    AA->>PO: Validation completed
 ```
 
-### **Fase 3: Predicciones y Visualización**
+### **Phase 3: Predictions and Visualization**
 ```mermaid
 sequenceDiagram
     participant PO as Pipeline Orchestrator
@@ -181,21 +181,21 @@ sequenceDiagram
     participant VA as VisualizationAgent
     participant CEA as CodeExecutorAgent
     
-    PO->>PA: Generar predicciones
-    PA->>CEA: Ejecutar script predicción
-    CEA->>PA: Predicciones generadas
-    PA->>PO: Predicciones completadas
-    PO->>VA: Crear visualizaciones
-    VA->>CEA: Ejecutar script gráficos
-    CEA->>VA: Gráficos generados
-    VA->>PO: Visualización completada
+    PO->>PA: Generate predictions
+    PA->>CEA: Execute prediction script
+    CEA->>PA: Predictions generated
+    PA->>PO: Predictions completed
+    PO->>VA: Create visualizations
+    VA->>CEA: Execute graphics script
+    CEA->>VA: Graphics generated
+    VA->>PO: Visualization completed
 ```
 
-## 🗄️ Arquitectura de Datos
+## 🗄️ Data Architecture
 
-### **Base de Datos Principal (SQLite)**
+### **Main Database (SQLite)**
 ```sql
--- Pipelines de ML
+-- ML Pipelines
 CREATE TABLE pipelines (
     id TEXT PRIMARY KEY,
     name TEXT,
@@ -206,7 +206,7 @@ CREATE TABLE pipelines (
     updated_at TIMESTAMP
 );
 
--- Jobs individuales por agente
+-- Individual jobs per agent
 CREATE TABLE jobs (
     id TEXT PRIMARY KEY,
     pipeline_id TEXT,
@@ -218,7 +218,7 @@ CREATE TABLE jobs (
     created_at TIMESTAMP
 );
 
--- Modelos entrenados
+-- Trained models
 CREATE TABLE models (
     id TEXT PRIMARY KEY,
     pipeline_id TEXT,
@@ -228,7 +228,7 @@ CREATE TABLE models (
     created_at TIMESTAMP
 );
 
--- Predicciones generadas
+-- Generated predictions
 CREATE TABLE predictions (
     id TEXT PRIMARY KEY,
     model_id TEXT,
@@ -238,34 +238,34 @@ CREATE TABLE predictions (
 );
 ```
 
-### **Sistema de Archivos**
+### **File System**
 ```
-├── uploads/          # Datasets cargados por usuarios
-├── models/           # Modelos entrenados guardados
-├── results/          # Predicciones y resultados
-├── visualizations/   # Gráficos generados
-├── coding/           # Scripts generados por agentes
-│   └── pipeline_id/  # Scripts específicos por pipeline
-└── logs/            # Logs del sistema
+├── uploads/          # User uploaded datasets
+├── models/           # Saved trained models
+├── results/          # Predictions and results
+├── visualizations/   # Generated charts
+├── coding/           # Agent-generated scripts
+│   └── pipeline_id/  # Pipeline-specific scripts
+└── logs/            # System logs
 ```
 
-## 🐳 Arquitectura de Contenedores
+## 🐳 Container Architecture
 
-### **Contenedor Principal (Sistema)**
+### **Main Container (System)**
 ```dockerfile
 FROM python:3.8-slim
-# FastAPI + Agentes + Base de datos
+# FastAPI + Agents + Database
 EXPOSE 8006
 ```
 
-### **Contenedores de Ejecución (Dinámicos)**
+### **Execution Containers (Dynamic)**
 ```dockerfile
 FROM python:3.8
-# Instalación automática de dependencias
-# Ejecución aislada de código generado
+# Automatic dependency installation
+# Isolated execution of generated code
 ```
 
-### **Red de Contenedores**
+### **Container Network**
 ```mermaid
 graph LR
     subgraph "Docker Network"
@@ -284,13 +284,13 @@ graph LR
     ECN --> H2O
 ```
 
-## 🔌 Integraciones Externas
+## 🔌 External Integrations
 
-### **Modelos de Lenguaje**
+### **Language Models**
 ```python
-# Configuración dual: Local + Cloud
+# Dual configuration: Local + Cloud
 LLM_CONFIG = {
-    "primary": "ollama",      # Local con gpt-oss:120b
+    "primary": "ollama",      # Local with gpt-oss:120b
     "fallback": "huggingface", # Cloud API
     "model": "gpt-oss:120b"
 }
@@ -298,7 +298,7 @@ LLM_CONFIG = {
 
 ### **H2O AutoML**
 ```python
-# Integración automática
+# Automatic integration
 h2o.init()
 aml = H2OAutoML(
     max_models=20,
@@ -308,15 +308,15 @@ aml = H2OAutoML(
 )
 ```
 
-## 📊 Monitoreo y Observabilidad
+## 📊 Monitoring and Observability
 
-### **Métricas del Sistema**
-- Tiempo de respuesta por agente
-- Uso de recursos (CPU, memoria)
-- Tasa de éxito de pipelines
-- Latencia de predicciones
+### **System Metrics**
+- Response time per agent
+- Resource usage (CPU, memory)
+- Pipeline success rate
+- Prediction latency
 
-### **Logs Estructurados**
+### **Structured Logs**
 ```json
 {
   "timestamp": "2024-01-01T10:00:00Z",
@@ -332,37 +332,37 @@ aml = H2OAutoML(
 }
 ```
 
-## 🔒 Consideraciones de Seguridad
+## 🔒 Security Considerations
 
-### **Aislamiento de Ejecución**
-- Contenedores Docker con recursos limitados
-- Red aislada para ejecución de código
-- Timeout automático para prevenir loops infinitos
+### **Execution Isolation**
+- Docker containers with limited resources
+- Isolated network for code execution
+- Automatic timeout to prevent infinite loops
 
-### **Validación de Entrada**
-- Sanitización de nombres de archivos
-- Validación de formato de datasets
-- Límites de tamaño de archivos
+### **Input Validation**
+- Filename sanitization
+- Dataset format validation
+- File size limits
 
-### **Auditoría**
-- Log de todas las operaciones
-- Trazabilidad completa de pipelines
-- Retención configurable de logs
+### **Auditing**
+- Log all operations
+- Complete pipeline traceability
+- Configurable log retention
 
-## 🚀 Escalabilidad y Rendimiento
+## 🚀 Scalability and Performance
 
-### **Escalabilidad Horizontal**
-- Múltiples instancias del servicio principal
-- Load balancer para distribución de carga
-- Base de datos con conexión pooling
+### **Horizontal Scalability**
+- Multiple instances of main service
+- Load balancer for traffic distribution
+- Database with connection pooling
 
-### **Optimizaciones**
-- Cache de resultados frecuentes
-- Procesamiento asíncrono de jobs
-- Compresión de datos grandes
+### **Optimizations**
+- Frequent result caching
+- Asynchronous job processing
+- Large data compression
 
 ---
 
-Esta arquitectura proporciona una base sólida para un sistema de Machine Learning automatizado que es **escalable**, **seguro** y **mantenible**.
+This architecture provides a solid foundation for an automated Machine Learning system that is **scalable**, **secure** and **maintainable**.
 
-**Siguiente**: [Instalación y Configuración](03_installation.md)
+**Next**: [Installation and Configuration](03_installation.md)

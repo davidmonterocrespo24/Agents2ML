@@ -1,153 +1,153 @@
-# Guía de Inicio Rápido
+# Quick Start Guide
 
-## 🚀 Tu Primer Modelo de ML en 10 Minutos
+## 🚀 Your First ML Model in 10 Minutes
 
-Esta guía te llevará paso a paso para crear tu primer modelo de Machine Learning utilizando el Sistema Multi-Agent AutoML. Al final tendrás un modelo entrenado, predicciones y visualizaciones profesionales.
+This guide will take you step by step to create your first Machine Learning model using the Multi-Agent AutoML System. By the end, you'll have a trained model, predictions, and professional visualizations.
 
-## ✅ Pre-requisitos
+## ✅ Prerequisites
 
-Antes de comenzar, asegúrate de que:
-- [ ] El sistema está instalado correctamente (ver [Instalación](03_installation.md))
-- [ ] Los servicios están ejecutándose (`python start.py`)
-- [ ] La interfaz web es accesible en `http://localhost:8006`
-- [ ] Tienes un archivo CSV con datos para analizar
+Before starting, make sure that:
+- [ ] The system is installed correctly (see [Installation](03_installation.md))
+- [ ] Services are running (`python start.py`)
+- [ ] Web interface is accessible at `http://localhost:8006`
+- [ ] You have a CSV file with data to analyze
 
-## 📊 Preparar Datos de Ejemplo
+## 📊 Prepare Sample Data
 
-Si no tienes datos propios, puedes usar nuestro dataset de ejemplo:
+If you don't have your own data, you can use our example dataset:
 
-### **Crear Dataset de Ventas**
+### **Create Sales Dataset**
 ```python
-# crear_datos_ejemplo.py
+# create_sample_data.py
 import pandas as pd
 import numpy as np
 from datetime import datetime, timedelta
 
-# Generar datos de ventas simulados
+# Generate simulated sales data
 np.random.seed(42)
 start_date = datetime(2023, 1, 1)
 dates = [start_date + timedelta(days=i) for i in range(365)]
 
-# Datos con tendencia y estacionalidad
+# Data with trend and seasonality
 base_sales = 1000
 trend = np.linspace(0, 200, 365)
 seasonal = 100 * np.sin(2 * np.pi * np.arange(365) / 365)
 noise = np.random.normal(0, 50, 365)
 sales = base_sales + trend + seasonal + noise
 
-# Crear DataFrame
+# Create DataFrame
 data = {
-    'fecha': dates,
-    'ventas': sales.round(2),
-    'mes': [d.month for d in dates],
-    'dia_semana': [d.weekday() for d in dates],
-    'promocion': np.random.choice([0, 1], 365, p=[0.8, 0.2])
+    'date': dates,
+    'sales': sales.round(2),
+    'month': [d.month for d in dates],
+    'day_of_week': [d.weekday() for d in dates],
+    'promotion': np.random.choice([0, 1], 365, p=[0.8, 0.2])
 }
 
 df = pd.DataFrame(data)
-df.to_csv('ventas_ejemplo.csv', index=False)
-print("✅ Archivo 'ventas_ejemplo.csv' creado")
-print(f"📊 Dataset: {len(df)} filas, {len(df.columns)} columnas")
+df.to_csv('sales_example.csv', index=False)
+print("✅ File 'sales_example.csv' created")
+print(f"📊 Dataset: {len(df)} rows, {len(df.columns)} columns")
 print(df.head())
 ```
 
 ```bash
-# Ejecutar el script
-python crear_datos_ejemplo.py
+# Execute the script
+python create_sample_data.py
 ```
 
-## 🖥️ Tutorial Paso a Paso
+## 🖥️ Step-by-Step Tutorial
 
-### **Paso 1: Acceder al Sistema**
+### **Step 1: Access System**
 
-1. **Abrir navegador** y ir a `http://localhost:8006`
-2. **Verificar estado**: Deberías ver el dashboard principal
-3. **Comprobar agentes**: Los 7 agentes deben aparecer como "Ready"
+1. **Open browser** and go to `http://localhost:8006`
+2. **Verify status**: You should see the main dashboard
+3. **Check agents**: All 7 agents should appear as "Ready"
 
-### **Paso 2: Cargar Dataset**
+### **Step 2: Upload Dataset**
 
-1. **Hacer clic** en el botón "📁 Upload Dataset"
-2. **Seleccionar** tu archivo `ventas_ejemplo.csv`
-3. **Esperar confirmación**: El archivo se carga automáticamente
-4. **Verificar**: Deberías ver detalles del archivo en pantalla
+1. **Click** the "📁 Upload Dataset" button
+2. **Select** your `sales_example.csv` file
+3. **Wait for confirmation**: The file uploads automatically
+4. **Verify**: You should see file details on screen
 
-### **Paso 3: Definir Objetivo**
+### **Step 3: Define Objective**
 
-1. **Localizar** el campo "User Objective"
-2. **Escribir objetivo**: 
+1. **Locate** the "User Objective" field
+2. **Write objective**: 
    ```
-   Predice las ventas futuras para los próximos 30 días basándose en los datos históricos
+   Predict future sales for the next 30 days based on historical data
    ```
-3. **Nombrar pipeline**: `prediccion_ventas_2024`
+3. **Name pipeline**: `sales_prediction_2024`
 
-### **Paso 4: Iniciar Pipeline**
+### **Step 4: Start Pipeline**
 
-1. **Hacer clic** en "🚀 Start ML Pipeline"
-2. **Observar progreso**: El sistema mostrará el estado en tiempo real
-3. **Ver logs**: Expandir las secciones de logs para ver detalles
+1. **Click** "🚀 Start ML Pipeline"
+2. **Observe progress**: System will show real-time status
+3. **View logs**: Expand log sections to see details
 
-### **Paso 5: Monitorear Progreso**
+### **Step 5: Monitor Progress**
 
-El sistema ejecutará automáticamente estas fases:
+The system will automatically execute these phases:
 
-#### **Fase 1: Análisis de Datos (1-2 minutos)**
+#### **Phase 1: Data Analysis (1-2 minutes)**
 ```
-🔍 DataProcessorAgent iniciando...
-✅ Detectado CSV con separador ','
-✅ Encontradas 365 filas, 5 columnas
-✅ Columna objetivo sugerida: 'ventas'
-✅ Análisis estadístico completado
-```
-
-#### **Fase 2: Entrenamiento de Modelos (5-15 minutos)**
-```
-🧠 ModelBuilderAgent iniciando...
-✅ Código Python generado para H2O AutoML
-⚡ CodeExecutorAgent ejecutando en Docker...
-🔬 H2O AutoML entrenando múltiples modelos...
-✅ Mejor modelo: GBM con RMSE: 45.23
-🔍 AnalystAgent validando resultados...
-✅ Modelo aprobado para producción
+🔍 DataProcessorAgent starting...
+✅ Detected CSV with separator ','
+✅ Found 365 rows, 5 columns
+✅ Suggested target column: 'sales'
+✅ Statistical analysis completed
 ```
 
-#### **Fase 3: Predicciones (2-3 minutos)**
+#### **Phase 2: Model Training (5-15 minutes)**
 ```
-🎯 PredictionAgent iniciando...
-✅ Modelo cargado correctamente
-✅ Generando predicciones para 30 días
-✅ Archivo de predicciones creado
-```
-
-#### **Fase 4: Visualizaciones (1-2 minutos)**
-```
-📈 VisualizationAgent iniciando...
-✅ Gráfico de tendencias generado
-✅ Visualización de predicciones completada
-✅ Archivos PNG guardados
+🧠 ModelBuilderAgent starting...
+✅ Python code generated for H2O AutoML
+⚡ CodeExecutorAgent executing in Docker...
+🔬 H2O AutoML training multiple models...
+✅ Best model: GBM with RMSE: 45.23
+🔍 AnalystAgent validating results...
+✅ Model approved for production
 ```
 
-### **Paso 6: Explorar Resultados**
+#### **Phase 3: Predictions (2-3 minutes)**
+```
+🎯 PredictionAgent starting...
+✅ Model loaded correctly
+✅ Generating predictions for 30 days
+✅ Prediction file created
+```
 
-Una vez completado el pipeline, podrás:
+#### **Phase 4: Visualizations (1-2 minutes)**
+```
+📈 VisualizationAgent starting...
+✅ Trend chart generated
+✅ Prediction visualization completed
+✅ PNG files saved
+```
 
-1. **Ver métricas del modelo**:
-   - Precisión (RMSE, MAE, R²)
-   - Importancia de características
-   - Validación cruzada
+### **Step 6: Explore Results**
 
-2. **Descargar predicciones**:
-   - Archivo CSV con predicciones futuras
-   - Intervalos de confianza
-   - Datos históricos incluidos
+Once the pipeline is completed, you can:
 
-3. **Ver visualizaciones**:
-   - Gráfico de tendencia histórica
-   - Predicciones futuras
-   - Bandas de confianza
+1. **View model metrics**:
+   - Accuracy (RMSE, MAE, R²)
+   - Feature importance
+   - Cross-validation
 
-## 📋 Ejemplo de Resultados
+2. **Download predictions**:
+   - CSV file with future predictions
+   - Confidence intervals
+   - Historical data included
 
-### **Métricas del Modelo**
+3. **View visualizations**:
+   - Historical trend chart
+   - Future predictions
+   - Confidence bands
+
+## 📋 Example Results
+
+### **Model Metrics**
 ```json
 {
   "model_performance": {
@@ -157,24 +157,24 @@ Una vez completado el pipeline, podrás:
     "mean_residual_deviance": 2045.11
   },
   "feature_importance": {
-    "fecha": 0.45,
-    "mes": 0.25,
-    "promocion": 0.20,
-    "dia_semana": 0.10
+    "date": 0.45,
+    "month": 0.25,
+    "promotion": 0.20,
+    "day_of_week": 0.10
   }
 }
 ```
 
-### **Predicciones (muestra)**
+### **Predictions (sample)**
 ```csv
-fecha,ventas_predichas,limite_inferior,limite_superior
+date,predicted_sales,lower_limit,upper_limit
 2024-01-01,1234.56,1189.23,1279.89
 2024-01-02,1245.78,1200.45,1291.11
 2024-01-03,1256.90,1211.57,1302.23
 ...
 ```
 
-### **Archivos Generados**
+### **Generated Files**
 ```
 results/
 ├── pipeline_abc123/
@@ -187,109 +187,109 @@ results/
 │       └── residuals_plot.png
 ```
 
-## 🔍 Interpretación de Resultados
+## 🔍 Interpreting Results
 
-### **Métricas de Rendimiento**
+### **Performance Metrics**
 
 **RMSE (Root Mean Square Error)**: 45.23
-- ✅ **Bueno**: Error promedio de ~45 unidades de ventas
-- 📊 **Contexto**: En ventas promedio de 1200, error del ~3.8%
+- ✅ **Good**: Average error of ~45 sales units
+- 📊 **Context**: In average sales of 1200, error of ~3.8%
 
-**R² (Coeficiente de Determinación)**: 0.89
-- ✅ **Excelente**: El modelo explica el 89% de la variabilidad
-- 📈 **Interpretación**: Muy buena capacidad predictiva
+**R² (Coefficient of Determination)**: 0.89
+- ✅ **Excellent**: Model explains 89% of variability
+- 📈 **Interpretation**: Very good predictive capability
 
 **MAE (Mean Absolute Error)**: 35.87
-- ✅ **Bueno**: Error absoluto promedio de ~36 unidades
-- 📊 **Contexto**: Más robusto a outliers que RMSE
+- ✅ **Good**: Average absolute error of ~36 units
+- 📊 **Context**: More robust to outliers than RMSE
 
-### **Importancia de Características**
+### **Feature Importance**
 
-1. **fecha (45%)**: Factor temporal más importante
-2. **mes (25%)**: Estacionalidad mensual significativa  
-3. **promocion (20%)**: Impacto considerable de promociones
-4. **dia_semana (10%)**: Variación semanal menor
+1. **date (45%)**: Most important temporal factor
+2. **month (25%)**: Significant monthly seasonality  
+3. **promotion (20%)**: Considerable impact of promotions
+4. **day_of_week (10%)**: Minor weekly variation
 
-### **Calidad de Predicciones**
+### **Prediction Quality**
 
-- **Intervalos de confianza**: Bandas del 95% incluidas
-- **Tendencia**: Modelo captura tendencia ascendente
-- **Estacionalidad**: Patrones estacionales preservados
+- **Confidence intervals**: 95% bands included
+- **Trend**: Model captures upward trend
+- **Seasonality**: Seasonal patterns preserved
 
-## 🎯 Casos de Uso Adicionales
+## 🎯 Additional Use Cases
 
-### **Modificar el Objetivo**
+### **Modify Objective**
 
-Puedes cambiar el objetivo para diferentes análisis:
+You can change the objective for different analyses:
 
 ```
-# Clasificación de clientes
-"Clasifica a los clientes en segmentos de alto, medio y bajo valor"
+# Customer classification
+"Classify customers into high, medium and low value segments"
 
-# Detección de anomalías
-"Detecta ventas anómalas que podrían indicar fraude o errores"
+# Anomaly detection
+"Detect anomalous sales that could indicate fraud or errors"
 
-# Optimización de inventario
-"Predice la demanda por producto para optimizar inventario"
+# Inventory optimization
+"Predict demand by product to optimize inventory"
 
-# Análisis de churn
-"Predice qué clientes tienen alta probabilidad de abandonar"
+# Churn analysis
+"Predict which customers have high probability of churning"
 ```
 
-### **Diferentes Tipos de Datos**
+### **Different Data Types**
 
-El sistema maneja diversos formatos:
+The system handles various formats:
 
 ```python
-# Series temporales
-fecha, valor, categoria
+# Time series
+date, value, category
 
-# Datos transaccionales  
-cliente_id, producto, cantidad, precio, fecha
+# Transactional data  
+customer_id, product, quantity, price, date
 
-# Datos de comportamiento
-usuario, accion, timestamp, dispositivo
+# Behavioral data
+user, action, timestamp, device
 
-# Datos financieros
-fecha, precio_apertura, precio_cierre, volumen
+# Financial data
+date, opening_price, closing_price, volume
 ```
 
-## ⚡ Consejos para Mejores Resultados
+## ⚡ Tips for Better Results
 
-### **Preparación de Datos**
-- ✅ **Consistencia**: Formatos de fecha uniformes
-- ✅ **Completitud**: Mínimo de outliers o datos faltantes
-- ✅ **Relevancia**: Incluir variables predictoras importantes
-- ✅ **Volumen**: Al menos 100 observaciones para resultados confiables
+### **Data Preparation**
+- ✅ **Consistency**: Uniform date formats
+- ✅ **Completeness**: Minimum outliers or missing data
+- ✅ **Relevance**: Include important predictor variables
+- ✅ **Volume**: At least 100 observations for reliable results
 
-### **Definición de Objetivos**
-- ✅ **Específico**: "Predice ventas diarias" vs "Analiza ventas"
-- ✅ **Medible**: Definir qué constituye éxito
-- ✅ **Temporal**: Especificar horizonte de predicción
-- ✅ **Contextual**: Incluir información de dominio relevante
+### **Objective Definition**
+- ✅ **Specific**: "Predict daily sales" vs "Analyze sales"
+- ✅ **Measurable**: Define what constitutes success
+- ✅ **Temporal**: Specify prediction horizon
+- ✅ **Contextual**: Include relevant domain information
 
-### **Interpretación de Resultados**
-- ✅ **Validación**: Comparar predicciones con conocimiento del negocio
-- ✅ **Intervalos**: Considerar incertidumbre en las predicciones
-- ✅ **Tendencias**: Evaluar si las tendencias son realistas
-- ✅ **Outliers**: Investigar predicciones extremas
+### **Result Interpretation**
+- ✅ **Validation**: Compare predictions with business knowledge
+- ✅ **Intervals**: Consider uncertainty in predictions
+- ✅ **Trends**: Evaluate if trends are realistic
+- ✅ **Outliers**: Investigate extreme predictions
 
-## 🔄 Siguiente Pasos
+## 🔄 Next Steps
 
-¡Felicitaciones! Has creado tu primer modelo de Machine Learning automatizado. 
+Congratulations! You've created your first automated Machine Learning model. 
 
-### **Explorar Más**
-1. 📖 **[Tutorial Detallado](tutorials/step_by_step_tutorial.md)**: Guía completa con más ejemplos
-2. 🤖 **[Documentación de Agentes](agents/)**: Entender cómo funciona cada agente
-3. 🔧 **[API Reference](api/api_reference.md)**: Integrar el sistema en tus aplicaciones
-4. 📊 **[Casos de Uso](tutorials/use_cases.md)**: Ejemplos para tu industria
+### **Explore More**
+1. 📖 **[Detailed Tutorial](tutorials/step_by_step_tutorial.md)**: Complete guide with more examples
+2. 🤖 **[Agents Documentation](agents/)**: Understand how each agent works
+3. 🔧 **[API Reference](api/api_reference.md)**: Integrate the system into your applications
+4. 📊 **[Use Cases](tutorials/use_cases.md)**: Examples for your industry
 
-### **Experimentar**
-- Probar con tus propios datasets
-- Modificar objetivos y comparar resultados
-- Explorar diferentes tipos de problemas de ML
-- Integrar el sistema en workflows existentes
+### **Experiment**
+- Try with your own datasets
+- Modify objectives and compare results
+- Explore different types of ML problems
+- Integrate the system into existing workflows
 
 ---
 
-**¡Has dado el primer paso en la automatización de Machine Learning! 🎉🤖**
+**You've taken the first step in Machine Learning automation! 🎉🤖**

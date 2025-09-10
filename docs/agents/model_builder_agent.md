@@ -1,38 +1,38 @@
 # ModelBuilderAgent
 
-## 🎯 Descripción General
+## 🎯 Overview
 
-El **ModelBuilderAgent** es el **arquitecto de modelos de Machine Learning** del sistema. Su responsabilidad principal es transformar el análisis de datos proporcionado por el DataProcessorAgent en **código Python ejecutable** que utiliza H2O AutoML para entrenar modelos de ML óptimos.
+The **ModelBuilderAgent** is the **Machine Learning model architect** of the system. Its main responsibility is to transform the data analysis provided by the DataProcessorAgent into **executable Python code** that uses H2O AutoML to train optimal ML models.
 
-## 🧠 Funcionalidades Principales
+## 🧠 Main Functionalities
 
-### 🐍 **Generación Automática de Código Python**
-- Crea scripts completos de entrenamiento de modelos
-- Implementa mejores prácticas de Machine Learning
-- Integra automáticamente con H2O AutoML
-- Optimiza hiperparámetros según el tipo de problema
+### 🐍 **Automatic Python Code Generation**
+- Creates complete model training scripts
+- Implements Machine Learning best practices
+- Automatically integrates with H2O AutoML
+- Optimizes hyperparameters according to problem type
 
-### 🎯 **Especialización por Tipo de Problema**
-- **Regresión**: Para predicción de valores continuos
-- **Clasificación**: Para predicción de categorías
-- **Series Temporales**: Para pronósticos y tendencias
-- **Clustering**: Para segmentación no supervisada
+### 🎯 **Specialization by Problem Type**
+- **Regression**: For continuous value prediction
+- **Classification**: For category prediction
+- **Time Series**: For forecasting and trends
+- **Clustering**: For unsupervised segmentation
 
-### 🔧 **Configuración Automática de H2O**
-- Inicialización optimizada de H2O cluster
-- Configuración de memoria y recursos
-- Selección automática de algoritmos
-- Parámetros de validación cruzada
+### 🔧 **Automatic H2O Configuration**
+- Optimized H2O cluster initialization
+- Memory and resource configuration
+- Automatic algorithm selection
+- Cross-validation parameters
 
-### 📊 **Feature Engineering Inteligente**
-- Transformación automática de variables categóricas
-- Manejo de valores nulos
-- Escalado de variables numéricas
-- Creación de características temporales
+### 📊 **Intelligent Feature Engineering**
+- Automatic categorical variable transformation
+- Null value handling
+- Numeric variable scaling
+- Temporal feature creation
 
-## 🏗️ Arquitectura del Agente
+## 🏗️ Agent Architecture
 
-### **Configuración Base**
+### **Base Configuration**
 ```python
 # agents/model_builder_agent.py
 def create_model_builder_agent():
@@ -46,52 +46,52 @@ def create_model_builder_agent():
     )
 ```
 
-### **Prompt del Sistema**
-El ModelBuilderAgent utiliza un prompt especializado que incluye:
-- Mejores prácticas de H2O AutoML
-- Patrones de código para diferentes tipos de ML
-- Manejo de errores y validación
-- Optimización de rendimiento
+### **System Prompt**
+The ModelBuilderAgent uses a specialized prompt that includes:
+- H2O AutoML best practices
+- Code patterns for different ML types
+- Error handling and validation
+- Performance optimization
 
-## 🔄 Proceso de Construcción de Modelos
+## 🔄 Model Building Process
 
-### **Flujo de Trabajo**
+### **Workflow**
 ```mermaid
 flowchart TD
-    A[Recibir análisis de datos] --> B[Identificar tipo de problema]
-    B --> C[Seleccionar algoritmos H2O]
-    C --> D[Generar código Python]
-    D --> E[Configurar validación]
-    E --> F[Añadir feature engineering]
-    F --> G[Optimizar hiperparámetros]
-    G --> H[Entregar script ejecutable]
+    A[Receive data analysis] --> B[Identify problem type]
+    B --> C[Select H2O algorithms]
+    C --> D[Generate Python code]
+    D --> E[Configure validation]
+    E --> F[Add feature engineering]
+    F --> G[Optimize hyperparameters]
+    G --> H[Deliver executable script]
 ```
 
-### **Tipos de Código Generado**
+### **Types of Generated Code**
 
-#### **1. Regresión - Predicción de Ventas**
+#### **1. Regression - Sales Prediction**
 ```python
 import h2o
 from h2o.automl import H2OAutoML
 import pandas as pd
 from datetime import datetime
 
-# Inicializar H2O
+# Initialize H2O
 h2o.init(max_mem_size="4G", nthreads=-1)
 
-# Cargar y preparar datos
-df = pd.read_csv('/path/to/ventas.csv')
+# Load and prepare data
+df = pd.read_csv('/path/to/sales.csv')
 h2o_df = h2o.H2OFrame(df)
 
-# Configurar variables
-y = 'ventas'
+# Configure variables
+y = 'sales'
 x = h2o_df.columns
 x.remove(y)
 
-# Dividir datos
+# Split data
 train, valid, test = h2o_df.split_frame([0.7, 0.15], seed=42)
 
-# Configurar H2O AutoML para regresión
+# Configure H2O AutoML for regression
 aml = H2OAutoML(
     max_models=20,
     max_runtime_secs=1800,
@@ -101,52 +101,52 @@ aml = H2OAutoML(
     verbosity='info'
 )
 
-# Entrenar modelos
+# Train models
 aml.train(x=x, y=y, training_frame=train, validation_frame=valid)
 
-# Evaluar modelo
+# Evaluate model
 perf = aml.leader.model_performance(test)
-print(f"RMSE en test: {perf.rmse()}")
-print(f"MAE en test: {perf.mae()}")
-print(f"R² en test: {perf.r2()}")
+print(f"Test RMSE: {perf.rmse()}")
+print(f"Test MAE: {perf.mae()}")
+print(f"Test R²: {perf.r2()}")
 
-# Guardar modelo
+# Save model
 model_path = h2o.save_model(aml.leader, path="./models", force=True)
-print(f"Modelo guardado en: {model_path}")
+print(f"Model saved at: {model_path}")
 
-# Importancia de características
+# Feature importance
 importance = aml.leader.varimp(use_pandas=True)
-print("Importancia de características:")
+print("Feature importance:")
 print(importance)
 
 h2o.cluster().shutdown()
 ```
 
-#### **2. Clasificación - Segmentación de Clientes**
+#### **2. Classification - Customer Segmentation**
 ```python
 import h2o
 from h2o.automl import H2OAutoML
 import pandas as pd
 
-# Inicializar H2O
+# Initialize H2O
 h2o.init()
 
-# Cargar datos
-df = pd.read_csv('/path/to/clientes.csv')
+# Load data
+df = pd.read_csv('/path/to/customers.csv')
 h2o_df = h2o.H2OFrame(df)
 
-# Convertir variable objetivo a categórica
-h2o_df['segmento'] = h2o_df['segmento'].asfactor()
+# Convert target variable to categorical
+h2o_df['segment'] = h2o_df['segment'].asfactor()
 
-# Configurar variables
-y = 'segmento'
+# Configure variables
+y = 'segment'
 x = h2o_df.columns
 x.remove(y)
 
-# Dividir datos
+# Split data
 train, valid, test = h2o_df.split_frame([0.7, 0.15], seed=42)
 
-# AutoML para clasificación
+# AutoML for classification
 aml = H2OAutoML(
     max_models=15,
     max_runtime_secs=1200,
@@ -156,121 +156,121 @@ aml = H2OAutoML(
     sort_metric='AUC'
 )
 
-# Entrenar
+# Train
 aml.train(x=x, y=y, training_frame=train, validation_frame=valid)
 
-# Métricas de clasificación
+# Classification metrics
 perf = aml.leader.model_performance(test)
 print(f"AUC: {perf.auc()[0][1]}")
 print(f"Accuracy: {perf.accuracy()[0][1]}")
 print(f"Log Loss: {perf.logloss()}")
 
-# Matriz de confusión
-print("Matriz de confusión:")
+# Confusion matrix
+print("Confusion matrix:")
 print(perf.confusion_matrix())
 
-# Guardar modelo
+# Save model
 h2o.save_model(aml.leader, path="./models", force=True)
 h2o.cluster().shutdown()
 ```
 
-#### **3. Series Temporales - Pronóstico de Demanda**
+#### **3. Time Series - Demand Forecasting**
 ```python
 import h2o
 from h2o.automl import H2OAutoML
 import pandas as pd
 from datetime import datetime, timedelta
 
-# Inicializar H2O
+# Initialize H2O
 h2o.init()
 
-# Cargar y procesar datos temporales
-df = pd.read_csv('/path/to/demanda.csv')
-df['fecha'] = pd.to_datetime(df['fecha'])
-df = df.sort_values('fecha')
+# Load and process temporal data
+df = pd.read_csv('/path/to/demand.csv')
+df['date'] = pd.to_datetime(df['date'])
+df = df.sort_values('date')
 
-# Feature engineering temporal
-df['año'] = df['fecha'].dt.year
-df['mes'] = df['fecha'].dt.month
-df['dia_semana'] = df['fecha'].dt.dayofweek
-df['dia_año'] = df['fecha'].dt.dayofyear
+# Temporal feature engineering
+df['year'] = df['date'].dt.year
+df['month'] = df['date'].dt.month
+df['day_of_week'] = df['date'].dt.dayofweek
+df['day_of_year'] = df['date'].dt.dayofyear
 
-# Crear lags para series temporales
+# Create lags for time series
 for lag in [1, 7, 30]:
-    df[f'demanda_lag_{lag}'] = df['demanda'].shift(lag)
+    df[f'demand_lag_{lag}'] = df['demand'].shift(lag)
 
-# Eliminar NaNs creados por lags
+# Remove NaNs created by lags
 df = df.dropna()
 
-# Convertir a H2O
+# Convert to H2O
 h2o_df = h2o.H2OFrame(df)
 
-# Variables predictoras (sin fecha original)
-y = 'demanda'
-x = [col for col in h2o_df.columns if col not in ['fecha', 'demanda']]
+# Predictor variables (without original date)
+y = 'demand'
+x = [col for col in h2o_df.columns if col not in ['date', 'demand']]
 
-# Split temporal (últimos 20% para test)
+# Temporal split (last 20% for test)
 n_rows = h2o_df.nrows
 split_point = int(n_rows * 0.8)
 train = h2o_df[:split_point, :]
 test = h2o_df[split_point:, :]
 
-# AutoML especializado en series temporales
+# AutoML specialized in time series
 aml = H2OAutoML(
     max_models=25,
     max_runtime_secs=2400,
-    nfolds=3,  # Menos folds para series temporales
+    nfolds=3,  # Less folds for time series
     seed=42,
     sort_metric='RMSE'
 )
 
-# Entrenar
+# Train
 aml.train(x=x, y=y, training_frame=train)
 
-# Evaluar en test (validación temporal)
+# Evaluate on test (temporal validation)
 predictions = aml.leader.predict(test)
 perf = aml.leader.model_performance(test)
 
-print(f"RMSE temporal: {perf.rmse()}")
-print(f"MAE temporal: {perf.mae()}")
+print(f"Temporal RMSE: {perf.rmse()}")
+print(f"Temporal MAE: {perf.mae()}")
 
-# Guardar modelo y predicciones
+# Save model and predictions
 h2o.save_model(aml.leader, path="./models", force=True)
-predictions.as_data_frame().to_csv('./results/predicciones_temporales.csv', index=False)
+predictions.as_data_frame().to_csv('./results/temporal_predictions.csv', index=False)
 
 h2o.cluster().shutdown()
 ```
 
-## 🎯 Especialización por Dominio
+## 🎯 Domain Specialization
 
-### **E-commerce y Retail**
+### **E-commerce and Retail**
 ```python
-# Feature engineering específico para retail
-df['es_fin_semana'] = df['dia_semana'].isin([5, 6]).astype(int)
-df['es_temporada_alta'] = df['mes'].isin([11, 12]).astype(int)
-df['precio_relativo'] = df['precio'] / df.groupby('categoria')['precio'].transform('mean')
+# Retail-specific feature engineering
+df['is_weekend'] = df['day_of_week'].isin([5, 6]).astype(int)
+df['is_high_season'] = df['month'].isin([11, 12]).astype(int)
+df['relative_price'] = df['price'] / df.groupby('category')['price'].transform('mean')
 ```
 
-### **Finanzas**
+### **Finance**
 ```python
-# Características financieras
-df['volatilidad'] = df['precio'].rolling(30).std()
-df['rsi'] = calculate_rsi(df['precio'], 14)
-df['media_movil_20'] = df['precio'].rolling(20).mean()
+# Financial features
+df['volatility'] = df['price'].rolling(30).std()
+df['rsi'] = calculate_rsi(df['price'], 14)
+df['moving_average_20'] = df['price'].rolling(20).mean()
 ```
 
-### **IoT y Sensores**
+### **IoT and Sensors**
 ```python
-# Procesamiento de datos de sensores
-df['temp_suavizada'] = df['temperatura'].rolling(5).mean()
-df['anomalia_temp'] = (abs(df['temperatura'] - df['temp_suavizada']) > 2 * df['temperatura'].std()).astype(int)
+# Sensor data processing
+df['temp_smoothed'] = df['temperature'].rolling(5).mean()
+df['temp_anomaly'] = (abs(df['temperature'] - df['temp_smoothed']) > 2 * df['temperature'].std()).astype(int)
 ```
 
-## 🔧 Configuración Avanzada
+## 🔧 Advanced Configuration
 
-### **Optimización de Hiperparámetros**
+### **Hyperparameter Optimization**
 ```python
-# Configuración adaptativa según tamaño de datos
+# Adaptive configuration based on data size
 def configure_automl(data_size):
     if data_size < 1000:
         return H2OAutoML(max_models=5, max_runtime_secs=300)
@@ -280,9 +280,9 @@ def configure_automl(data_size):
         return H2OAutoML(max_models=30, max_runtime_secs=3600)
 ```
 
-### **Selección de Algoritmos**
+### **Algorithm Selection**
 ```python
-# Algoritmos por tipo de problema
+# Algorithms by problem type
 ALGORITHM_CONFIG = {
     'regression': ['GBM', 'XGBoost', 'RandomForest', 'GLM'],
     'classification': ['GBM', 'XGBoost', 'RandomForest', 'DeepLearning'],
@@ -291,30 +291,30 @@ ALGORITHM_CONFIG = {
 }
 ```
 
-## 📊 Validación y Métricas
+## 📊 Validation and Metrics
 
-### **Métricas por Tipo de Problema**
+### **Metrics by Problem Type**
 
-#### **Regresión**
-- **RMSE**: Error cuadrático medio
-- **MAE**: Error absoluto medio  
-- **R²**: Coeficiente de determinación
-- **MAPE**: Error porcentual absoluto medio
+#### **Regression**
+- **RMSE**: Root mean square error
+- **MAE**: Mean absolute error  
+- **R²**: Coefficient of determination
+- **MAPE**: Mean absolute percentage error
 
-#### **Clasificación**
-- **AUC**: Área bajo la curva ROC
-- **Accuracy**: Precisión general
-- **Precision/Recall**: Por clase
-- **F1-Score**: Media armónica de precisión y recall
+#### **Classification**
+- **AUC**: Area under ROC curve
+- **Accuracy**: Overall accuracy
+- **Precision/Recall**: Per class
+- **F1-Score**: Harmonic mean of precision and recall
 
-#### **Series Temporales**
-- **MASE**: Error escalado absoluto medio
-- **sMAPE**: Error porcentual absoluto simétrico
-- **Directional Accuracy**: Precisión direccional
+#### **Time Series**
+- **MASE**: Mean absolute scaled error
+- **sMAPE**: Symmetric mean absolute percentage error
+- **Directional Accuracy**: Directional accuracy
 
-### **Validación Robusta**
+### **Robust Validation**
 ```python
-# Configuración de validación cruzada
+# Cross-validation configuration
 VALIDATION_CONFIG = {
     'regression': {'nfolds': 5, 'fold_assignment': 'Random'},
     'classification': {'nfolds': 5, 'balance_classes': True},
@@ -322,15 +322,15 @@ VALIDATION_CONFIG = {
 }
 ```
 
-## 🔄 Integración con Otros Agentes
+## 🔄 Integration with Other Agents
 
-### **Input desde DataProcessorAgent**
+### **Input from DataProcessorAgent**
 ```json
 {
   "problem_type": "time_series_regression",
-  "target_column": "ventas",
-  "predictor_columns": ["mes", "dia_semana", "promocion"],
-  "temporal_column": "fecha",
+  "target_column": "sales",
+  "predictor_columns": ["month", "day_of_week", "promotion"],
+  "temporal_column": "date",
   "data_quality": {
     "completeness": 0.98,
     "outliers": 3
@@ -338,18 +338,18 @@ VALIDATION_CONFIG = {
 }
 ```
 
-### **Output hacia CodeExecutorAgent**
+### **Output to CodeExecutorAgent**
 ```python
-# Script Python completo y ejecutable
+# Complete and executable Python script
 generated_script = """
-# Código generado por ModelBuilderAgent
+# Code generated by ModelBuilderAgent
 import h2o
 from h2o.automl import H2OAutoML
-# ... resto del código
+# ... rest of code
 """
 ```
 
-### **Comunicación con AnalystAgent**
+### **Communication with AnalystAgent**
 ```json
 {
   "script_generated": true,
@@ -359,23 +359,23 @@ from h2o.automl import H2OAutoML
 }
 ```
 
-## 🐛 Manejo de Errores
+## 🐛 Error Handling
 
-### **Errores Comunes y Soluciones**
+### **Common Errors and Solutions**
 
-#### **Memoria Insuficiente**
+#### **Insufficient Memory**
 ```python
-# Configuración adaptativa de memoria
+# Adaptive memory configuration
 try:
     h2o.init(max_mem_size="8G")
 except:
     h2o.init(max_mem_size="4G")
-    print("Advertencia: Memoria limitada, reduciendo modelos")
+    print("Warning: Limited memory, reducing models")
 ```
 
-#### **Datos Desbalanceados**
+#### **Unbalanced Data**
 ```python
-# Balanceo automático para clasificación
+# Automatic balancing for classification
 if problem_type == 'classification':
     class_distribution = df[target].value_counts()
     if class_distribution.min() / class_distribution.max() < 0.1:
@@ -383,29 +383,29 @@ if problem_type == 'classification':
         class_sampling_factors = calculate_sampling_factors(class_distribution)
 ```
 
-#### **Features Correlacionadas**
+#### **Correlated Features**
 ```python
-# Eliminación automática de multicolinealidad
+# Automatic multicollinearity removal
 correlation_matrix = df.corr()
 highly_correlated = find_highly_correlated_features(correlation_matrix, 0.95)
 if highly_correlated:
-    print(f"Eliminando features correlacionadas: {highly_correlated}")
+    print(f"Removing correlated features: {highly_correlated}")
     df = df.drop(columns=highly_correlated)
 ```
 
-## 📈 Optimización de Rendimiento
+## 📈 Performance Optimization
 
-### **Paralelización**
+### **Parallelization**
 ```python
-# Configuración de hilos según hardware
+# Thread configuration based on hardware
 import multiprocessing
 optimal_threads = min(multiprocessing.cpu_count(), 8)
 h2o.init(nthreads=optimal_threads)
 ```
 
-### **Gestión de Memoria**
+### **Memory Management**
 ```python
-# Liberación proactiva de memoria
+# Proactive memory release
 def cleanup_h2o():
     h2o.remove_all()
     h2o.cluster().shutdown()
@@ -414,7 +414,7 @@ def cleanup_h2o():
 
 ### **Early Stopping**
 ```python
-# Parada temprana para eficiencia
+# Early stopping for efficiency
 aml = H2OAutoML(
     max_models=20,
     max_runtime_secs=1800,
@@ -425,47 +425,47 @@ aml = H2OAutoML(
 
 ## 📚 Best Practices
 
-### **Para Generación de Código**
-1. **Reproducibilidad**: Siempre usar seeds fijos
-2. **Validación**: Implementar splits apropiados por tipo de problema  
-3. **Limpieza**: Incluir liberación de recursos
-4. **Logging**: Registrar pasos importantes y métricas
+### **For Code Generation**
+1. **Reproducibility**: Always use fixed seeds
+2. **Validation**: Implement appropriate splits by problem type  
+3. **Cleanup**: Include resource release
+4. **Logging**: Record important steps and metrics
 
-### **Para Optimización**
-1. **Configuración adaptativa**: Ajustar según tamaño de datos
-2. **Selección de algoritmos**: Especializar por dominio
-3. **Feature engineering**: Automático pero contextual
-4. **Validación cruzada**: Apropiada para el tipo de datos
+### **For Optimization**
+1. **Adaptive configuration**: Adjust based on data size
+2. **Algorithm selection**: Specialize by domain
+3. **Feature engineering**: Automatic but contextual
+4. **Cross-validation**: Appropriate for data type
 
 ## 🔍 Troubleshooting
 
-### **Problema: H2O no inicia**
+### **Problem: H2O doesn't start**
 ```bash
-# Verificar puertos disponibles
+# Check available ports
 netstat -tulpn | grep 54321
 
-# Limpiar procesos H2O previos
+# Clean previous H2O processes
 pkill -f h2o
 ```
 
-### **Problema: Modelos de baja calidad**
+### **Problem: Low quality models**
 ```python
-# Aumentar tiempo de entrenamiento
+# Increase training time
 H2OAutoML(max_runtime_secs=3600, max_models=50)
 
-# Mejorar feature engineering
+# Improve feature engineering
 include_interaction_terms=True
 ```
 
-### **Problema: Memory leak**
+### **Problem: Memory leak**
 ```python
-# Limpieza explícita después de cada modelo
+# Explicit cleanup after each model
 h2o.remove_all()
 gc.collect()
 ```
 
 ---
 
-El **ModelBuilderAgent** es el corazón inteligente del sistema, transformando análisis de datos en código ML ejecutable y optimizado.
+The **ModelBuilderAgent** is the intelligent heart of the system, transforming data analysis into executable and optimized ML code.
 
-**Siguiente**: [CodeExecutorAgent](code_executor_agent.md)
+**Next**: [CodeExecutorAgent](code_executor_agent.md)

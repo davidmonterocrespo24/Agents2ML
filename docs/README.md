@@ -1,91 +1,91 @@
-# Documentación del Sistema Multi-Agent AutoML
+# Multi-Agent AutoML System Documentation
 
-Esta carpeta contiene la documentación completa del Sistema Multi-Agent AutoML, un sistema automatizado de Machine Learning que utiliza 7 agentes especializados de IA para transformar datos brutos en modelos de ML listos para producción.
+This folder contains the complete documentation for the Multi-Agent AutoML System, an automated Machine Learning system that uses 7 specialized AI agents to transform raw data into production-ready ML models.
 
-## 📚 Índice de Documentación
+## 📚 Documentation Index
 
-### 📋 Documentación General
-- [**Introducción al Sistema**](01_introduction.md) - Visión general y características principales
-- [**Arquitectura del Sistema**](02_architecture.md) - Diseño técnico y componentes
-- [**Instalación y Configuración**](03_installation.md) - Guía de instalación paso a paso
-- [**Guía de Inicio Rápido**](04_quick_start.md) - Tutorial para comenzar rápidamente
+### 📋 General Documentation
+- [**System Introduction**](01_introduction.md) - Overview and main features
+- [**System Architecture**](02_architecture.md) - Technical design and components
+- [**Installation and Configuration**](03_installation.md) - Step-by-step installation guide
+- [**Quick Start Guide**](04_quick_start.md) - Tutorial to get started quickly
 
-### 🤖 Documentación de Agentes
-- [**DataProcessorAgent**](agents/data_processor_agent.md) - Análisis automático de datasets
-- [**ModelBuilderAgent**](agents/model_builder_agent.md) - Generación de código Python + H2O AutoML
-- [**CodeExecutorAgent**](agents/code_executor_agent.md) - Ejecución segura en Docker
-- [**AnalystAgent**](agents/analyst_agent.md) - Control de calidad y validación
-- [**PredictionAgent**](agents/prediction_agent.md) - Generación de predicciones
-- [**VisualizationAgent**](agents/visualization_agent.md) - Creación de gráficos y visualizaciones
-- [**UserProxyAgent**](agents/user_proxy_agent.md) - Coordinación general
+### 🤖 Agents Documentation
+- [**DataProcessorAgent**](agents/data_processor_agent.md) - Automatic dataset analysis
+- [**ModelBuilderAgent**](agents/model_builder_agent.md) - Python code generation + H2O AutoML
+- [**CodeExecutorAgent**](agents/code_executor_agent.md) - Safe execution in Docker
+- [**AnalystAgent**](agents/analyst_agent.md) - Quality control and validation
+- [**PredictionAgent**](agents/prediction_agent.md) - Prediction generation
+- [**VisualizationAgent**](agents/visualization_agent.md) - Chart and visualization creation
+- [**UserProxyAgent**](agents/user_proxy_agent.md) - General coordination
 
-### 🔧 Documentación Técnica
-- [**API Reference**](api/api_reference.md) - Documentación completa de la API REST
-- [**Configuración Avanzada**](technical/advanced_configuration.md) - Configuración detallada del sistema
-- [**Base de Datos**](technical/database_schema.md) - Esquema y modelos de datos
-- [**Pipeline de ML**](technical/ml_pipeline.md) - Flujo de trabajo de Machine Learning
-- [**Integración con H2O**](technical/h2o_integration.md) - Detalles de integración con H2O AutoML
+### 🔧 Technical Documentation
+- [**API Reference**](api/api_reference.md) - Complete REST API documentation
+- [**Advanced Configuration**](technical/advanced_configuration.md) - Detailed system configuration
+- [**Database**](technical/database_schema.md) - Schema and data models
+- [**ML Pipeline**](technical/ml_pipeline.md) - Machine Learning workflow
+- [**H2O Integration**](technical/h2o_integration.md) - H2O AutoML integration details
 
-### 📖 Guías de Usuario
-- [**Tutorial Paso a Paso**](tutorials/step_by_step_tutorial.md) - Tutorial completo con ejemplos
-- [**Casos de Uso**](tutorials/use_cases.md) - Ejemplos prácticos de implementación
-- [**Mejores Prácticas**](tutorials/best_practices.md) - Recomendaciones para uso óptimo
-- [**Resolución de Problemas**](tutorials/troubleshooting.md) - Solución de problemas comunes
+### 📖 User Guides
+- [**Step-by-Step Tutorial**](tutorials/step_by_step_tutorial.md) - Complete tutorial with examples
+- [**Use Cases**](tutorials/use_cases.md) - Practical implementation examples
+- [**Best Practices**](tutorials/best_practices.md) - Recommendations for optimal use
+- [**Troubleshooting**](tutorials/troubleshooting.md) - Common problem solutions
 
-### 🚀 Deployment y Producción
-- [**Deployment con Docker**](deployment/docker_deployment.md) - Instalación usando contenedores
-- [**Deployment en la Nube**](deployment/cloud_deployment.md) - AWS, Azure, Google Cloud
-- [**Monitoreo y Mantenimiento**](deployment/monitoring.md) - Supervisión del sistema en producción
-- [**Escalabilidad**](deployment/scalability.md) - Configuración para alta carga
+### 🚀 Deployment and Production
+- [**Docker Deployment**](deployment/docker_deployment.md) - Container-based installation
+- [**Cloud Deployment**](deployment/cloud_deployment.md) - AWS, Azure, Google Cloud
+- [**Monitoring and Maintenance**](deployment/monitoring.md) - Production system monitoring
+- [**Scalability**](deployment/scalability.md) - High-load configuration
 
-### 🛠️ Desarrollo y Extensión
-- [**Guía de Desarrollo**](development/development_guide.md) - Configuración del entorno de desarrollo
-- [**Creación de Agentes Personalizados**](development/custom_agents.md) - Desarrollo de nuevos agentes
-- [**Extensión de Pipelines**](development/pipeline_extensions.md) - Añadir funcionalidades al pipeline
-- [**Testing**](development/testing.md) - Pruebas y validación del sistema
+### 🛠️ Development and Extension
+- [**Development Guide**](development/development_guide.md) - Development environment setup
+- [**Custom Agents Creation**](development/custom_agents.md) - Developing new agents
+- [**Pipeline Extensions**](development/pipeline_extensions.md) - Adding pipeline functionality
+- [**Testing**](development/testing.md) - System testing and validation
 
-### 📊 Ejemplos y Casos de Estudio
-- [**Predicción de Ventas**](examples/sales_forecasting.md) - Análisis de series temporales de ventas
-- [**Clasificación de Clientes**](examples/customer_classification.md) - Segmentación automática de clientes
-- [**Análisis Financiero**](examples/financial_analysis.md) - Modelos de riesgo y predicción financiera
-- [**Optimización de Procesos**](examples/process_optimization.md) - Mejora de eficiencia operacional
+### 📊 Examples and Case Studies
+- [**Sales Forecasting**](examples/sales_forecasting.md) - Sales time series analysis
+- [**Customer Classification**](examples/customer_classification.md) - Automatic customer segmentation
+- [**Financial Analysis**](examples/financial_analysis.md) - Risk models and financial prediction
+- [**Process Optimization**](examples/process_optimization.md) - Operational efficiency improvement
 
-### 🔒 Seguridad y Compliance
-- [**Seguridad del Sistema**](security/security_overview.md) - Características de seguridad
-- [**Manejo de Datos**](security/data_handling.md) - Privacidad y protección de datos
-- [**Auditoría y Logs**](security/auditing.md) - Registro y monitoreo de actividades
-- [**Compliance**](security/compliance.md) - Cumplimiento regulatorio
+### 🔒 Security and Compliance
+- [**System Security**](security/security_overview.md) - Security features
+- [**Data Handling**](security/data_handling.md) - Privacy and data protection
+- [**Auditing and Logs**](security/auditing.md) - Activity logging and monitoring
+- [**Compliance**](security/compliance.md) - Regulatory compliance
 
-## 🎯 Navegación Rápida
+## 🎯 Quick Navigation
 
-### Para Usuarios Nuevos
-1. Leer [Introducción al Sistema](01_introduction.md)
-2. Seguir la [Guía de Instalación](03_installation.md)
-3. Completar el [Tutorial Paso a Paso](tutorials/step_by_step_tutorial.md)
+### For New Users
+1. Read [System Introduction](01_introduction.md)
+2. Follow the [Installation Guide](03_installation.md)
+3. Complete the [Step-by-Step Tutorial](tutorials/step_by_step_tutorial.md)
 
-### Para Administradores de Sistema
-1. Revisar [Arquitectura del Sistema](02_architecture.md)
-2. Configurar [Deployment con Docker](deployment/docker_deployment.md)
-3. Implementar [Monitoreo y Mantenimiento](deployment/monitoring.md)
+### For System Administrators
+1. Review [System Architecture](02_architecture.md)
+2. Configure [Docker Deployment](deployment/docker_deployment.md)
+3. Implement [Monitoring and Maintenance](deployment/monitoring.md)
 
-### Para Desarrolladores
-1. Configurar [Entorno de Desarrollo](development/development_guide.md)
-2. Estudiar [Documentación de Agentes](agents/)
-3. Consultar [API Reference](api/api_reference.md)
+### For Developers
+1. Set up [Development Environment](development/development_guide.md)
+2. Study [Agents Documentation](agents/)
+3. Consult [API Reference](api/api_reference.md)
 
-## 📞 Soporte y Contribución
+## 📞 Support and Contribution
 
-- **Reportar Issues**: Crear issues en el repositorio
-- **Solicitar Features**: Usar el sistema de issues para nuevas funcionalidades
-- **Contribuir**: Consultar la [Guía de Desarrollo](development/development_guide.md)
-- **Documentación**: Ayudar a mejorar esta documentación
+- **Report Issues**: Create issues in the repository
+- **Request Features**: Use the issue system for new functionality
+- **Contribute**: Check the [Development Guide](development/development_guide.md)
+- **Documentation**: Help improve this documentation
 
-## 🏷️ Versión de la Documentación
+## 🏷️ Documentation Version
 
-Esta documentación corresponde a la **versión 1.0** del Sistema Multi-Agent AutoML.
+This documentation corresponds to **version 1.0** of the Multi-Agent AutoML System.
 
-**Última actualización**: Septiembre 2024
+**Last updated**: September 2024
 
 ---
 
-**Sistema Multi-Agent AutoML - Transformando datos en insights con el poder de la automatización de IA multi-agente.**
+**Multi-Agent AutoML System - Transforming data into insights with the power of multi-agent AI automation.**

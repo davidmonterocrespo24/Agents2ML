@@ -1,78 +1,78 @@
-# Instalación y Configuración
+# Installation and Configuration
 
-## 🎯 Requisitos del Sistema
+## 🎯 System Requirements
 
-### **Requisitos Mínimos**
-- **Sistema Operativo**: Windows 10/11, macOS 10.14+, Ubuntu 18.04+
-- **Memoria RAM**: 8 GB (recomendado 16 GB)
-- **Espacio en Disco**: 10 GB libres
-- **Procesador**: Intel i5 o AMD Ryzen 5 (4 núcleos mínimo)
-- **Conexión a Internet**: Para descargas iniciales y modelos
+### **Minimum Requirements**
+- **Operating System**: Windows 10/11, macOS 10.14+, Ubuntu 18.04+
+- **RAM**: 8 GB (16 GB recommended)
+- **Disk Space**: 10 GB free
+- **Processor**: Intel i5 or AMD Ryzen 5 (4 cores minimum)
+- **Internet Connection**: For initial downloads and models
 
-### **Software Requerido**
+### **Required Software**
 
-#### **Obligatorio**
-- **Python 3.8+** con pip
-- **Docker Desktop** (última versión)
-- **Git** para clonación del repositorio
+#### **Mandatory**
+- **Python 3.8+** with pip
+- **Docker Desktop** (latest version)
+- **Git** for repository cloning
 
-#### **Opciones de LLM (elegir una)**
-- **Opción A**: **Ollama** (recomendado para uso local)
-- **Opción B**: **Hugging Face API Key** (para uso cloud)
+#### **LLM Options (choose one)**
+- **Option A**: **Ollama** (recommended for local use)
+- **Option B**: **Hugging Face API Key** (for cloud use)
 
-## 🚀 Instalación Rápida
+## 🚀 Quick Installation
 
-### **Paso 1: Clonar el Repositorio**
+### **Step 1: Clone Repository**
 ```bash
-# Clonar el proyecto
+# Clone the project
 git clone https://github.com/your-repo/Agents2ML.git
 cd Agents2ML
 
-# Verificar contenido
+# Verify content
 ls -la
 ```
 
-### **Paso 2: Crear Entorno Virtual**
+### **Step 2: Create Virtual Environment**
 ```bash
-# Crear entorno virtual
+# Create virtual environment
 python -m venv venv
 
-# Activar entorno virtual
-# En Windows:
+# Activate virtual environment
+# On Windows:
 venv\Scripts\activate
-# En macOS/Linux:
+# On macOS/Linux:
 source venv/bin/activate
 
-# Verificar activación
-which python  # Debe mostrar la ruta del entorno virtual
+# Verify activation
+which python  # Should show virtual environment path
 ```
 
-### **Paso 3: Instalar Dependencias**
+### **Step 3: Install Dependencies**
 ```bash
-# Instalar dependencias principales
+# Install main dependencies
 pip install -r requirements.txt
 
-# Verificar instalación crítica
+# Verify critical installation
 pip show fastapi uvicorn h2o autogen-agentchat
 ```
 
-### **Paso 4: Configurar Docker**
+### **Step 4: Configure Docker**
 ```bash
-# Verificar Docker está funcionando
+# Verify Docker is working
 docker --version
 docker run hello-world
 
-# Verificar Docker Compose
+# Verify Docker Compose
 docker-compose --version
 ```
 
-## 🧠 Configuración del Modelo de Lenguaje
+## 🧠 Language Model Configuration
 
-### **Opción A: Ollama (Recomendado para Local)**
+### **Option A: Ollama (Recommended for Local)**
 
-#### **Instalar Ollama**
+#### **Install Ollama**
 ```bash
-# Windows (PowerShell como Administrador)
+# Windows (PowerShell as Administrator)
 winget install Ollama.Ollama
 
 # macOS
@@ -82,21 +82,21 @@ brew install ollama
 curl -fsSL https://ollama.ai/install.sh | sh
 ```
 
-#### **Descargar el Modelo**
+#### **Download Model**
 ```bash
-# Iniciar Ollama
+# Start Ollama
 ollama serve
 
-# En otra terminal, descargar el modelo (puede tomar tiempo)
+# In another terminal, download model (may take time)
 ollama run gpt-oss:120b
 
-# Verificar modelo instalado
+# Verify model installed
 ollama list
 ```
 
-#### **Probar Conexión**
+#### **Test Connection**
 ```bash
-# Probar que Ollama funciona
+# Test that Ollama works
 curl http://localhost:11434/api/generate -d '{
   "model": "gpt-oss:120b",
   "prompt": "Hello, world!",
@@ -104,47 +104,47 @@ curl http://localhost:11434/api/generate -d '{
 }'
 ```
 
-### **Opción B: Hugging Face API**
+### **Option B: Hugging Face API**
 
-#### **Obtener API Key**
-1. Ir a [Hugging Face](https://huggingface.co/)
-2. Crear cuenta o iniciar sesión
-3. Ir a Settings → Access Tokens
-4. Crear nuevo token con permisos de lectura
+#### **Get API Key**
+1. Go to [Hugging Face](https://huggingface.co/)
+2. Create account or sign in
+3. Go to Settings → Access Tokens
+4. Create new token with read permissions
 
-#### **Configurar Variables de Entorno**
+#### **Configure Environment Variables**
 ```bash
-# Crear archivo .env
+# Create .env file
 cp .env.example .env
 
-# Editar .env con tu token
-echo "HF_TOKEN=tu_hugging_face_token_aqui" > .env
+# Edit .env with your token
+echo "HF_TOKEN=your_hugging_face_token_here" > .env
 ```
 
-## ⚙️ Configuración del Sistema
+## ⚙️ System Configuration
 
-### **Archivo de Configuración Principal**
+### **Main Configuration File**
 ```python
-# config.py - Configuración personalizada
+# config.py - Custom configuration
 
-# Configuración del LLM
+# LLM Configuration
 LLM_CONFIG = {
-    "primary_provider": "ollama",  # o "huggingface"
+    "primary_provider": "ollama",  # or "huggingface"
     "model_name": "gpt-oss:120b",
     "ollama_url": "http://localhost:11434",
     "max_tokens": 4000,
     "temperature": 0.1
 }
 
-# Configuración de Docker
+# Docker Configuration
 DOCKER_CONFIG = {
     "enabled": True,
-    "timeout": 1800,  # 30 minutos
+    "timeout": 1800,  # 30 minutes
     "memory_limit": "2g",
     "cpu_limit": 2
 }
 
-# Configuración de la aplicación
+# Application Configuration
 APP_CONFIG = {
     "host": "0.0.0.0",
     "port": 8006,
@@ -152,7 +152,7 @@ APP_CONFIG = {
     "log_level": "INFO"
 }
 
-# Configuración de H2O
+# H2O Configuration
 H2O_CONFIG = {
     "max_models": 20,
     "max_runtime_secs": 1800,
@@ -161,20 +161,20 @@ H2O_CONFIG = {
 }
 ```
 
-### **Configuración de Base de Datos**
+### **Database Configuration**
 ```bash
-# Inicializar base de datos
+# Initialize database
 python database_init.py
 
-# Verificar tablas creadas
+# Verify tables created
 sqlite3 automl_system.db ".tables"
 ```
 
-## 🧪 Verificación de la Instalación
+## 🧪 Installation Verification
 
-### **Script de Verificación**
+### **Verification Script**
 ```bash
-# Crear script de prueba
+# Create test script
 cat > test_installation.py << 'EOF'
 #!/usr/bin/env python3
 import sys
@@ -214,16 +214,16 @@ def check_ollama():
             gpt_oss = any('gpt-oss:120b' in model.get('name', '') 
                          for model in models)
             if gpt_oss:
-                print("✅ Ollama y gpt-oss:120b OK")
+                print("✅ Ollama and gpt-oss:120b OK")
                 return True
             else:
-                print("⚠️  Ollama OK, pero falta gpt-oss:120b")
+                print("⚠️  Ollama OK, but missing gpt-oss:120b")
                 return False
         else:
-            print("❌ Ollama no responde")
+            print("❌ Ollama not responding")
             return False
     except:
-        print("⚠️  Ollama no está funcionando (usa Hugging Face)")
+        print("⚠️  Ollama not working (use Hugging Face)")
         return False
 
 def check_files():
@@ -236,12 +236,12 @@ def check_files():
         if Path(file).exists():
             print(f"✅ {file}")
         else:
-            print(f"❌ {file} faltante")
+            print(f"❌ {file} missing")
             all_present = False
     return all_present
 
 if __name__ == "__main__":
-    print("🔍 Verificando instalación...")
+    print("🔍 Verifying installation...")
     print()
     
     checks = [
@@ -252,50 +252,50 @@ if __name__ == "__main__":
     ]
     
     if all(checks):
-        print("\n🎉 ¡Instalación completa y correcta!")
-        print("Ejecutar: python start.py")
+        print("\n🎉 Installation complete and correct!")
+        print("Run: python start.py")
     else:
-        print("\n❌ Hay problemas con la instalación")
-        print("Revisar los elementos marcados con ❌")
+        print("\n❌ There are problems with the installation")
+        print("Review items marked with ❌")
 EOF
 
-# Ejecutar verificación
+# Execute verification
 python test_installation.py
 ```
 
-## 🚀 Primer Inicio
+## 🚀 First Launch
 
-### **Iniciar el Sistema**
+### **Start System**
 ```bash
-# Método 1: Script de inicio
+# Method 1: Start script
 python start.py
 
-# Método 2: Directamente con uvicorn
+# Method 2: Direct with uvicorn
 uvicorn app:app --host 0.0.0.0 --port 8006 --reload
 ```
 
-### **Verificar que Funciona**
+### **Verify It Works**
 ```bash
-# Probar API
+# Test API
 curl http://localhost:8006/health
 
-# Respuesta esperada:
+# Expected response:
 # {"status": "healthy", "agents": 7, "llm": "connected"}
 ```
 
-### **Acceder a la Interfaz Web**
-1. Abrir navegador
-2. Ir a `http://localhost:8006`
-3. Debería ver el dashboard principal
+### **Access Web Interface**
+1. Open browser
+2. Go to `http://localhost:8006`
+3. Should see main dashboard
 
-## 🔧 Configuración Avanzada
+## 🔧 Advanced Configuration
 
-### **Variables de Entorno Completas**
+### **Complete Environment Variables**
 ```bash
-# .env - Configuración completa
+# .env - Complete configuration
 # LLM Configuration
-LLM_PROVIDER=ollama  # o 'huggingface'
-HF_TOKEN=tu_token_aqui
+LLM_PROVIDER=ollama  # or 'huggingface'
+HF_TOKEN=your_token_here
 OLLAMA_URL=http://localhost:11434
 MODEL_NAME=gpt-oss:120b
 
@@ -321,11 +321,11 @@ DATABASE_URL=sqlite:///automl_system.db
 DATABASE_ECHO=False
 
 # Security
-SECRET_KEY=tu_secret_key_aqui
+SECRET_KEY=your_secret_key_here
 CORS_ORIGINS=["http://localhost:3000", "http://localhost:8006"]
 ```
 
-### **Configuración de Logging**
+### **Logging Configuration**
 ```python
 # logging_config.py
 LOGGING_CONFIG = {
@@ -355,7 +355,7 @@ LOGGING_CONFIG = {
 }
 ```
 
-## 🐳 Instalación con Docker
+## 🐳 Docker Installation
 
 ### **Docker Compose Setup**
 ```yaml
@@ -373,7 +373,7 @@ services:
       - ./results:/app/results
       - ./logs:/app/logs
     environment:
-      - LLM_PROVIDER=huggingface  # Recomendado para Docker
+      - LLM_PROVIDER=huggingface  # Recommended for Docker
       - HF_TOKEN=${HF_TOKEN}
       - DATABASE_URL=sqlite:///data/automl_system.db
     depends_on:
@@ -398,85 +398,85 @@ networks:
     driver: bridge
 ```
 
-### **Construcción y Ejecución**
+### **Build and Run**
 ```bash
-# Construir y ejecutar
+# Build and run
 docker-compose up --build
 
-# En background
+# In background
 docker-compose up -d
 
-# Ver logs
+# View logs
 docker-compose logs -f
 
-# Parar servicios
+# Stop services
 docker-compose down
 ```
 
-## 🔍 Solución de Problemas Comunes
+## 🔍 Common Troubleshooting
 
-### **Problema: Ollama no inicia**
+### **Problem: Ollama doesn't start**
 ```bash
-# Verificar si el puerto está ocupado
+# Check if port is occupied
 netstat -tulpn | grep 11434
 
-# Reiniciar Ollama
+# Restart Ollama
 pkill ollama
 ollama serve
 ```
 
-### **Problema: Docker no funciona**
+### **Problem: Docker doesn't work**
 ```bash
-# Verificar estado de Docker
+# Check Docker status
 systemctl status docker
 
-# Reiniciar Docker
+# Restart Docker
 sudo systemctl restart docker
 
-# Verificar permisos (Linux)
+# Check permissions (Linux)
 sudo usermod -aG docker $USER
 newgrp docker
 ```
 
-### **Problema: Puerto 8006 ocupado**
+### **Problem: Port 8006 occupied**
 ```bash
-# Encontrar proceso usando el puerto
+# Find process using port
 lsof -i :8006
 
-# Cambiar puerto en config.py
+# Change port in config.py
 APP_CONFIG = {
-    "port": 8007  # Puerto alternativo
+    "port": 8007  # Alternative port
 }
 ```
 
-### **Problema: Falta memoria para H2O**
+### **Problem: Insufficient memory for H2O**
 ```python
-# En config.py - Reducir uso de memoria
+# In config.py - Reduce memory usage
 H2O_CONFIG = {
-    "max_models": 5,  # Reducir modelos
-    "max_runtime_secs": 900,  # Reducir tiempo
-    "nfolds": 3  # Reducir validación cruzada
+    "max_models": 5,  # Reduce models
+    "max_runtime_secs": 900,  # Reduce time
+    "nfolds": 3  # Reduce cross-validation
 }
 ```
 
-## ✅ Lista de Verificación Post-Instalación
+## ✅ Post-Installation Checklist
 
-- [ ] Python 3.8+ instalado y funcionando
-- [ ] Docker Desktop funcionando
-- [ ] Ollama + gpt-oss:120b OR Hugging Face token configurado
-- [ ] Dependencias Python instaladas
-- [ ] Base de datos inicializada
-- [ ] Puertos 8006 y 11434 disponibles
-- [ ] Script de verificación ejecutado sin errores
-- [ ] Interfaz web accesible en http://localhost:8006
-- [ ] API respondiendo en /health endpoint
+- [ ] Python 3.8+ installed and working
+- [ ] Docker Desktop working
+- [ ] Ollama + gpt-oss:120b OR Hugging Face token configured
+- [ ] Python dependencies installed
+- [ ] Database initialized
+- [ ] Ports 8006 and 11434 available
+- [ ] Verification script executed without errors
+- [ ] Web interface accessible at http://localhost:8006
+- [ ] API responding at /health endpoint
 
-## 🎉 ¡Instalación Completada!
+## 🎉 Installation Completed!
 
-Si todos los elementos de la lista están marcados, ¡felicitaciones! El sistema está listo para usar.
+If all checklist items are marked, congratulations! The system is ready to use.
 
-**Siguiente paso**: [Guía de Inicio Rápido](04_quick_start.md) para crear tu primer modelo.
+**Next step**: [Quick Start Guide](04_quick_start.md) to create your first model.
 
 ---
 
-**¿Problemas con la instalación?** Consulta la sección de [Troubleshooting](tutorials/troubleshooting.md) para soluciones detalladas.
+**Installation problems?** Check the [Troubleshooting](tutorials/troubleshooting.md) section for detailed solutions.

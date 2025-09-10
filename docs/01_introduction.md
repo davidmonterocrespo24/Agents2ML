@@ -1,154 +1,154 @@
-# Introducción al Sistema Multi-Agent AutoML
+# Introduction to the Multi-Agent AutoML System
 
-## 🎯 ¿Qué es el Sistema Multi-Agent AutoML?
+## 🎯 What is the Multi-Agent AutoML System?
 
-El **Sistema Multi-Agent AutoML** es una plataforma completa de Machine Learning automatizado que utiliza **7 agentes especializados de IA** para transformar datos brutos en modelos de ML listos para producción. El sistema está diseñado para eliminar la complejidad técnica del desarrollo de modelos de Machine Learning, permitiendo a usuarios sin experiencia técnica crear modelos predictivos profesionales.
+The **Multi-Agent AutoML System** is a complete automated Machine Learning platform that uses **7 specialized AI agents** to transform raw data into production-ready ML models. The system is designed to eliminate the technical complexity of Machine Learning model development, allowing users without technical experience to create professional predictive models.
 
-## 🌟 Características Principales
+## 🌟 Key Features
 
-### 🤖 **Automatización Completa**
-- **Cero intervención manual**: Desde la carga de datos hasta las predicciones finales
-- **Análisis automático de datos**: Detección inteligente de tipos de datos y patrones
-- **Generación automática de código**: Scripts de Python optimizados para cada caso de uso
-- **Entrenamiento automático**: Integración con H2O AutoML para modelos óptimos
+### 🤖 **Complete Automation**
+- **Zero manual intervention**: From data upload to final predictions
+- **Automatic data analysis**: Intelligent detection of data types and patterns
+- **Automatic code generation**: Optimized Python scripts for each use case
+- **Automatic training**: Integration with H2O AutoML for optimal models
 
-### 👥 **Sistema Multi-Agente Inteligente**
-- **7 agentes especializados** que trabajan en colaboración
-- **Comunicación entre agentes** para optimización continua
-- **Validación cruzada** entre agentes para garantizar calidad
-- **Recuperación automática de errores** con retroalimentación inteligente
+### 👥 **Intelligent Multi-Agent System**
+- **7 specialized agents** working in collaboration
+- **Inter-agent communication** for continuous optimization
+- **Cross-validation** between agents to ensure quality
+- **Automatic error recovery** with intelligent feedback
 
-### 🔒 **Seguridad y Confiabilidad**
-- **Ejecución en contenedores Docker** para aislamiento completo
-- **Validación de código** antes de la ejecución
-- **Logs detallados** para auditoría y debugging
-- **Manejo robusto de errores** con reintentos automáticos
+### 🔒 **Security and Reliability**
+- **Docker container execution** for complete isolation
+- **Code validation** before execution
+- **Detailed logs** for auditing and debugging
+- **Robust error handling** with automatic retries
 
-### 📊 **Interfaz Web Completa**
-- **Dashboard en tiempo real** para monitoreo de trabajos
-- **Gestión visual de pipelines** ML
-- **Visualización automática** de resultados
-- **Descarga de modelos** entrenados
+### 📊 **Complete Web Interface**
+- **Real-time dashboard** for job monitoring
+- **Visual ML pipeline management**
+- **Automatic result visualization**
+- **Trained model download**
 
-## 🎯 ¿Para Quién es Este Sistema?
+## 🎯 Who is This System For?
 
-### 👨‍💼 **Analistas de Negocio**
-- Crear modelos predictivos sin conocimientos técnicos
-- Obtener insights rápidos de datos empresariales
-- Generar reportes automáticos con visualizaciones
+### 👨‍💼 **Business Analysts**
+- Create predictive models without technical knowledge
+- Get quick insights from business data
+- Generate automatic reports with visualizations
 
-### 👩‍💻 **Científicos de Datos**
-- Acelerar el proceso de prototipado de modelos
-- Automatizar tareas repetitivas del pipeline ML
-- Enfocar tiempo en análisis de alto valor
+### 👩‍💻 **Data Scientists**
+- Accelerate model prototyping process
+- Automate repetitive ML pipeline tasks
+- Focus time on high-value analysis
 
-### 🏢 **Equipos de TI**
-- Democratizar el acceso a Machine Learning en la organización
-- Implementar soluciones ML escalables y seguras
-- Reducir la dependencia de recursos especializados
+### 🏢 **IT Teams**
+- Democratize Machine Learning access in the organization
+- Implement scalable and secure ML solutions
+- Reduce dependency on specialized resources
 
-### 🎓 **Estudiantes y Educadores**
-- Aprender conceptos de ML con ejemplos prácticos
-- Experimentar con diferentes tipos de modelos
-- Entender el flujo completo de un proyecto ML
+### 🎓 **Students and Educators**
+- Learn ML concepts with practical examples
+- Experiment with different model types
+- Understand the complete flow of an ML project
 
-## 🚀 ¿Qué Hace el Sistema?
+## 🚀 What Does the System Do?
 
-### **Flujo de Trabajo Automatizado**
+### **Automated Workflow**
 
 ```mermaid
 graph LR
-    A[📁 Cargar CSV] --> B[🔍 Análisis Automático]
-    B --> C[🧠 Entrenamiento ML]
-    C --> D[📊 Predicciones]
-    D --> E[📈 Visualizaciones]
-    E --> F[📋 Resultados Finales]
+    A[📁 Upload CSV] --> B[🔍 Automatic Analysis]
+    B --> C[🧠 ML Training]
+    C --> D[📊 Predictions]
+    D --> E[📈 Visualizations]
+    E --> F[📋 Final Results]
 ```
 
-1. **📁 Carga de Datos**: Sube un archivo CSV con tus datos
-2. **🔍 Análisis Automático**: El sistema analiza estructura, tipos de datos y patrones
-3. **🧠 Entrenamiento**: Genera y entrena múltiples modelos automáticamente
-4. **📊 Predicciones**: Crea predicciones futuras basadas en el mejor modelo
-5. **📈 Visualizaciones**: Genera gráficos profesionales de resultados
-6. **📋 Resultados**: Entrega modelos, predicciones y visualizaciones listos para usar
+1. **📁 Data Upload**: Upload a CSV file with your data
+2. **🔍 Automatic Analysis**: System analyzes structure, data types and patterns
+3. **🧠 Training**: Generates and trains multiple models automatically
+4. **📊 Predictions**: Creates future predictions based on the best model
+5. **📈 Visualizations**: Generates professional result charts
+6. **📋 Results**: Delivers models, predictions and visualizations ready to use
 
-### **Tipos de Problemas que Resuelve**
+### **Types of Problems It Solves**
 
-#### 📈 **Predicción de Series Temporales**
-- Ventas futuras
-- Demanda de productos
-- Tendencias de mercado
-- Proyecciones financieras
+#### 📈 **Time Series Prediction**
+- Future sales
+- Product demand
+- Market trends
+- Financial projections
 
-#### 🎯 **Clasificación**
-- Segmentación de clientes
-- Detección de fraudes
-- Análisis de sentimientos
-- Clasificación de productos
+#### 🎯 **Classification**
+- Customer segmentation
+- Fraud detection
+- Sentiment analysis
+- Product classification
 
-#### 📊 **Regresión**
-- Predicción de precios
-- Estimación de costos
-- Análisis de riesgo
-- Optimización de procesos
+#### 📊 **Regression**
+- Price prediction
+- Cost estimation
+- Risk analysis
+- Process optimization
 
-## 🔧 Tecnologías Utilizadas
+## 🔧 Technologies Used
 
 ### **Backend**
-- **Python 3.8+**: Lenguaje principal
-- **FastAPI**: Framework web moderno y rápido
-- **H2O AutoML**: Motor de Machine Learning automatizado
-- **Docker**: Contenedores para ejecución segura
-- **SQLite**: Base de datos ligera y rápida
+- **Python 3.8+**: Main language
+- **FastAPI**: Modern and fast web framework
+- **H2O AutoML**: Automated Machine Learning engine
+- **Docker**: Containers for secure execution
+- **SQLite**: Lightweight and fast database
 
-### **Inteligencia Artificial**
-- **gpt-oss:120b**: Modelo de lenguaje open source
-- **Ollama**: Ejecución local de LLMs
-- **Hugging Face API**: Alternativa cloud para LLMs
-- **AutoGen**: Framework multi-agente de Microsoft
+### **Artificial Intelligence**
+- **gpt-oss:120b**: Open source language model
+- **Ollama**: Local LLM execution
+- **Hugging Face API**: Cloud alternative for LLMs
+- **AutoGen**: Microsoft's multi-agent framework
 
 ### **Frontend**
-- **HTML5/CSS3/JavaScript**: Interfaz web moderna
-- **Charts.js**: Visualizaciones interactivas
-- **Bootstrap**: Diseño responsive
+- **HTML5/CSS3/JavaScript**: Modern web interface
+- **Charts.js**: Interactive visualizations
+- **Bootstrap**: Responsive design
 
-## 🌟 Beneficios Clave
+## 🌟 Key Benefits
 
-### ⚡ **Velocidad**
-- **De horas a minutos**: Reduce el tiempo de desarrollo de modelos ML
-- **Automatización completa**: Elimina tareas manuales repetitivas
-- **Procesamiento paralelo**: Múltiples agentes trabajando simultáneamente
+### ⚡ **Speed**
+- **From hours to minutes**: Reduces ML model development time
+- **Complete automation**: Eliminates repetitive manual tasks
+- **Parallel processing**: Multiple agents working simultaneously
 
-### 💰 **Costo-Efectividad**
-- **Sin necesidad de expertos**: Democratiza el acceso a ML
-- **Infraestructura mínima**: Funciona en hardware estándar
-- **Open Source**: Sin costos de licenciamiento
+### 💰 **Cost-Effectiveness**
+- **No expert needed**: Democratizes ML access
+- **Minimal infrastructure**: Works on standard hardware
+- **Open Source**: No licensing costs
 
-### 🎯 **Calidad**
-- **Mejores prácticas automáticas**: Implementa técnicas ML profesionales
-- **Validación continua**: Control de calidad en cada paso
-- **Modelos optimizados**: Utiliza H2O AutoML para máximo rendimiento
+### 🎯 **Quality**
+- **Automatic best practices**: Implements professional ML techniques
+- **Continuous validation**: Quality control at every step
+- **Optimized models**: Uses H2O AutoML for maximum performance
 
-### 🔄 **Escalabilidad**
-- **Arquitectura modular**: Fácil de extender y personalizar
-- **Deployment flexible**: Local, cloud o híbrido
-- **API REST**: Integración sencilla con otros sistemas
+### 🔄 **Scalability**
+- **Modular architecture**: Easy to extend and customize
+- **Flexible deployment**: Local, cloud or hybrid
+- **REST API**: Simple integration with other systems
 
-## 🎉 ¿Listo para Comenzar?
+## 🎉 Ready to Get Started?
 
-El Sistema Multi-Agent AutoML está diseñado para ser **fácil de usar** pero **poderoso en capacidades**. En los siguientes capítulos de esta documentación encontrarás:
+The Multi-Agent AutoML System is designed to be **easy to use** but **powerful in capabilities**. In the following chapters of this documentation you will find:
 
-- **Guía de instalación** paso a paso
-- **Tutorial completo** con ejemplos reales
-- **Documentación detallada** de cada componente
-- **Casos de uso prácticos** para tu industria
+- **Step-by-step installation guide**
+- **Complete tutorial** with real examples
+- **Detailed documentation** of each component
+- **Practical use cases** for your industry
 
-### **Próximos Pasos**
+### **Next Steps**
 
-1. 📖 Leer la [**Arquitectura del Sistema**](02_architecture.md) para entender cómo funciona
-2. 🛠️ Seguir la [**Guía de Instalación**](03_installation.md) para configurar el sistema
-3. 🚀 Completar la [**Guía de Inicio Rápido**](04_quick_start.md) con tu primer modelo
+1. 📖 Read the [**System Architecture**](02_architecture.md) to understand how it works
+2. 🛠️ Follow the [**Installation Guide**](03_installation.md) to set up the system
+3. 🚀 Complete the [**Quick Start Guide**](04_quick_start.md) with your first model
 
 ---
 
-**¡Bienvenido al futuro del Machine Learning automatizado! 🎯🤖**
+**Welcome to the future of automated Machine Learning! 🎯🤖**
