@@ -53,6 +53,7 @@ A complete automated Machine Learning system that uses **7 specialized AI agents
 ```bash
 git clone <repository-url>
 cd Agent-AutoML
+
 ```
 
 2. **Install dependencies**
@@ -61,11 +62,17 @@ pip install -r requirements.txt
 ```
 
 3. **Configure environment**
-If using Hugging Face API, create a `.env` file with:
-```
-HF_TOKEN=your_huggingface_api_token_here
-```
-If using Ollama, make sure the Ollama server is running locally and the `gpt-oss:120b` model is available.
+Build the Docker image for the application (from the included `Dockerfile`). In the project root, run:
+   ```powershell
+      docker build -t agents2ml .
+   ```
+
+
+   If using Hugging Face API, create a `.env` file with:
+   ```
+   HF_TOKEN=your_huggingface_api_token_here
+   ```
+   If using Ollama, make sure the Ollama server is running locally and the `gpt-oss:120b` model is available.
 
 4. **Start the application**
 ```bash
