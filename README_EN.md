@@ -72,7 +72,7 @@ python start.py
 The system will automatically use Ollama (local) or Hugging Face (cloud) for LLM inference with `gpt-oss:120b`.
 
 5. **Access the web interface**
-Open `http://localhost:8000` in your browser
+Open `http://localhost:8006` in your browser
 
 ## Architecture
 
@@ -257,7 +257,7 @@ The system includes comprehensive error handling:
 ```dockerfile
 # Use provided Dockerfile
 docker build -t automl-system .
-docker run -p 8000:8000 -e OPENAI_API_KEY=your_key automl-system
+docker run -p 8000:8000 -e  automl-system
 ```
 
 ### Production Considerations
@@ -270,10 +270,10 @@ docker run -p 8000:8000 -e OPENAI_API_KEY=your_key automl-system
 
 ### Common Issues
 
-1. **OpenAI API Errors**
-   - Verify API key is valid
-   - Check rate limits and quotas
-   - Ensure sufficient credits
+1. **Ollama API Errors**
+   - Verify API is valid
+   - Download the model using ollama run gpt-oss:120b
+   - Make sure your hardware is adequate
 
 2. **Docker Execution Issues**
    - Verify Docker is running
@@ -299,12 +299,6 @@ python start.py
 # Install development dependencies
 pip install -r requirements-dev.txt
 
-# Run tests
-pytest tests/
-
-# Code formatting
-black .
-flake8 .
 ```
 
 ### Adding New Agents
@@ -314,14 +308,12 @@ flake8 .
 4. Write tests for new functionality
 
 ## License
-
-MIT License - see LICENSE file for details
+OSS/Apache License
 
 ## Support
 
 - **Documentation**: Check the `/docs` folder for detailed guides
 - **Issues**: Report bugs and feature requests on GitHub
-- **Community**: Join our Discord for discussions
 
 ## Roadmap
 
