@@ -1,0 +1,1 @@
+cd 'pipeline_3ee8ca9e-5834-4f88-a64d-e4a2ec2834dc' && python predict_anomaly_scores.py --model-path /workspace/pipeline_3ee8ca9e-5834-4f88-a64d-e4a2ec2834dc/IsolationForest_model_python_1757359255519_1 --pipeline-dir /workspace/pipeline_3ee8ca9e-5834-4f88-a64d-e4a2ec2834dc --data-file 3ee8ca9e-5834-4f88-a64d-e4a2ec2834dc.csv --output-file predictions.csv

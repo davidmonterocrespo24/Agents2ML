@@ -1,0 +1,1 @@
+cd 'pipeline_860505f2-013a-4bbb-badf-114e4645315c' && python h2o_training.py --file=860505f2-013a-4bbb-badf-114e4645315c_ventas.csv --target=monto_total --sep=; --output-dir=./ --max_models=20 --max_runtime_secs=180 --seed=42 --train-ratio=0.8 --valid-ratio=0.1 --max_mem_size=2G

@@ -1,0 +1,1 @@
+cd 'pipeline_d304ff5d-f2ed-4c30-9955-fa8acbb291b5' && python h2o_training_script.py --file d304ff5d-f2ed-4c30-9955-fa8acbb291b5_ventas.csv --target monto_total --sep ; --max_runtime_secs 300 --max_models 10

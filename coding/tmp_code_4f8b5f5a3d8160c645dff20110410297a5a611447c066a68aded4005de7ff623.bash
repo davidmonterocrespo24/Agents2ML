@@ -1,0 +1,1 @@
+cd 'pipeline_eeaff94b-29d3-4e76-b80d-a2e7513699a8' && python prediction_script.py --model-path GBM_4_AutoML_1_20250905_135824 --pipeline-dir /workspace/pipeline_eeaff94b-29d3-4e76-b80d-a2e7513699a8 --horizon 30 --freq D --output-file predictions.csv

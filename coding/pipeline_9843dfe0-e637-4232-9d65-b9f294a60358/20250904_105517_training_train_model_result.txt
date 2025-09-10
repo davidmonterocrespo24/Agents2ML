@@ -1,0 +1,101 @@
+Execution Result for train_model.py
+--------------------------------------------------
+=== Execution successful (attempt 1/3) in 20.94s ===
+Checking whether there is an H2O instance running at http://localhost:54321..... not found.
+Attempting to start a local H2O server...
+  Java Version: openjdk version "21.0.8" 2025-07-15; OpenJDK Runtime Environment (build 21.0.8+9-Debian-1); OpenJDK 64-Bit Server VM (build 21.0.8+9-Debian-1, mixed mode, sharing)
+  Starting server from /usr/local/lib/python3.11/site-packages/h2o/backend/bin/h2o.jar
+  Ice root: /tmp/tmpjxw7qywo
+  JVM stdout: /tmp/tmpjxw7qywo/h2o_unknownUser_started_from_python.out
+  JVM stderr: /tmp/tmpjxw7qywo/h2o_unknownUser_started_from_python.err
+  Server is running at http://127.0.0.1:54321
+Connecting to H2O server at http://127.0.0.1:54321 ... successful.
+Warning: Your H2O cluster version is (5 months and 7 days) old.  There may be a newer version available.
+Please download and install the latest version from: https://h2o-release.s3.amazonaws.com/h2o/latest_stable.html
+--------------------------  ----------------------------------
+H2O_cluster_uptime:         01 secs
+H2O_cluster_timezone:       Etc/UTC
+H2O_data_parsing_timezone:  UTC
+H2O_cluster_version:        3.46.0.7
+H2O_cluster_version_age:    5 months and 7 days
+H2O_cluster_name:           H2O_from_python_unknownUser_vi38zi
+H2O_cluster_total_nodes:    1
+H2O_cluster_free_memory:    1.887 Gb
+H2O_cluster_total_cores:    16
+H2O_cluster_allowed_cores:  16
+H2O_cluster_status:         locked, healthy
+H2O_connection_url:         http://127.0.0.1:54321
+H2O_connection_proxy:       {"http": null, "https": null}
+H2O_internal_security:      False
+Python_version:             3.11.13 final
+--------------------------  ----------------------------------
+Reading CSV file...
+Dataset shape: (504, 2)
+First few rows:
+          fecha  monto_total
+0  15 nov. 2023      8992.62
+1  16 nov. 2023      1354.86
+2  21 nov. 2023     15071.95
+3  22 nov. 2023     34009.92
+4  23 nov. 2023     24072.84
+Parsing dates...
+Warning: 26 dates could not be parsed
+             fecha   monto_total fecha_parsed
+216  02 sept. 2024  1.011356e+06          NaT
+217  03 sept. 2024  4.012948e+05          NaT
+218  04 sept. 2024  4.304185e+05          NaT
+219  05 sept. 2024  2.789223e+05          NaT
+220  06 sept. 2024  4.169800e+05          NaT
+Final dataset shape after cleaning: (478, 8)
+Parse progress: |████████████████████████████████████████████████████████████████| (done) 100%
+Predictors: ['year', 'month', 'day', 'day_of_week', 'day_of_year']
+Target: monto_total
+Training set: 382 rows
+Test set: 96 rows
+Starting H2O AutoML...
+AutoML progress: |
+13:55:25.705: User specified a validation frame with cross-validation still enabled. Please note that the models will still be validated using cross-validation only, the validation frame will be used to provide purely informative validation metrics on the trained models.
+
+███████████████████████████████████████████████████████████████| (done) 100%
+/usr/local/lib/python3.11/site-packages/h2o/frame.py:1983: H2ODependencyWarning: Converting H2O frame to pandas dataframe using single-thread.  For faster conversion using multi-thread, install polars and pyarrow and use it as pandas_df = h2o_df.as_data_frame(use_multi_thread=True)
+
+  warnings.warn("Converting H2O frame to pandas dataframe using single-thread.  For faster conversion using"
+Leaderboard:
+model_id                                                   rmse          mse       mae      rmsle    mean_residual_deviance
+GBM_4_AutoML_1_20250904_135525                           110358  1.21789e+10   75264    nan                     1.21789e+10
+StackedEnsemble_AllModels_1_AutoML_1_20250904_135525     110480  1.22057e+10   74561.2  nan                     1.22057e+10
+GBM_3_AutoML_1_20250904_135525                           110522  1.22151e+10   76196.6  nan                     1.22151e+10
+StackedEnsemble_BestOfFamily_1_AutoML_1_20250904_135525  111545  1.24422e+10   75027.8  nan                     1.24422e+10
+GBM_2_AutoML_1_20250904_135525                           113079  1.27869e+10   77398.7  nan                     1.27869e+10
+XGBoost_1_AutoML_1_20250904_135525                       119131  1.41922e+10   83751.3  nan                     1.41922e+10
+XGBoost_3_AutoML_1_20250904_135525                       120834  1.4601e+10    83862.3  nan                     1.4601e+10
+XGBoost_2_AutoML_1_20250904_135525                       121015  1.46447e+10   85344.8  nan                     1.46447e+10
+DRF_1_AutoML_1_20250904_135525                           121600  1.47865e+10   87250.9    3.16624               1.47865e+10
+XRT_1_AutoML_1_20250904_135525                           141381  1.99887e+10  105569      3.39914               1.99887e+10
+[10 rows x 6 columns]
+
+Best model: GBM_4_AutoML_1_20250904_135525
+Model saved to: /workspace/pipeline_9843dfe0-e637-4232-9d65-b9f294a60358/GBM_4_AutoML_1_20250904_135525
+gbm prediction progress: |███████████████████████████████████████████████████████| (done) 100%
+Predictions on test set:
+  predict
+   331923
+   283355
+   460258
+   387980
+   349357
+   367682
+   315262
+    17751
+   456950
+   365261
+[10 rows x 1 column]
+
+Model performance on test set:
+RMSE: 124127.1033357109
+MSE: 15407537782.514252
+MAE: 85908.51406477146
+R²: 0.5867660736970568
+Test predictions saved to test_predictions.csv
+H2O session _sid_a4ee closed.
+SUCCESS: Model training completed successfully

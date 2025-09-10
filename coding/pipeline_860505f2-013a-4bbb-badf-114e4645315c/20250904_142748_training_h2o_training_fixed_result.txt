@@ -1,0 +1,74 @@
+Execution Result for h2o_training_fixed.py
+--------------------------------------------------
+=== Execution successful (attempt 1/3) in 225.33s ===
+LOG_START:DATA_SUMMARY
+{"n_rows": 504, "n_cols": 2, "dtypes": {"fecha": "object", "monto_total": "float64"}, "n_nulls": {"fecha": 0, "monto_total": 0}, "sample": [{"fecha": "15 nov. 2023", "monto_total": 8992.62}, {"fecha": "16 nov. 2023", "monto_total": 1354.86}, {"fecha": "21 nov. 2023", "monto_total": 15071.95}]}
+LOG_END:DATA_SUMMARY
+Checking whether there is an H2O instance running at http://localhost:54321..... not found.
+Attempting to start a local H2O server...
+  Java Version: openjdk version "21.0.8" 2025-07-15; OpenJDK Runtime Environment (build 21.0.8+9-Debian-1); OpenJDK 64-Bit Server VM (build 21.0.8+9-Debian-1, mixed mode, sharing)
+  Starting server from /usr/local/lib/python3.11/site-packages/h2o/backend/bin/h2o.jar
+  Ice root: /tmp/tmpp58uq43m
+  JVM stdout: /tmp/tmpp58uq43m/h2o_unknownUser_started_from_python.out
+  JVM stderr: /tmp/tmpp58uq43m/h2o_unknownUser_started_from_python.err
+  Server is running at http://127.0.0.1:54321
+Connecting to H2O server at http://127.0.0.1:54321 ... successful.
+Warning: Your H2O cluster version is (5 months and 8 days) old.  There may be a newer version available.
+Please download and install the latest version from: https://h2o-release.s3.amazonaws.com/h2o/latest_stable.html
+--------------------------  ----------------------------------
+H2O_cluster_uptime:         01 secs
+H2O_cluster_timezone:       Etc/UTC
+H2O_data_parsing_timezone:  UTC
+H2O_cluster_version:        3.46.0.7
+H2O_cluster_version_age:    5 months and 8 days
+H2O_cluster_name:           H2O_from_python_unknownUser_tl2ivn
+H2O_cluster_total_nodes:    1
+H2O_cluster_free_memory:    3.984 Gb
+H2O_cluster_total_cores:    16
+H2O_cluster_allowed_cores:  16
+H2O_cluster_status:         locked, healthy
+H2O_connection_url:         http://127.0.0.1:54321
+H2O_connection_proxy:       {"http": null, "https": null}
+H2O_internal_security:      False
+Python_version:             3.11.13 final
+--------------------------  ----------------------------------
+Parse progress: |████████████████████████████████████████████████████████████████| (done) 100%
+AutoML progress: |
+17:27:55.505: User specified a validation frame with cross-validation still enabled. Please note that the models will still be validated using cross-validation only, the validation frame will be used to provide purely informative validation metrics on the trained models.
+17:27:55.543: _train param, Dropping bad and constant columns: [fecha_original]
+
+
+17:27:56.832: _train param, Dropping bad and constant columns: [fecha_original]
+
+
+17:27:56.981: _train param, Dropping bad and constant columns: [fecha_original]
+
+
+17:27:57.204: _train param, Dropping bad and constant columns: [fecha_original]
+
+██
+17:27:58.547: _train param, Dropping bad and constant columns: [fecha_original]
+
+█
+17:27:59.116: _train param, Dropping bad and constant columns: [fecha_original]
+17:27:59.272: _train param, Dropping bad and constant columns: [fecha_original]
+17:27:59.437: _train param, Dropping bad and constant columns: [fecha_original]
+
+██
+17:27:59.595: _train param, Dropping bad and constant columns: [fecha_original]
+
+██
+17:28:00.621: _train param, Dropping bad and constant columns: [fecha_original]
+17:28:01.57: _train param, Dropping bad and constant columns: [fecha_original]
+17:28:01.185: _train param, Dropping bad and constant columns: [fecha_original]
+
+████████████████████████████████████████████████████
+17:31:31.583: _train param, Dropping unused columns: [fecha_original]
+
+
+17:31:31.926: _train param, Dropping unused columns: [fecha_original]
+
+████| (done) 100%
+MODEL_PATH_START:/workspace/pipeline_860505f2-013a-4bbb-badf-114e4645315c/GBM_4_AutoML_1_20250904_172755:MODEL_PATH_END
+METRICS_START:{"model_path": "/workspace/pipeline_860505f2-013a-4bbb-badf-114e4645315c/GBM_4_AutoML_1_20250904_172755", "mojo_path": "/workspace/pipeline_860505f2-013a-4bbb-badf-114e4645315c/GBM_4_AutoML_1_20250904_172755", "metrics": {"rmse": 114981.14846920947, "mae": 84461.73773718064, "r2": 0.5438208677657181, "mse": 13220664503.298391}, "rows_trained": 504, "n_cols": 12, "training_time_secs": 223.49442291259766, "seed": 42, "h2o_version": "3.46.0.7"}:METRICS_END
+H2O session _sid_9b14 closed.

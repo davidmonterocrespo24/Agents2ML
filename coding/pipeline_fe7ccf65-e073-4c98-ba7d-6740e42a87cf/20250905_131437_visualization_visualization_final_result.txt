@@ -1,0 +1,15 @@
+Execution Result for visualization_final.py
+--------------------------------------------------
+=== Execution successful (attempt 2/3) in 9.47s ===
+Starting visualization process...
+Loading historical data...
+Loaded historical data: 504 rows
+Loading predictions...
+Loaded predictions: 30 rows
+Gráfico guardado exitosamente como forecast_plot.png
+Visualization completed successfully!
+
+
+[File Persistence Status]
+✓ forecast_plot.png (1333773 bytes)
+✓ predictions.csv (967 bytes)

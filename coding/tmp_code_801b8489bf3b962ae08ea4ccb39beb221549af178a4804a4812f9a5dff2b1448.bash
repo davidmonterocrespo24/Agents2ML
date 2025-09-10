@@ -1,0 +1,1 @@
+cd 'pipeline_3ee8ca9e-5834-4f88-a64d-e4a2ec2834dc' && python model_h2o_training.py --file 3ee8ca9e-5834-4f88-a64d-e4a2ec2834dc.csv --output-dir . --max-rows 50000 --max-mem-size 2G

@@ -1,0 +1,8 @@
+Execution Result for model_h2o_training.py
+--------------------------------------------------
+Execution error (not missing module). Attempts: 1
+  File "/workspace/pipeline_e7b39ffd-ee11-418a-8abb-e08fe91c33ff/model_h2o_training.py", line 284
+    print(f"LOG_START:METRIC_EXTRACT_ISSUE\n{str(e)}\nLOG_END:METRIC_EXTRACT_ISSUE}")
+                                                                                    ^
+SyntaxError: f-string: single '}' is not allowed
+

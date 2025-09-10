@@ -1,0 +1,20 @@
+
+import os
+import shutil
+from pathlib import Path
+
+print(f"Current working directory: {os.getcwd()}")
+print(f"Files in current directory: {os.listdir('.')}")
+
+# Try to find forecast_plot.png anywhere
+for root, dirs, files in os.walk('.'):
+    if 'forecast_plot.png' in files:
+        source_path = os.path.join(root, 'forecast_plot.png')
+        print(f"FOUND_FILE_START:{source_path}:FOUND_FILE_END")
+        
+        # Try to get file size
+        try:
+            size = os.path.getsize(source_path)
+            print(f"FILE_SIZE_START:{size} bytes:FILE_SIZE_END")
+        except Exception as e:
+            print(f"ERROR getting file size: {e}")

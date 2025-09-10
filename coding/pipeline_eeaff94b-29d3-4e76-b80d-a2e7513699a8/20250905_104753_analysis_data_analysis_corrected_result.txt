@@ -1,0 +1,68 @@
+Execution Result for data_analysis_corrected.py
+--------------------------------------------------
+=== Execution successful (attempt 1/3) in 0.49s ===
+{
+  "n_rows": 504,
+  "n_cols": 2,
+  "columns": [
+    "fecha",
+    "monto_total"
+  ],
+  "dtypes": {
+    "fecha": "datetime64[ns]",
+    "monto_total": "float64"
+  },
+  "date_range": {
+    "start": "2023-11-15",
+    "end": "2025-08-07"
+  },
+  "target_stats": {
+    "mean": 301866.27603124996,
+    "std": 183498.47559680077,
+    "min": 0.0,
+    "max": 1163663.744,
+    "null_count": 0
+  },
+  "sample_data": [
+    {
+      "fecha": "2023-11-15 00:00:00",
+      "monto_total": 8992.62
+    },
+    {
+      "fecha": "2023-11-16 00:00:00",
+      "monto_total": 1354.86
+    },
+    {
+      "fecha": "2023-11-21 00:00:00",
+      "monto_total": 15071.95
+    },
+    {
+      "fecha": "2023-11-22 00:00:00",
+      "monto_total": 34009.92
+    },
+    {
+      "fecha": "2023-11-23 00:00:00",
+      "monto_total": 24072.84
+    },
+    {
+      "fecha": "2023-11-24 00:00:00",
+      "monto_total": 3905.65
+    },
+    {
+      "fecha": "2023-11-27 00:00:00",
+      "monto_total": 3618.97
+    },
+    {
+      "fecha": "2023-11-28 00:00:00",
+      "monto_total": 53358.9
+    },
+    {
+      "fecha": "2023-11-29 00:00:00",
+      "monto_total": 94631.93
+    },
+    {
+      "fecha": "2023-11-30 00:00:00",
+      "monto_total": 30638.77
+    }
+  ]
+}

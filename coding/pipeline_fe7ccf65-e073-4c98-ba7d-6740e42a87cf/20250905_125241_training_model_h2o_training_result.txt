@@ -1,0 +1,58 @@
+Execution Result for model_h2o_training.py
+--------------------------------------------------
+Execution error (not missing module). Attempts: 1
+LOG_START:DATA_SUMMARY
+{"n_rows": 503, "n_cols": 2, "dtypes": {"fecha": "object", "monto total": "float64"}, "n_nulls": {"fecha": 0, "monto total": 0}, "sample": [{"fecha": "16 nov. 2023", "monto total": 1354.86}, {"fecha": "21 nov. 2023", "monto total": 15071.95}, {"fecha": "22 nov. 2023", "monto total": 34009.92}]}
+LOG_END:DATA_SUMMARY
+LOG_START:DATE_FEATURES_CREATED
+Column:fecha
+Features created: year, month, day, dayofweek, etc.
+LOG_END:DATE_FEATURES_CREATED
+Checking whether there is an H2O instance running at http://localhost:54321..... not found.
+Attempting to start a local H2O server...
+  Java Version: openjdk version "21.0.8" 2025-07-15; OpenJDK Runtime Environment (build 21.0.8+9-Debian-1); OpenJDK 64-Bit Server VM (build 21.0.8+9-Debian-1, mixed mode, sharing)
+  Starting server from /usr/local/lib/python3.11/site-packages/h2o/backend/bin/h2o.jar
+  Ice root: /tmp/tmp1g5rgwg7
+  JVM stdout: /tmp/tmp1g5rgwg7/h2o_unknownUser_started_from_python.out
+  JVM stderr: /tmp/tmp1g5rgwg7/h2o_unknownUser_started_from_python.err
+  Server is running at http://127.0.0.1:54321
+Connecting to H2O server at http://127.0.0.1:54321 ... successful.
+Warning: Your H2O cluster version is (5 months and 8 days) old.  There may be a newer version available.
+Please download and install the latest version from: https://h2o-release.s3.amazonaws.com/h2o/latest_stable.html
+--------------------------  ----------------------------------
+H2O_cluster_uptime:         02 secs
+H2O_cluster_timezone:       Etc/UTC
+H2O_data_parsing_timezone:  UTC
+H2O_cluster_version:        3.46.0.7
+H2O_cluster_version_age:    5 months and 8 days
+H2O_cluster_name:           H2O_from_python_unknownUser_gpkyjz
+H2O_cluster_total_nodes:    1
+H2O_cluster_free_memory:    3.984 Gb
+H2O_cluster_total_cores:    16
+H2O_cluster_allowed_cores:  16
+H2O_cluster_status:         locked, healthy
+H2O_connection_url:         http://127.0.0.1:54321
+H2O_connection_proxy:       {"http": null, "https": null}
+H2O_internal_security:      False
+Python_version:             3.11.13 final
+--------------------------  ----------------------------------
+Parse progress: |████████████████████████████████████████████████████████████████| (done) 100%
+AutoML progress: | (failed)
+
+15:52:50.786: User specified a validation frame with cross-validation still enabled. Please note that the models will still be validated using cross-validation only, the validation frame will be used to provide purely informative validation metrics on the trained models.
+15:52:50.824: _train param, Training data must have at least 2 features (incl. response).
+15:52:50.828: _train param, Training data must have at least 2 features (incl. response).
+15:52:50.832: _train param, Training data must have at least 2 features (incl. response).
+15:52:50.834: _train param, Training data must have at least 2 features (incl. response).
+15:52:50.844: _train param, Training data must have at least 2 features (incl. response).
+15:52:50.845: _train param, Training data must have at least 2 features (incl. response).
+15:52:50.846: _train param, Training data must have at least 2 features (incl. response).
+15:52:50.848: _train param, Training data must have at least 2 features (incl. response).
+15:52:50.849: _train param, Training data must have at least 2 features (incl. response).
+15:52:50.851: _train param, Training data must have at least 2 features (incl. response).
+15:52:50.853: Empty leaderboard.
+AutoML was not able to build any model within a max runtime constraint of 300 seconds, you may want to increase this value before retrying.
+
+ERROR_START:Job with key $03017f00000132d4ffffffff$_8e01ed0ff465c9e6f8ee099211594c10 failed with an exception: water.exceptions.H2OAutoMLException: Aborting AutoML after too many consecutive model failures stacktrace:  water.exceptions.H2OAutoMLException: Aborting AutoML after too many consecutive model failures 	at ai.h2o.automl.AutoML.learn(AutoML.java:776) 	at ai.h2o.automl.AutoML.run(AutoML.java:494) 	at ai.h2o.automl.H2OJob$1.compute2(H2OJob.java:33) 	at water.H2O$H2OCountedCompleter.compute(H2O.java:1704) 	at jsr166y.CountedCompleter.exec(CountedCompleter.java:468) 	at jsr166y.ForkJoinTask.doExec(ForkJoinTask.java:263) 	at jsr166y.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:976) 	at jsr166y.ForkJoinPool.runWorker(ForkJoinPool.java:1479) 	at jsr166y.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:104) :ERROR_END
+H2O session _sid_a682 closed.
+

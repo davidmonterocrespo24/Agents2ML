@@ -1,0 +1,11 @@
+
+import shutil
+import os
+
+# Check if forecast_plot.png exists in current directory
+if os.path.exists('forecast_plot.png'):
+    print('COPY_STATUS_START:forecast_plot.png found in container:COPY_STATUS_END')
+    # The file should already be available in the mounted directory
+    print('COPY_STATUS_START:File should be accessible from host:COPY_STATUS_END')
+else:
+    print('ERROR_START:forecast_plot.png not found in container working directory:ERROR_END')

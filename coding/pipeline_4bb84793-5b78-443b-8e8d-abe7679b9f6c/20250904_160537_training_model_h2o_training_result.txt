@@ -1,0 +1,8 @@
+Execution Result for model_h2o_training.py
+--------------------------------------------------
+Execution error (not missing module). Attempts: 1
+LOG_START:DATA_SUMMARY
+{"n_rows": 503, "n_cols": 2, "dtypes": {"15 nov. 2023": "object", "8992,62": "object"}, "n_nulls": {"15 nov. 2023": 0, "8992,62": 0}, "sample": [{"15 nov. 2023": "16 nov. 2023", "8992,62": "1354,86"}, {"15 nov. 2023": "21 nov. 2023", "8992,62": "15071,95"}, {"15 nov. 2023": "22 nov. 2023", "8992,62": "34009,92"}]}
+LOG_END:DATA_SUMMARY
+ERROR_START:Target column 'monto total' not found:ERROR_END
+

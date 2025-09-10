@@ -1,0 +1,66 @@
+Execution Result for simple_training.py
+--------------------------------------------------
+=== Execution successful (attempt 1/3) in 13.89s ===
+Reading file: e7b39ffd-ee11-418a-8abb-e08fe91c33ff_ventas por categoria tecnologia.csv
+Target column: total_amount
+Dataset shape: (438, 2)
+First few rows:
+                date total_amount
+0       04 jul. 2023            0
+1       22 nov. 2023        597,6
+2       29 nov. 2023        141,2
+3       01 dic. 2023        370,4
+4       04 dic. 2023        282,4
+Data after preprocessing:
+         date  total_amount  year  month  day  dayofweek  is_weekend
+0  2023-07-04      0.000000  2023      7    4          1           0
+1  2023-11-22    597.600000  2023     11   22          2           0
+2  2023-11-29    141.200000  2023     11   29          2           0
+43 2024-02-01  13605.079020  2024      2    1          3           0
+44 2024-02-02   6477.386927  2024      2    2          4           0
+Checking whether there is an H2O instance running at http://localhost:54321..... not found.
+Attempting to start a local H2O server...
+  Java Version: openjdk version "21.0.8" 2025-07-15; OpenJDK Runtime Environment (build 21.0.8+9-Debian-1); OpenJDK 64-Bit Server VM (build 21.0.8+9-Debian-1, mixed mode, sharing)
+  Starting server from /usr/local/lib/python3.11/site-packages/h2o/backend/bin/h2o.jar
+  Ice root: /tmp/tmpn3hq3zid
+  JVM stdout: /tmp/tmpn3hq3zid/h2o_unknownUser_started_from_python.out
+  JVM stderr: /tmp/tmpn3hq3zid/h2o_unknownUser_started_from_python.err
+  Server is running at http://127.0.0.1:54321
+Connecting to H2O server at http://127.0.0.1:54321 ... successful.
+Warning: Your H2O cluster version is (5 months and 13 days) old.  There may be a newer version available.
+Please download and install the latest version from: https://h2o-release.s3.amazonaws.com/h2o/latest_stable.html
+--------------------------  ----------------------------------
+H2O_cluster_uptime:         01 secs
+H2O_cluster_timezone:       Etc/UTC
+H2O_data_parsing_timezone:  UTC
+H2O_cluster_version:        3.46.0.7
+H2O_cluster_version_age:    5 months and 13 days
+H2O_cluster_name:           H2O_from_python_unknownUser_2kfld9
+H2O_cluster_total_nodes:    1
+H2O_cluster_free_memory:    1.888 Gb
+H2O_cluster_total_cores:    16
+H2O_cluster_allowed_cores:  16
+H2O_cluster_status:         locked, healthy
+H2O_connection_url:         http://127.0.0.1:54321
+H2O_connection_proxy:       {"http": null, "https": null}
+H2O_internal_security:      False
+Python_version:             3.11.13 final
+--------------------------  ----------------------------------
+Parse progress: |████████████████████████████████████████████████████████████████| (done) 100%
+Features: ['year', 'month', 'day', 'dayofweek', 'is_weekend']
+Target: total_amount
+AutoML progress: |
+03:54:42.515: User specified a validation frame with cross-validation still enabled. Please note that the models will still be validated using cross-validation only, the validation frame will be used to provide purely informative validation metrics on the trained models.
+
+█
+03:54:44.718: GBM_1_AutoML_1_20250910_35442 [GBM def_5] failed: water.exceptions.H2OModelBuilderIllegalArgumentException: Illegal argument(s) for GBM model: GBM_1_AutoML_1_20250910_35442.  Details: ERRR on field: _min_rows: The dataset size is too small to split for min_rows=100.0: must have at least 200.0 (weighted) rows, but have only 168.0.
+ERRR on field: _min_rows: The dataset size is too small to split for min_rows=100.0: must have at least 200.0 (weighted) rows, but have only 168.0.
+ERRR on field: _min_rows: The dataset size is too small to split for min_rows=100.0: must have at least 200.0 (weighted) rows, but have only 168.0.
+ERRR on field: _min_rows: The dataset size is too small to split for min_rows=100.0: must have at least 200.0 (weighted) rows, but have only 168.0.
+ERRR on field: _min_rows: The dataset size is too small to split for min_rows=100.0: must have at least 200.0 (weighted) rows, but have only 168.0.
+
+
+██████████████████████████████████████████████████████████████| (done) 100%
+MODEL_PATH_START:/workspace/pipeline_e7b39ffd-ee11-418a-8abb-e08fe91c33ff/StackedEnsemble_AllModels_1_AutoML_1_20250910_35442:MODEL_PATH_END
+METRICS_START:{"model_path": "/workspace/pipeline_e7b39ffd-ee11-418a-8abb-e08fe91c33ff/StackedEnsemble_AllModels_1_AutoML_1_20250910_35442", "metrics": {"rmse": 11468.566449125183, "mae": 9263.484527665403, "r2": -0.023955006848678018}, "rows_trained": 262, "training_successful": true}:METRICS_END
+H2O session _sid_96e9 closed.

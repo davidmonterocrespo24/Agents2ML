@@ -1,0 +1,1 @@
+cd 'pipeline_9843dfe0-e637-4232-9d65-b9f294a60358' && python train_model.py 

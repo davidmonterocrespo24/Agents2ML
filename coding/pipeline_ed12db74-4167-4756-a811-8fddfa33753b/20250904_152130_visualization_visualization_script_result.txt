@@ -1,0 +1,7 @@
+Execution Result for visualization_script.py
+--------------------------------------------------
+=== Execution successful (attempt 2/3) in 7.65s ===
+/workspace/pipeline_ed12db74-4167-4756-a811-8fddfa33753b/visualization_script.py:71: RuntimeWarning: divide by zero encountered in scalar divide
+  change_pct = ((first_prediction - last_historical) / last_historical) * 100
+LOG_START:Plot saved successfully: ./forecast_plot.png (576131 bytes):LOG_END
+VISUALIZATION_SUCCESS_START:./forecast_plot.png:VISUALIZATION_SUCCESS_END

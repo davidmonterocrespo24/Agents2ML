@@ -1,0 +1,60 @@
+Execution Result for prediction_script.py
+--------------------------------------------------
+Execution error (not missing module). Attempts: 1
+LOG_START:Working in pipeline directory: /workspace/pipeline_e7b39ffd-ee11-418a-8abb-e08fe91c33ff:LOG_END
+Checking whether there is an H2O instance running at http://localhost:54321..... not found.
+Attempting to start a local H2O server...
+  Java Version: openjdk version "21.0.8" 2025-07-15; OpenJDK Runtime Environment (build 21.0.8+9-Debian-1); OpenJDK 64-Bit Server VM (build 21.0.8+9-Debian-1, mixed mode, sharing)
+  Starting server from /usr/local/lib/python3.11/site-packages/h2o/backend/bin/h2o.jar
+  Ice root: /tmp/tmpk0kehmab
+  JVM stdout: /tmp/tmpk0kehmab/h2o_unknownUser_started_from_python.out
+  JVM stderr: /tmp/tmpk0kehmab/h2o_unknownUser_started_from_python.err
+  Server is running at http://127.0.0.1:54321
+Connecting to H2O server at http://127.0.0.1:54321 ... successful.
+Warning: Your H2O cluster version is (5 months and 13 days) old.  There may be a newer version available.
+Please download and install the latest version from: https://h2o-release.s3.amazonaws.com/h2o/latest_stable.html
+--------------------------  ----------------------------------
+H2O_cluster_uptime:         01 secs
+H2O_cluster_timezone:       Etc/UTC
+H2O_data_parsing_timezone:  UTC
+H2O_cluster_version:        3.46.0.7
+H2O_cluster_version_age:    5 months and 13 days
+H2O_cluster_name:           H2O_from_python_unknownUser_op0a47
+H2O_cluster_total_nodes:    1
+H2O_cluster_free_memory:    1.983 Gb
+H2O_cluster_total_cores:    16
+H2O_cluster_allowed_cores:  16
+H2O_cluster_status:         locked, healthy
+H2O_connection_url:         http://127.0.0.1:54321
+H2O_connection_proxy:       {"http": null, "https": null}
+H2O_internal_security:      False
+Python_version:             3.11.13 final
+--------------------------  ----------------------------------
+LOG_START:H2O initialized successfully:LOG_END
+LOG_START:Model loaded: StackedEnsemble_AllModels_1_AutoML_1_20250910_35442:LOG_END
+LOG_START:Model type: H2OStackedEnsembleEstimator:LOG_END
+LOG_START:Model requires features: ['year', 'month', 'day', 'dayofweek', 'is_weekend', 'total_amount']:LOG_END
+LOG_START:Generated 30 future dates:LOG_END
+LOG_START:Created features for 30 future periods:LOG_END
+Parse progress: |████████████████████████████████████████████████████████████████| (done) 100%
+stackedensemble prediction progress: | (failed)
+LOG_START:Main model prediction failed: Job with key $03017f00000132d4ffffffff$_b5a76ec2029821e9602bd7c8e9e4f6e failed with an exception: java.lang.IllegalArgumentException: Test/Validation dataset has categorical column 'total_amount' which is real-valued in the training data
+stacktrace: 
+java.lang.IllegalArgumentException: Test/Validation dataset has categorical column 'total_amount' which is real-valued in the training data
+	at hex.Model.adaptTestForTrain(Model.java:1833)
+	at hex.Model.adaptTestForTrain(Model.java:1643)
+	at hex.Model.adaptTestForTrain(Model.java:1639)
+	at hex.Model.adaptFrameForScore(Model.java:1981)
+	at hex.Model.score(Model.java:1999)
+	at water.api.ModelMetricsHandler$1.compute2(ModelMetricsHandler.java:555)
+	at water.H2O$H2OCountedCompleter.compute(H2O.java:1704)
+	at jsr166y.CountedCompleter.exec(CountedCompleter.java:468)
+	at jsr166y.ForkJoinTask.doExec(ForkJoinTask.java:263)
+	at jsr166y.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:976)
+	at jsr166y.ForkJoinPool.runWorker(ForkJoinPool.java:1479)
+	at jsr166y.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:104)
+:LOG_END
+LOG_START:Trying alternative prediction approach:LOG_END
+ERROR_START:All prediction methods failed: 'base_models':ERROR_END
+H2O session _sid_951e closed.
+

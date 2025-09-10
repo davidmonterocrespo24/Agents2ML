@@ -1,0 +1,1 @@
+cd 'pipeline_e7b39ffd-ee11-418a-8abb-e08fe91c33ff' && python simple_training.py --file="e7b39ffd-ee11-418a-8abb-e08fe91c33ff_ventas por categoria tecnologia.csv" --target=total_amount

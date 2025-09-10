@@ -1,0 +1,1 @@
+cd 'pipeline_9843dfe0-e637-4232-9d65-b9f294a60358' && python predict.py --model-path /workspace/pipeline_9843dfe0-e637-4232-9d65-b9f294a60358/GBM_4_AutoML_1_20250904_135525 --pipeline-dir /workspace/pipeline_9843dfe0-e637-4232-9d65-b9f294a60358 --output-file predictions.csv

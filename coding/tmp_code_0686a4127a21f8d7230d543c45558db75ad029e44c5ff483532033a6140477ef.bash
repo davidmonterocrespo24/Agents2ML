@@ -1,0 +1,1 @@
+cd 'pipeline_860505f2-013a-4bbb-badf-114e4645315c' && python visualization_script.py 

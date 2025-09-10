@@ -1,0 +1,1 @@
+cd 'pipeline_d304ff5d-f2ed-4c30-9955-fa8acbb291b5' && python h2o_prediction_script.py --model-path ./StackedEnsemble_AllModels_1_AutoML_1_20250904_234213 --pipeline-dir /workspace/pipeline_d304ff5d-f2ed-4c30-9955-fa8acbb291b5 --horizon 30 --freq D --date-column fecha --output-file predictions.csv --h2o-mem 2G --seed 42

@@ -1,0 +1,1 @@
+cd 'pipeline_ed12db74-4167-4756-a811-8fddfa33753b' && python data_processor.py 

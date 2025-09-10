@@ -1,0 +1,1 @@
+cd 'pipeline_e7b39ffd-ee11-418a-8abb-e08fe91c33ff' && python prediction_script.py --model-path=StackedEnsemble_AllModels_1_AutoML_1_20250910_35442 --pipeline-dir=. --horizon=30 --output-file=predictions.csv

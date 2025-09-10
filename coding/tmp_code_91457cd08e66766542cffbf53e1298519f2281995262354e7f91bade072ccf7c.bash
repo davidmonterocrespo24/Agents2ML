@@ -1,0 +1,1 @@
+cd 'pipeline_fe7ccf65-e073-4c98-ba7d-6740e42a87cf' && python model_h2o_training.py --file fe7ccf65-e073-4c98-ba7d-6740e42a87cf_ventas.csv --target "monto total" --sep ";" --output-dir ./ --max_models 20 --max_runtime_secs 300 --seed 42

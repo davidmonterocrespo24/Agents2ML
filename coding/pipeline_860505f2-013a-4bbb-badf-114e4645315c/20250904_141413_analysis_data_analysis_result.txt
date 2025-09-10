@@ -1,0 +1,34 @@
+Execution Result for data_analysis.py
+--------------------------------------------------
+Execution error (not missing module). Attempts: 1
+Error analyzing dataset: time data '02 Sept. 2024' does not match format '%d %b. %Y'
+Traceback (most recent call last):
+  File "/workspace/pipeline_860505f2-013a-4bbb-badf-114e4645315c/data_analysis.py", line 25, in <module>
+    df['fecha'] = df['fecha'].apply(parse_spanish_date)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pandas/core/series.py", line 4935, in apply
+    ).apply()
+      ^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pandas/core/apply.py", line 1422, in apply
+    return self.apply_standard()
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pandas/core/apply.py", line 1502, in apply_standard
+    mapped = obj._map_values(
+             ^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pandas/core/base.py", line 925, in _map_values
+    return algorithms.map_array(arr, mapper, na_action=na_action, convert=convert)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/pandas/core/algorithms.py", line 1743, in map_array
+    return lib.map_infer(values, mapper, convert=convert)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "pandas/_libs/lib.pyx", line 2999, in pandas._libs.lib.map_infer
+  File "/workspace/pipeline_860505f2-013a-4bbb-badf-114e4645315c/data_analysis.py", line 23, in parse_spanish_date
+    return datetime.strptime(date_str, '%d %b. %Y')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/_strptime.py", line 567, in _strptime_datetime
+    tt, fraction, gmtoff_fraction = _strptime(data_string, format)
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/_strptime.py", line 349, in _strptime
+    raise ValueError("time data %r does not match format %r" %
+ValueError: time data '02 Sept. 2024' does not match format '%d %b. %Y'
+

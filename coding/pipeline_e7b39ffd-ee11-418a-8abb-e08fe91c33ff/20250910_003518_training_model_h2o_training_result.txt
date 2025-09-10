@@ -1,0 +1,18 @@
+Execution Result for model_h2o_training.py
+--------------------------------------------------
+Execution error (not missing module). Attempts: 1
+usage: model_h2o_training.py [-h] --file FILE [--target TARGET] [--sep SEP]
+                             [--output-dir OUTPUT_DIR]
+                             [--max_models MAX_MODELS]
+                             [--max_runtime_secs MAX_RUNTIME_SECS]
+                             [--seed SEED] [--train-ratio TRAIN_RATIO]
+                             [--valid-ratio VALID_RATIO]
+                             [--max_rows_for_validation MAX_ROWS_FOR_VALIDATION]
+                             [--max_mem_size MAX_MEM_SIZE]
+                             [--nthreads NTHREADS]
+                             [--stopping_metric STOPPING_METRIC]
+                             [--categorical_unique_ratio_threshold CATEGORICAL_UNIQUE_RATIO_THRESHOLD]
+                             [--sort_metric SORT_METRIC] [--balance_classes]
+                             [--project_name PROJECT_NAME]
+model_h2o_training.py: error: unrecognized arguments: por categoria tecnologia.csv
+

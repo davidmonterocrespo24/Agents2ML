@@ -1,0 +1,1 @@
+cd 'pipeline_4bb84793-5b78-443b-8e8d-abe7679b9f6c' && python model_h2o_training.py --file 4bb84793-5b78-443b-8e8d-abe7679b9f6c_ventas.csv --target "monto_total" --sep ";"

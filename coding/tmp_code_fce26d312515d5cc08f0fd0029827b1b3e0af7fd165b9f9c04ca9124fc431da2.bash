@@ -1,0 +1,1 @@
+cd 'pipeline_e3e0f8c3-d0c6-4620-9df5-fdf5ac58d4e8' && python prediction_script.py --model-path /workspace/pipeline_e3e0f8c3-d0c6-4620-9df5-fdf5ac58d4e8/DeepLearning_grid_1_AutoML_1_20250904_184011_model_7 --pipeline-dir /workspace/pipeline_e3e0f8c3-d0c6-4620-9df5-fdf5ac58d4e8 --horizon 30 --freq D --date-column fecha --output-file predictions.csv --h2o-mem 2G --seed 42

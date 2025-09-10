@@ -1,0 +1,10 @@
+Execution Result for visualization_script.py
+--------------------------------------------------
+=== Execution successful (attempt 3/3) in 12.26s ===
+Reading historical data from: e3e0f8c3-d0c6-4620-9df5-fdf5ac58d4e8_ventas.csv
+Reading predictions from: predictions.csv
+Plot saved to: forecast_plot.png
+Historical data points: 477
+Forecast points: 30
+Historical date range: 2023-11-16 00:00:00 to 2025-08-07 00:00:00
+Forecast date range: 2025-09-04 18:52:30.958682 to 2025-10-03 18:52:30.958682

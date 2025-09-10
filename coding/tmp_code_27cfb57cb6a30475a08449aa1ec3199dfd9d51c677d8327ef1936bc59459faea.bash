@@ -1,0 +1,1 @@
+cd 'pipeline_c4817250-b02b-49ac-a00b-e7f87e432343' && python model_h2o_training.py --file c4817250-b02b-49ac-a00b-e7f87e432343_ventas.csv --sep ; --max_runtime_secs 180 --max_models 5 --nthreads 2 --max_mem_size 1G

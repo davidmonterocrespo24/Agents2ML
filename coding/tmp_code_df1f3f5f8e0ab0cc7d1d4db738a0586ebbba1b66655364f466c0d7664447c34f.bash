@@ -1,0 +1,1 @@
+cd 'pipeline_fe7ccf65-e073-4c98-ba7d-6740e42a87cf' && python h2o_prediction_script.py --model-path /workspace/pipeline_fe7ccf65-e073-4c98-ba7d-6740e42a87cf/GBM_grid_1_AutoML_1_20250905_160037_model_1 --pipeline-dir /workspace/pipeline_fe7ccf65-e073-4c98-ba7d-6740e42a87cf --horizon 30 --freq D --date-column fecha --output-file predictions.csv --h2o-mem 2G --seed 42

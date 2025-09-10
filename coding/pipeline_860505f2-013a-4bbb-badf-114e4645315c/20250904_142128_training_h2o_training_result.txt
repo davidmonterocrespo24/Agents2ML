@@ -1,0 +1,6 @@
+Execution Result for h2o_training.py
+--------------------------------------------------
+Execution error (not missing module). Attempts: 1
+ERROR_START:only single character unicode strings can be converted to Py_UCS4, got length 0:ERROR_END
+tmp_code_bf771248d50467e71221132f25e42bca6156669bf6654754ef7b0b4615e0b876.bash: line 1: --output-dir=./: No such file or directory
+

@@ -1,0 +1,1 @@
+cd 'pipeline_eeaff94b-29d3-4e76-b80d-a2e7513699a8' && python model_h2o_training_simple.py --file eeaff94b-29d3-4e76-b80d-a2e7513699a8_ventas.csv --target monto_total --max-models 10 --max-runtime-secs 300

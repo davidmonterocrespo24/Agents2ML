@@ -1,0 +1,11 @@
+Execution Result for data_analysis.py
+--------------------------------------------------
+Execution error (not missing module). Attempts: 1
+Traceback (most recent call last):
+  File "/workspace/pipeline_e3e0f8c3-d0c6-4620-9df5-fdf5ac58d4e8/data_analysis.py", line 7, in <module>
+    locale.setlocale(locale.LC_TIME, 'es_ES.UTF-8')
+  File "/usr/local/lib/python3.11/locale.py", line 627, in setlocale
+    return _setlocale(category, locale)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+locale.Error: unsupported locale setting
+

@@ -1,0 +1,1 @@
+cd 'pipeline_e3e0f8c3-d0c6-4620-9df5-fdf5ac58d4e8' && python data_analysis.py 

@@ -1,0 +1,7 @@
+Execution Result for simple_training.py
+--------------------------------------------------
+Execution error (not missing module). Attempts: 1
+usage: simple_training.py [-h] --file FILE --target TARGET
+                          [--output-dir OUTPUT_DIR]
+simple_training.py: error: unrecognized arguments: por categoria tecnologia.csv
+

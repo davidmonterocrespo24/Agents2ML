@@ -1,0 +1,1 @@
+cd 'pipeline_e3e0f8c3-d0c6-4620-9df5-fdf5ac58d4e8' && python visualization_script.py --historical-file e3e0f8c3-d0c6-4620-9df5-fdf5ac58d4e8_ventas.csv --predictions-file predictions.csv --output-file forecast_plot.png --title "Sales Forecast Analysis" --width 14 --height 7

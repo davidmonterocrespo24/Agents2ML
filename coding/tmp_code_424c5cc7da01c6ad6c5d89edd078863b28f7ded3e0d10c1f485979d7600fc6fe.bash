@@ -1,0 +1,1 @@
+cd 'pipeline_c4817250-b02b-49ac-a00b-e7f87e432343' && python model_h2o_prediction.py --model-path ./DRF_1_AutoML_1_20250904_154856 --pipeline-dir /workspace/pipeline_c4817250-b02b-49ac-a00b-e7f87e432343 --horizon 30 --freq D --date-column fecha --output-file predictions.csv --h2o_mem 1G

@@ -1,0 +1,1 @@
+cd 'pipeline_4bb84793-5b78-443b-8e8d-abe7679b9f6c' && python forecast_visualization.py --historical-file "4bb84793-5b78-443b-8e8d-abe7679b9f6c_ventas.csv" --predictions-file "predictions.csv" --output-file "forecast_plot.png"

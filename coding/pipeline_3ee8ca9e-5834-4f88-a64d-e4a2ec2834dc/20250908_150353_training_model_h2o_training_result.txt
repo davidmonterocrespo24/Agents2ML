@@ -1,0 +1,40 @@
+Execution Result for model_h2o_training.py
+--------------------------------------------------
+Execution error (not missing module). Attempts: 1
+/workspace/pipeline_3ee8ca9e-5834-4f88-a64d-e4a2ec2834dc/model_h2o_training.py:19: ParserWarning: Falling back to the 'python' engine because the 'c' engine does not support sep=None with delim_whitespace=False; you can avoid this warning by specifying engine='python'.
+  df = pd.read_csv(path, sep=sep, encoding=encoding)
+LOG_START:DATA_SUMMARY
+{"n_rows": 105830, "n_cols": 6, "dtypes": {"factura_nombre": "object", "factura_monto_total": "float64", "factura_total_descuentos": "float64", "factura_total_pagos": "float64", "vendedor_id": "float64", "cliente_nombre": "object"}, "n_nulls": {"factura_nombre": 0, "factura_monto_total": 0, "factura_total_descuentos": 0, "factura_total_pagos": 0, "vendedor_id": 0, "cliente_nombre": 0}}
+LOG_END:DATA_SUMMARY
+Checking whether there is an H2O instance running at http://localhost:54321..... not found.
+Attempting to start a local H2O server...
+  Java Version: openjdk version "21.0.8" 2025-07-15; OpenJDK Runtime Environment (build 21.0.8+9-Debian-1); OpenJDK 64-Bit Server VM (build 21.0.8+9-Debian-1, mixed mode, sharing)
+  Starting server from /usr/local/lib/python3.11/site-packages/h2o/backend/bin/h2o.jar
+  Ice root: /tmp/tmp07dqn03r
+  JVM stdout: /tmp/tmp07dqn03r/h2o_unknownUser_started_from_python.out
+  JVM stderr: /tmp/tmp07dqn03r/h2o_unknownUser_started_from_python.err
+  Server is running at http://127.0.0.1:54321
+Connecting to H2O server at http://127.0.0.1:54321 ... successful.
+Warning: Your H2O cluster version is (5 months and 12 days) old.  There may be a newer version available.
+Please download and install the latest version from: https://h2o-release.s3.amazonaws.com/h2o/latest_stable.html
+--------------------------  ----------------------------------
+H2O_cluster_uptime:         01 secs
+H2O_cluster_timezone:       Etc/UTC
+H2O_data_parsing_timezone:  UTC
+H2O_cluster_version:        3.46.0.7
+H2O_cluster_version_age:    5 months and 12 days
+H2O_cluster_name:           H2O_from_python_unknownUser_s1y6jy
+H2O_cluster_total_nodes:    1
+H2O_cluster_free_memory:    1.983 Gb
+H2O_cluster_total_cores:    16
+H2O_cluster_allowed_cores:  16
+H2O_cluster_status:         locked, healthy
+H2O_connection_url:         http://127.0.0.1:54321
+H2O_connection_proxy:       {"http": null, "https": null}
+H2O_internal_security:      False
+Python_version:             3.11.13 final
+--------------------------  ----------------------------------
+Parse progress: |████████████████████████████████████████████████████████████████| (done) 100%
+ERROR_START:0:ERROR_END
+H2O session _sid_8fce closed.
+

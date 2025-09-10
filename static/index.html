@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoML Training System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Markdown and code highlighting -->
+    <script src="https://cdn.jsdelivr.net/npm/marked@4.3.0/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/highlight.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/languages/python.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/styles/github-dark.min.css" id="highlight-theme">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        dark: {
+                            50: '#f8fafc',
+                            100: '#f1f5f9',
+                            200: '#e2e8f0',
+                            300: '#cbd5e1',
+                            400: '#94a3b8',
+                            500: '#64748b',
+                            600: '#475569',
+                            700: '#334155',
+                            800: '#1e293b',
+                            900: '#0f172a'
+                        }
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.3s ease-in-out',
+                        'slide-up': 'slideUp 0.3s ease-out'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .glass-effect {
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .dark .glass-effect {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+        .dark {
+            color-scheme: dark;
+        }
+        .scroll-smooth {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-dark-900 transition-colors duration-300 text-gray-900 dark:text-gray-100">
+    <div id="app" class="min-h-screen">
+        <!-- Navigation -->
+        <nav class="bg-gradient-to-r from-blue-600 to-purple-600 dark:from-gray-900 dark:to-black text-white p-4 shadow-lg border-b border-gray-200 dark:border-gray-800">
+            <div class="container mx-auto flex justify-between items-center">
+                <h1 class="text-2xl font-bold flex items-center">
+                    <i class="fas fa-robot mr-2 text-3xl animate-pulse"></i>
+                    <span class="bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent">AutoML Training System</span>
+                </h1>
+                <div class="flex items-center space-x-4">
+                    <!-- Dark mode toggle -->
+                    <button onclick="toggleDarkMode()" class="p-2 rounded-lg glass-effect hover:bg-white/20 transition-all duration-300" title="Toggle dark mode">
+                        <i id="theme-icon" class="fas fa-moon text-lg"></i>
+                    </button>
+                    
+                    <!-- Navigation buttons -->
+                    <button id="nav-dashboard" class="nav-btn bg-white/20 hover:bg-white/30 px-4 py-2 rounded-lg transition-all duration-300 backdrop-blur">
+                        <i class="fas fa-tachometer-alt mr-1"></i>Dashboard
+                    </button>
+                    <button id="nav-create-job" class="nav-btn bg-white/20 hover:bg-white/30 px-4 py-2 rounded-lg transition-all duration-300 backdrop-blur">
+                        <i class="fas fa-plus mr-1"></i>New Job
+                    </button>
+                    <button id="nav-jobs" class="nav-btn bg-white/20 hover:bg-white/30 px-4 py-2 rounded-lg transition-all duration-300 backdrop-blur">
+                        <i class="fas fa-list mr-1"></i>Jobs
+                    </button>
+                    <button id="nav-dataset-sql" class="nav-btn bg-white/20 hover:bg-white/30 px-4 py-2 rounded-lg transition-all duration-300 backdrop-blur">
+                        <i class="fas fa-database mr-1"></i>Dataset SQL
+                    </button>
+                    <button id="nav-configuration" class="nav-btn bg-white/20 hover:bg-white/30 px-4 py-2 rounded-lg transition-all duration-300 backdrop-blur">
+                        <i class="fas fa-cog mr-1"></i>Configuration
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Dashboard Section -->
+        <div id="dashboard-section" class="container mx-auto p-6 animate-fade-in">
+            <div class="flex items-center justify-between mb-8">
+                <h2 class="text-4xl font-bold text-gray-900 dark:text-white flex items-center">
+                    <i class="fas fa-chart-bar mr-3 text-blue-500"></i>Training Dashboard
+                </h2>
+                <div class="text-sm text-gray-500 dark:text-gray-300">
+                    <i class="fas fa-clock mr-1"></i>
+                    <span id="last-updated">Just now</span>
+                </div>
+            </div>
+            
+            <!-- Stats Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-8">
+                <div class="bg-white dark:bg-gray-900 p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-200 dark:border-gray-800">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-600 dark:text-gray-200 text-sm font-medium">Total Jobs</p>
+                            <p id="total-jobs" class="text-3xl font-bold text-gray-900 dark:text-white mt-1">0</p>
+                        </div>
+                        <div class="p-4 rounded-full bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-lg">
+                            <i class="fas fa-briefcase text-xl"></i>
+                        </div>
+                    </div>
+                    <div class="mt-4 flex items-center">
+                        <div class="w-full bg-gray-200 dark:bg-gray-800 rounded-full h-2">
+                            <div class="bg-gradient-to-r from-blue-500 to-blue-600 h-2 rounded-full" style="width: 100%"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white dark:bg-gray-900 p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-200 dark:border-gray-800">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-600 dark:text-gray-200 text-sm font-medium">Completed</p>
+                            <p id="completed-jobs" class="text-3xl font-bold text-gray-900 dark:text-white mt-1">0</p>
+                        </div>
+                        <div class="p-4 rounded-full bg-gradient-to-r from-green-500 to-green-600 text-white shadow-lg">
+                            <i class="fas fa-check-circle text-xl"></i>
+                        </div>
+                    </div>
+                    <div class="mt-4 flex items-center text-green-600 dark:text-green-400">
+                        <i class="fas fa-arrow-up text-sm mr-1"></i>
+                        <span class="text-sm font-medium">Success rate</span>
+                    </div>
+                </div>
+                
+                <div class="bg-white dark:bg-gray-900 p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-200 dark:border-gray-800">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-600 dark:text-gray-200 text-sm font-medium">Running</p>
+                            <p id="running-jobs" class="text-3xl font-bold text-gray-900 dark:text-white mt-1">0</p>
+                        </div>
+                        <div class="p-4 rounded-full bg-gradient-to-r from-yellow-500 to-orange-500 text-white shadow-lg">
+                            <i class="fas fa-spinner animate-spin text-xl"></i>
+                        </div>
+                    </div>
+                    <div class="mt-4 flex items-center text-yellow-600 dark:text-yellow-400">
+                        <div class="w-2 h-2 bg-yellow-500 rounded-full animate-pulse mr-2"></div>
+                        <span class="text-sm font-medium">In progress</span>
+                    </div>
+                </div>
+                
+                <div class="bg-white dark:bg-gray-900 p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-200 dark:border-gray-800">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-600 dark:text-gray-200 text-sm font-medium">Failed</p>
+                            <p id="failed-jobs" class="text-3xl font-bold text-gray-900 dark:text-white mt-1">0</p>
+                        </div>
+                        <div class="p-4 rounded-full bg-gradient-to-r from-red-500 to-red-600 text-white shadow-lg">
+                            <i class="fas fa-exclamation-triangle text-xl"></i>
+                        </div>
+                    </div>
+                    <div class="mt-4 flex items-center text-red-600 dark:text-red-400">
+                        <i class="fas fa-arrow-down text-sm mr-1"></i>
+                        <span class="text-sm font-medium">Need attention</span>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Recent Jobs -->
+            <div class="bg-white dark:bg-gray-900 p-6 rounded-xl shadow-lg border border-gray-200 dark:border-gray-800">
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-2xl font-bold text-gray-900 dark:text-white flex items-center">
+                        <i class="fas fa-history mr-2 text-green-500"></i>Recent Jobs
+                    </h3>
+                    <button onclick="loadDashboard()" class="text-blue-500 hover:text-blue-600 dark:text-blue-400 text-sm font-medium transition-colors">
+                        <i class="fas fa-sync-alt mr-1"></i>Refresh
+                    </button>
+                </div>
+                <div id="recent-jobs" class="space-y-3">
+                    <!-- Recent jobs will be loaded here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Create Job Section -->
+        <div id="create-job-section" class="container mx-auto p-6 hidden animate-fade-in">
+            <div class="bg-white dark:bg-gray-900 rounded-xl shadow-lg p-8 border border-gray-200 dark:border-gray-800">
+                <div class="flex items-center mb-8">
+                    <div class="p-3 rounded-full bg-gradient-to-r from-green-500 to-green-600 text-white mr-4">
+                        <i class="fas fa-plus text-xl"></i>
+                    </div>
+                    <h2 class="text-3xl font-bold text-gray-900 dark:text-white">Create New Training Job</h2>
+                </div>
+                
+                <form id="job-form" class="space-y-8">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div>
+                            <label class="flex items-center text-sm font-medium text-gray-700 dark:text-gray-200 mb-3">
+                                <i class="fas fa-tag mr-2 text-blue-500"></i>Job Name
+                            </label>
+                            <input type="text" id="job-name" required
+                                class="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                                placeholder="Enter a descriptive job name">
+                        </div>
+
+                        <div>
+                            <label class="flex items-center text-sm font-medium text-gray-700 dark:text-gray-200 mb-3">
+                                <i class="fas fa-crosshairs mr-2 text-green-500"></i>Target Column
+                                <span class="text-xs text-gray-500 ml-1">(opcional para detección de anomalías)</span>
+                            </label>
+                            <input type="text" id="target-column"
+                                class="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all"
+                                placeholder="Column name to predict (leave empty for anomaly/fraud detection)">
+                            <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                                <i class="fas fa-info-circle mr-1"></i>
+                                Deje vacío este campo para entrenamiento no supervisado (detección de fraudes/anomalías)
+                            </p>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="flex items-center text-sm font-medium text-gray-700 dark:text-gray-200 mb-3">
+                            <i class="fas fa-lightbulb mr-2 text-yellow-500"></i>Training Objective (Prompt)
+                        </label>
+                        <textarea id="job-prompt" required rows="4"
+                            class="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all resize-none"
+                            placeholder="Describe what you want to predict or analyze with this dataset. Be specific about your goals and expected outcomes..."></textarea>
+                    </div>
+
+                    <div>
+                        <label class="flex items-center text-sm font-medium text-gray-700 dark:text-gray-200 mb-3">
+                            <i class="fas fa-database mr-2 text-purple-500"></i>Dataset Source
+                        </label>
+                        
+                        <!-- Dataset Source Selection -->
+                        <div class="mb-4">
+                            <div class="flex border border-gray-300 dark:border-gray-700 rounded-lg overflow-hidden">
+                                <button type="button" id="source-file-btn" class="flex-1 px-4 py-3 bg-purple-500 text-white font-medium" onclick="selectDatasetSource('file')">
+                                    <i class="fas fa-file-upload mr-2"></i>Upload File
+                                </button>
+                                <button type="button" id="source-sql-btn" class="flex-1 px-4 py-3 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 font-medium" onclick="selectDatasetSource('sql')">
+                                    <i class="fas fa-database mr-2"></i>SQL Dataset
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- File Upload Option -->
+                        <div id="file-upload-section">
+                            <div class="relative">
+                                <input type="file" id="dataset-file" accept=".csv,.xlsx,.xls"
+                                    class="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-purple-50 file:text-purple-700 hover:file:bg-purple-100">
+                            </div>
+                            <div class="flex items-center mt-2 text-sm text-gray-500 dark:text-gray-300">
+                                <i class="fas fa-info-circle mr-1"></i>
+                                Supported formats: CSV, Excel (.xlsx, .xls) • Max size: 100MB
+                            </div>
+                        </div>
+                        
+                        <!-- SQL Dataset Selection -->
+                        <div id="sql-dataset-section" class="hidden">
+                            <select id="sql-dataset-select" 
+                                class="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all">
+                                <option value="">Select a SQL dataset</option>
+                            </select>
+                            <div class="flex items-center mt-2 text-sm text-gray-500 dark:text-gray-300">
+                                <i class="fas fa-info-circle mr-1"></i>
+                                Choose from previously created SQL datasets
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row gap-4 pt-6">
+                        <button type="submit" class="flex-1 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg">
+                            <i class="fas fa-rocket mr-2"></i>Create and Start Job
+                        </button>
+                        <button type="button" onclick="resetForm()" class="flex-1 bg-gray-500 hover:bg-gray-600 dark:bg-gray-700 dark:hover:bg-gray-600 text-white font-bold py-3 px-6 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg">
+                            <i class="fas fa-redo mr-2"></i>Reset Form
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Jobs List Section -->
+        <div id="jobs-section" class="container mx-auto p-6 hidden animate-fade-in">
+            <div class="bg-white dark:bg-gray-900 rounded-xl shadow-lg p-6 border border-gray-200 dark:border-gray-800">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
+                    <div>
+                        <h2 class="text-3xl font-bold text-gray-900 dark:text-white flex items-center">
+                            <i class="fas fa-list-alt mr-3 text-purple-500"></i>Training Jobs
+                        </h2>
+                        <p class="text-gray-600 dark:text-gray-200 mt-1">Manage and monitor your ML training pipelines</p>
+                    </div>
+                    <div class="flex gap-3">
+                        <button onclick="loadJobs()" class="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white px-4 py-2 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg">
+                            <i class="fas fa-sync-alt mr-1"></i>Refresh
+                        </button>
+                        <button onclick="showSection('create-job')" class="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-4 py-2 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg">
+                            <i class="fas fa-plus mr-1"></i>New Job
+                        </button>
+                    </div>
+                </div>
+                
+                <div id="jobs-list" class="space-y-4">
+                    <!-- Jobs will be loaded here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Job Details Page -->
+        <div id="job-details-section" class="container mx-auto p-6 hidden animate-fade-in">
+            <!-- Header with back button -->
+            <div class="flex items-center justify-between mb-8">
+                <div class="flex items-center">
+                    <button onclick="goBack()" class="mr-4 p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors">
+                        <i class="fas fa-arrow-left text-xl text-gray-600 dark:text-gray-200"></i>
+                    </button>
+                    <div>
+                        <h1 id="job-details-title" class="text-4xl font-bold text-gray-900 dark:text-white flex items-center">
+                            <i class="fas fa-cogs mr-3 text-blue-500"></i>
+                            <span>Job Details</span>
+                        </h1>
+                        <p class="text-gray-600 dark:text-gray-200 mt-1">Monitor agent interactions and job progress</p>
+                    </div>
+                </div>
+                <div class="flex space-x-3">
+                    <button id="job-details-retry-btn" onclick="retryJobFromDetails()" class="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-white px-4 py-2 rounded-lg transition-all duration-300 shadow-md hidden">
+                        <i class="fas fa-redo mr-1"></i>Retry Job
+                    </button>
+                </div>
+            </div>
+
+            <!-- Job Info Cards -->
+            <div id="job-details-info" class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+                <!-- Job info will be loaded here -->
+            </div>
+
+            <!-- Tabs Navigation -->
+            <div class="bg-white dark:bg-gray-900 rounded-xl shadow-lg border border-gray-200 dark:border-gray-800">
+                <div class="border-b border-gray-200 dark:border-gray-700">
+                    <nav class="flex space-x-8 px-6">
+                        <button onclick="showJobTab('chat')" class="job-tab-btn border-b-2 border-blue-500 text-blue-600 dark:text-blue-400 py-4 px-2 text-sm font-semibold transition-all duration-300">
+                            <i class="fas fa-comments mr-2"></i>Agent Chat
+                        </button>
+                        <button onclick="showJobTab('logs')" class="job-tab-btn border-b-2 border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-200 dark:hover:text-gray-200 py-4 px-2 text-sm font-medium transition-all duration-300">
+                            <i class="fas fa-file-alt mr-2"></i>System Logs
+                        </button>
+                        <button onclick="showJobTab('models')" class="job-tab-btn border-b-2 border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-200 dark:hover:text-gray-200 py-4 px-2 text-sm font-medium transition-all duration-300">
+                            <i class="fas fa-brain mr-2"></i>Models
+                        </button>
+                        <button onclick="showJobTab('predictions')" class="job-tab-btn border-b-2 border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-200 dark:hover:text-gray-200 py-4 px-2 text-sm font-medium transition-all duration-300">
+                            <i class="fas fa-chart-line mr-2"></i>Predictions
+                        </button>
+                        <button onclick="showJobTab('reports')" class="job-tab-btn border-b-2 border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-200 dark:hover:text-gray-200 py-4 px-2 text-sm font-medium transition-all duration-300">
+                            <i class="fas fa-file-invoice mr-2"></i>Process Reports
+                        </button>
+                        <button onclick="showJobTab('statistics')" class="job-tab-btn border-b-2 border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-200 dark:hover:text-gray-200 py-4 px-2 text-sm font-medium transition-all duration-300">
+                            <i class="fas fa-chart-bar mr-2"></i>Agent Statistics
+                        </button>
+                        <button onclick="showJobTab('scripts')" class="job-tab-btn border-b-2 border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-200 dark:hover:text-gray-200 py-4 px-2 text-sm font-medium transition-all duration-300">
+                            <i class="fas fa-code mr-2"></i>Generated Scripts
+                        </button>
+                    </nav>
+                </div>
+
+                <!-- Tab Content -->
+                <div class="p-6">
+                    <!-- Chat Tab -->
+                    <div id="job-chat-tab" class="job-tab-content">
+                        <div class="bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-900 dark:to-black border border-gray-200 dark:border-gray-700 rounded-xl h-[600px] flex flex-col overflow-hidden shadow-inner">
+                            <!-- Chat header -->
+                            <div class="bg-white dark:bg-gray-900 px-6 py-4 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <div class="w-3 h-3 bg-green-500 rounded-full mr-3 animate-pulse"></div>
+                                    <h4 class="font-semibold text-gray-900 dark:text-white">Live Agent Conversation</h4>
+                                </div>
+                                <div class="flex items-center space-x-4">
+                                    <div class="text-sm text-gray-500 dark:text-gray-300">
+                                        <i class="fas fa-robot mr-1"></i>Real-time updates
+                                    </div>
+                                    <button onclick="refreshJobChat()" class="text-blue-500 hover:text-blue-600 text-sm">
+                                        <i class="fas fa-sync-alt mr-1"></i>Refresh
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Chat messages container -->
+                            <div id="job-chat-messages" class="flex-1 p-6 overflow-y-auto space-y-4 scroll-smooth relative">
+                                <!-- Agent messages will be loaded here -->
+                                
+                                <!-- Scroll to bottom button -->
+                                <button id="scroll-to-bottom" class="fixed bottom-24 right-6 w-12 h-12 bg-blue-500 hover:bg-blue-600 text-white rounded-full shadow-lg opacity-0 invisible transition-all duration-300 z-10" onclick="scrollChatToBottom()">
+                                    <i class="fas fa-chevron-down"></i>
+                                </button>
+                            </div>
+                            
+                           
+                        </div>
+                        
+                        <div class="mt-4 flex justify-between items-center">
+                            <div class="text-sm text-gray-500 dark:text-gray-300 flex items-center">
+                                <div class="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></div>
+                                Auto-refreshing every 3 seconds
+                            </div>
+                            <div class="text-sm text-gray-500 dark:text-gray-300">
+                                <i class="fas fa-info-circle mr-1"></i>
+                                Supports Markdown and Python syntax highlighting
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Logs Tab -->
+                    <div id="job-logs-tab" class="job-tab-content hidden">
+                        <div class="bg-black dark:bg-gray-950 rounded-xl p-6 h-96 overflow-y-auto font-mono text-sm border border-gray-800">
+                            <div id="job-logs-content" class="text-green-400">
+                                <!-- System logs will be loaded here -->
+                            </div>
+                        </div>
+                        <div class="mt-4 flex justify-between">
+                            <button onclick="refreshJobLogs()" class="bg-gradient-to-r from-gray-500 to-gray-600 hover:from-gray-600 hover:to-gray-700 text-white px-4 py-2 rounded-lg text-sm transition-all duration-300 shadow-md">
+                                <i class="fas fa-sync-alt mr-1"></i>Refresh Logs
+                            </button>
+                            <div class="text-sm text-gray-500 dark:text-gray-300 flex items-center">
+                                <i class="fas fa-terminal mr-1"></i>System execution logs
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Models Tab -->
+                    <div id="job-models-tab" class="job-tab-content hidden">
+                        <div id="job-models-content">
+                            <!-- Models will be loaded here -->
+                        </div>
+                    </div>
+
+                    <!-- Predictions Tab -->
+                    <div id="job-predictions-tab" class="job-tab-content hidden">
+                        <div id="job-predictions-content">
+                            <!-- Predictions will be loaded here -->
+                        </div>
+                    </div>
+
+                    <!-- Process Reports Tab -->
+                    <div id="job-reports-tab" class="job-tab-content hidden">
+                        <div id="job-reports-content" class="space-y-4">
+                            <!-- Process reports will be loaded here -->
+                        </div>
+                    </div>
+
+                    <!-- Agent Statistics Tab -->
+                    <div id="job-statistics-tab" class="job-tab-content hidden">
+                        <div id="job-statistics-content" class="space-y-6">
+                            <!-- Agent statistics will be loaded here -->
+                        </div>
+                    </div>
+
+                    <!-- Generated Scripts Tab -->
+                    <div id="job-scripts-tab" class="job-tab-content hidden">
+                        <div id="job-scripts-content" class="space-y-4">
+                            <!-- Generated scripts will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dataset SQL Section -->
+        <div id="dataset-sql-section" class="container mx-auto p-6 hidden animate-fade-in">
+            <div class="flex items-center justify-between mb-8">
+                <h2 class="text-4xl font-bold text-gray-900 dark:text-white flex items-center">
+                    <i class="fas fa-database mr-3 text-purple-500"></i>Dataset SQL
+                </h2>
+                <div class="flex space-x-3">
+                    <button onclick="showCreateDataset()" class="bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white px-4 py-2 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg">
+                        <i class="fas fa-plus mr-1"></i>New Dataset
+                    </button>
+                    <button onclick="loadSqlDatasets()" class="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white px-4 py-2 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg">
+                        <i class="fas fa-sync-alt mr-1"></i>Refresh
+                    </button>
+                </div>
+            </div>
+
+            <!-- Create Dataset Panel -->
+            <div id="create-dataset-panel" class="bg-white dark:bg-gray-900 rounded-xl shadow-lg p-6 mb-6 border border-gray-200 dark:border-gray-800 hidden">
+                <div class="flex items-center justify-between mb-6">
+                    <h3 id="dataset-panel-title" class="text-2xl font-bold text-gray-900 dark:text-white flex items-center">
+                        <i id="dataset-panel-icon" class="fas fa-code mr-2 text-purple-500"></i><span id="dataset-panel-text">Create Dataset with SQL</span>
+                    </h3>
+                    <button onclick="hideCreateDataset()" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Left Panel: SQL Editor -->
+                    <div>
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-2">
+                                <i class="fas fa-tag mr-1 text-blue-500"></i>Dataset Name
+                            </label>
+                            <input type="text" id="dataset-name" 
+                                class="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                                placeholder="Enter dataset name">
+                        </div>
+
+                        <!-- SQL Generation Mode Selector -->
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-2">
+                                <i class="fas fa-magic mr-1 text-indigo-500"></i>Generation Mode
+                            </label>
+                            <div class="flex border border-gray-300 dark:border-gray-700 rounded-lg overflow-hidden">
+                                <button type="button" id="mode-manual-btn" class="flex-1 px-4 py-3 bg-purple-500 text-white font-medium" onclick="selectSQLMode('manual')">
+                                    <i class="fas fa-code mr-2"></i>Manual SQL
+                                </button>
+                                <button type="button" id="mode-agent-btn" class="flex-1 px-4 py-3 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 font-medium" onclick="selectSQLMode('agent')">
+                                    <i class="fas fa-robot mr-2"></i>AI Agent
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Manual Mode Fields -->
+                        <div id="manual-mode-fields">
+                            <div class="mb-4">
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-2">
+                                    <i class="fas fa-server mr-1 text-green-500"></i>Database Connection
+                                </label>
+                                <select id="dataset-connection" 
+                                    class="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all">
+                                    <option value="">Select a database connection</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Agent Mode Fields -->
+                        <div id="agent-mode-fields" class="hidden">
+                            <div class="mb-4">
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-2">
+                                    <i class="fas fa-server mr-1 text-green-500"></i>Database Connection
+                                </label>
+                                <select id="agent-dataset-connection" 
+                                    class="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all">
+                                    <option value="">Select a database connection</option>
+                                </select>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-2">
+                                    <i class="fas fa-question-circle mr-1 text-indigo-500"></i>What data do you need?
+                                </label>
+                                <textarea id="agent-question" rows="3" 
+                                    class="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
+                                    placeholder="Describe what data you need for your ML model. For example: 'I need sales data to predict revenue for the next 3 months' or 'Get customer data to predict churn'"></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Manual Mode: SQL Query -->
+                        <div id="manual-sql-section">
+                            <div class="mb-4">
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-2">
+                                    <i class="fas fa-code mr-1 text-orange-500"></i>SQL Query
+                                </label>
+                                <div class="relative">
+                                    <textarea id="sql-query" rows="12" 
+                                        class="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all font-mono text-sm"
+                                        placeholder="SELECT * FROM your_table WHERE condition = 'value';"></textarea>
+                                    <div class="absolute bottom-2 right-2">
+                                        <button onclick="executePreviewQuery()" class="bg-orange-500 hover:bg-orange-600 text-white px-3 py-1 rounded text-xs transition-all">
+                                            <i class="fas fa-play mr-1"></i>Preview
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Agent Mode: Generated SQL Display -->
+                        <div id="agent-sql-section" class="hidden">
+                            <div class="mb-4">
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-2">
+                                    <i class="fas fa-robot mr-1 text-indigo-500"></i>AI Generated SQL Query (Editable)
+                                </label>
+                                <div class="relative">
+                                    <textarea id="generated-sql-query" rows="12"
+                                        class="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all font-mono text-sm"
+                                        placeholder="AI will generate SQL query here..."></textarea>
+                                    <div class="absolute bottom-2 right-2 flex space-x-2">
+                                        <button onclick="executeGeneratedQuery()" class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded text-xs transition-all">
+                                            <i class="fas fa-play mr-1"></i>Execute
+                                        </button>
+                                        <button onclick="resetGeneratedQuery()" class="bg-gray-500 hover:bg-gray-600 text-white px-3 py-1 rounded text-xs transition-all">
+                                            <i class="fas fa-undo mr-1"></i>Reset
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex space-x-3">
+                            <!-- Manual Mode Button -->
+                            <button id="manual-save-btn" onclick="executeAndSaveDataset()" class="flex-1 bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white font-bold py-3 px-6 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg">
+                                <i class="fas fa-save mr-2"></i>Save Dataset
+                            </button>
+                            
+                            <!-- Agent Mode Buttons -->
+                            <button id="agent-generate-btn" onclick="generateDatasetWithAgent()" class="flex-1 bg-gradient-to-r from-indigo-500 to-indigo-600 hover:from-indigo-600 hover:to-indigo-700 text-white font-bold py-3 px-6 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg hidden">
+                                <i class="fas fa-magic mr-2"></i>Generate with AI
+                            </button>
+                            
+                            <button id="agent-save-edited-btn" onclick="saveEditedDataset()" class="flex-1 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-bold py-3 px-6 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg hidden">
+                                <i class="fas fa-save mr-2"></i>Save Edited Query
+                            </button>
+                            
+                            <button onclick="clearSqlEditor()" class="bg-gray-500 hover:bg-gray-600 dark:bg-gray-700 dark:hover:bg-gray-600 text-white px-6 py-3 rounded-lg transition-all duration-300">
+                                <i class="fas fa-trash mr-2"></i>Clear
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Right Panel: Query Results / Edit Table -->
+                    <div>
+                        <div class="bg-gray-50 dark:bg-gray-800 rounded-lg p-4 h-full min-h-96">
+                            <div class="flex items-center justify-between mb-4">
+                                <h4 id="results-panel-title" class="font-semibold text-gray-900 dark:text-white flex items-center">
+                                    <i id="results-panel-icon" class="fas fa-table mr-2 text-blue-500"></i><span id="results-panel-text">Query Results Preview</span>
+                                </h4>
+                                <div class="flex items-center space-x-4">
+                                    <div id="query-status" class="text-sm">
+                                        <span class="text-gray-500 dark:text-gray-400">Ready to execute query</span>
+                                    </div>
+                                    <div id="edit-actions" class="hidden space-x-2">
+                                        <button onclick="addNewRowToEdit()" class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-xs">
+                                            <i class="fas fa-plus mr-1"></i>Add Row
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="query-results" class="overflow-auto max-h-96">
+                                <div class="text-center py-12 text-gray-500 dark:text-gray-400">
+                                    <i class="fas fa-play-circle text-4xl mb-4"></i>
+                                    <p>Click "Preview" to see query results</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Saved Datasets List -->
+            <div class="bg-white dark:bg-gray-900 rounded-xl shadow-lg p-6 border border-gray-200 dark:border-gray-800">
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-2xl font-bold text-gray-900 dark:text-white flex items-center">
+                        <i class="fas fa-list mr-2 text-blue-500"></i>Saved Datasets
+                    </h3>
+                    <div class="text-sm text-gray-500 dark:text-gray-300">
+                        <span id="datasets-count">0 datasets</span>
+                    </div>
+                </div>
+                <div id="sql-datasets-list" class="space-y-4">
+                    <!-- Datasets will be loaded here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Process Report Section -->
+        <div id="process-report-section" class="container mx-auto p-6 hidden animate-fade-in">
+            <div class="flex items-center justify-between mb-8">
+                <div class="flex items-center">
+                    <button onclick="showSection('jobs')" class="bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300 px-4 py-2 rounded-lg mr-4 transition-colors duration-200">
+                        <i class="fas fa-arrow-left mr-2"></i>Back to Jobs
+                    </button>
+                    <h2 class="text-4xl font-bold text-gray-900 dark:text-white flex items-center">
+                        <i class="fas fa-chart-line mr-3 text-indigo-500"></i>Process Report
+                    </h2>
+                </div>
+                <div class="text-sm text-gray-500 dark:text-gray-400">
+                    Comprehensive analysis of agent interactions and pipeline performance
+                </div>
+            </div>
+
+            <!-- Process Report Content -->
+            <div id="process-report-content" class="animate-fade-in">
+                <!-- Content will be dynamically loaded here -->
+                <div class="flex items-center justify-center py-12">
+                    <div class="text-center">
+                        <i class="fas fa-chart-line text-6xl text-gray-400 dark:text-gray-600 mb-4"></i>
+                        <h3 class="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">Process Report</h3>
+                        <p class="text-gray-500 dark:text-gray-400">Detailed analysis of agent performance and pipeline execution</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Configuration Section -->
+        <div id="configuration-section" class="container mx-auto p-6 hidden animate-fade-in">
+            <div class="flex items-center justify-between mb-8">
+                <h2 class="text-4xl font-bold text-gray-900 dark:text-white flex items-center">
+                    <i class="fas fa-cog mr-3 text-blue-500"></i>Configuration
+                </h2>
+                <button onclick="loadConfiguration()" class="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white px-4 py-2 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg">
+                    <i class="fas fa-sync-alt mr-1"></i>Refresh
+                </button>
+            </div>
+
+            <!-- Database Connections Section -->
+            <div class="bg-white dark:bg-gray-900 rounded-xl shadow-lg p-6 mb-6 border border-gray-200 dark:border-gray-800">
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-2xl font-bold text-gray-900 dark:text-white flex items-center">
+                        <i class="fas fa-database mr-2 text-green-500"></i>Database Connections
+                    </h3>
+                    <button onclick="showCreateConnection()" class="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-4 py-2 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg">
+                        <i class="fas fa-plus mr-1"></i>Add Connection
+                    </button>
+                </div>
+
+                <!-- Create Connection Form -->
+                <div id="create-connection-form" class="bg-gray-50 dark:bg-gray-800 rounded-lg p-6 mb-6 hidden">
+                    <h4 id="connection-form-title" class="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
+                        <i id="connection-form-icon" class="fas fa-plus-circle mr-2 text-green-500"></i><span id="connection-form-text">Add New Database Connection</span>
+                    </h4>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-2">Connection Name</label>
+                            <input type="text" id="connection-name" 
+                                class="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all"
+                                placeholder="My PostgreSQL DB">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-2">Database Type</label>
+                            <select id="connection-type" 
+                                class="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all">
+                                <option value="postgresql">PostgreSQL</option>
+                                <option value="mysql">MySQL</option>
+                                <option value="sqlite">SQLite</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-2">Host</label>
+                            <input type="text" id="connection-host" 
+                                class="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all"
+                                placeholder="localhost">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-2">Port</label>
+                            <input type="number" id="connection-port" 
+                                class="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all"
+                                placeholder="5432">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-2">Database Name</label>
+                            <input type="text" id="connection-database" 
+                                class="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all"
+                                placeholder="mydb">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-2">Username</label>
+                            <input type="text" id="connection-username" 
+                                class="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all"
+                                placeholder="username">
+                        </div>
+                        
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-2">Password</label>
+                            <input type="password" id="connection-password" 
+                                class="w-full px-4 py-3 border border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all"
+                                placeholder="password">
+                        </div>
+                    </div>
+                    
+                    <div class="flex space-x-3 mt-6">
+                        <button onclick="testConnection()" class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-lg transition-all duration-300">
+                            <i class="fas fa-plug mr-1"></i>Test Connection
+                        </button>
+                        <button id="save-connection-btn" onclick="saveConnection()" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg transition-all duration-300">
+                            <i id="save-connection-icon" class="fas fa-save mr-1"></i><span id="save-connection-text">Save Connection</span>
+                        </button>
+                        <button onclick="hideCreateConnection()" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg transition-all duration-300">
+                            <i class="fas fa-times mr-1"></i>Cancel
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Connections List -->
+                <div id="connections-list" class="space-y-4">
+                    <!-- Database connections will be loaded here -->
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Job Detail Modal -->
+        <div id="job-modal" class="fixed inset-0 bg-black bg-opacity-75 hidden backdrop-blur-sm z-50 animate-fade-in">
+            <div class="flex items-center justify-center min-h-screen p-4">
+                <div class="bg-white dark:bg-gray-900 rounded-2xl shadow-2xl max-w-6xl w-full max-h-[90vh] overflow-hidden border border-gray-200 dark:border-gray-800 animate-slide-up">
+                    <div class="p-8">
+                        <div class="flex justify-between items-start mb-6">
+                            <div>
+                                <h3 id="modal-title" class="text-3xl font-bold text-gray-900 dark:text-white flex items-center">
+                                    <i class="fas fa-cogs mr-3 text-blue-500"></i>
+                                    <span></span>
+                                </h3>
+                                <p class="text-gray-600 dark:text-gray-200 mt-1">Job Details & Agent Interactions</p>
+                            </div>
+                            <div class="flex space-x-3">
+                                <button id="retry-btn" onclick="retryJobFromModal()" class="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-white px-4 py-2 rounded-lg transition-all duration-300 shadow-md hidden">
+                                    <i class="fas fa-redo mr-1"></i>Retry Job
+                                </button>
+                                <button onclick="closeJobModal()" class="p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors">
+                                    <i class="fas fa-times text-xl"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Job Info -->
+                        <div id="job-info" class="mb-6">
+                            <!-- Job information will be loaded here -->
+                        </div>
+
+                        <!-- Tabs -->
+                        <div class="border-b border-gray-200 dark:border-gray-700 mb-6">
+                            <nav class="-mb-px flex space-x-8">
+                                <button onclick="showTab('chat')" class="tab-btn border-b-2 border-blue-500 text-blue-600 dark:text-blue-400 py-3 px-2 text-sm font-semibold transition-all duration-300">
+                                    <i class="fas fa-comments mr-2"></i>Agent Chat
+                                </button>
+                                <button onclick="showTab('logs')" class="tab-btn border-b-2 border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-200 dark:hover:text-gray-200 py-3 px-2 text-sm font-medium transition-all duration-300">
+                                    <i class="fas fa-file-alt mr-2"></i>Logs
+                                </button>
+                                <button onclick="showTab('models')" class="tab-btn border-b-2 border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-200 dark:hover:text-gray-200 py-3 px-2 text-sm font-medium transition-all duration-300">
+                                    <i class="fas fa-brain mr-2"></i>Models
+                                </button>
+                                <button onclick="showTab('predictions')" class="tab-btn border-b-2 border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-200 dark:hover:text-gray-200 py-3 px-2 text-sm font-medium transition-all duration-300">
+                                    <i class="fas fa-chart-line mr-2"></i>Predictions
+                                </button>
+                            </nav>
+                        </div>
+
+                        <!-- Tab Content -->
+                        <div id="chat-tab" class="tab-content">
+                            <div class="bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-900 dark:to-black border border-gray-200 dark:border-gray-700 rounded-xl h-[500px] flex flex-col overflow-hidden shadow-inner">
+                                <!-- Chat header -->
+                                <div class="bg-white dark:bg-gray-900 px-6 py-4 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
+                                    <div class="flex items-center">
+                                        <div class="w-3 h-3 bg-green-500 rounded-full mr-3 animate-pulse"></div>
+                                        <h4 class="font-semibold text-gray-900 dark:text-white">Agent Conversation</h4>
+                                    </div>
+                                    <div class="text-sm text-gray-500 dark:text-gray-300">
+                                        <i class="fas fa-robot mr-1"></i>Live
+                                    </div>
+                                </div>
+                                
+                                <!-- Chat messages container -->
+                                <div id="chat-messages" class="flex-1 p-6 overflow-y-auto space-y-4 scroll-smooth">
+                                    <!-- Agent messages will be loaded here -->
+                                </div>
+                                
+                                <!-- User input area -->
+                                <div id="user-input-area" class="border-t border-gray-200 dark:border-gray-700 p-4 bg-white dark:bg-gray-900">
+                                    <div class="flex space-x-3 mb-3">
+                                        <input type="text" id="user-message-input" 
+                                               placeholder="Type your message to the agents..." 
+                                               class="flex-1 px-4 py-3 border border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                                               onkeypress="if(event.key==='Enter') sendUserMessage()">
+                                        <button onclick="sendUserMessage()" 
+                                                class="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white px-6 py-3 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-105">
+                                            <i class="fas fa-paper-plane mr-2"></i>Send
+                                        </button>
+                                    </div>
+                                    <div class="flex items-center mt-3 text-sm text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/30 px-3 py-2 rounded-lg">
+                                        <i class="fas fa-info-circle mr-2"></i>Agent is waiting for your input
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-4 flex justify-between items-center">
+                                <button onclick="refreshChat()" class="bg-gradient-to-r from-gray-500 to-gray-600 hover:from-gray-600 hover:to-gray-700 text-white px-4 py-2 rounded-lg text-sm transition-all duration-300 shadow-md">
+                                    <i class="fas fa-sync-alt mr-1"></i>Refresh
+                                </button>
+                                <div class="text-sm text-gray-500 dark:text-gray-300 flex items-center">
+                                    <div class="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></div>
+                                    Auto-refreshing every 3 seconds
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="logs-tab" class="tab-content hidden">
+                            <div class="bg-black dark:bg-gray-950 text-green-400 p-4 rounded-lg h-64 overflow-y-auto font-mono text-sm border border-gray-800">
+                                <div id="logs-content">
+                                    <!-- Logs will be loaded here -->
+                                </div>
+                            </div>
+                            <button onclick="refreshLogs()" class="mt-2 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white px-4 py-2 rounded-lg text-sm transition-all duration-300 shadow-md hover:shadow-lg">
+                                <i class="fas fa-refresh mr-1"></i>Refresh Logs
+                            </button>
+                        </div>
+
+                        <div id="models-tab" class="tab-content hidden">
+                            <div id="models-content">
+                                <!-- Models will be loaded here -->
+                            </div>
+                        </div>
+
+                        <div id="predictions-tab" class="tab-content hidden">
+                            <div id="predictions-content">
+                                <!-- Predictions will be loaded here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Job Versions Modal -->
+    <div id="versions-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50 p-4">
+        <div class="bg-white dark:bg-dark-800 rounded-lg shadow-xl max-w-6xl w-full max-h-[90vh] overflow-hidden">
+            <div class="flex justify-between items-center p-6 border-b border-gray-200 dark:border-gray-700">
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white">
+                    <i class="fas fa-code-branch mr-2 text-blue-500"></i>Job Versions
+                </h3>
+                <button onclick="closeVersionsModal()" class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            
+            <div class="p-6 overflow-y-auto max-h-[70vh]">
+                <!-- Create New Version Section -->
+                <div class="mb-6 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
+                    <h4 class="font-semibold text-blue-800 dark:text-blue-300 mb-3">
+                        <i class="fas fa-plus-circle mr-2"></i>Create New Version
+                    </h4>
+                    <form id="create-version-form" class="space-y-3">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Version Name</label>
+                            <input type="text" id="version-name" class="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md dark:bg-dark-700 dark:text-white" placeholder="Enter version name..." required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Updated Prompt</label>
+                            <textarea id="version-prompt" rows="4" class="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md dark:bg-dark-700 dark:text-white" placeholder="Enter the updated prompt for this version..." required></textarea>
+                        </div>
+                        <button type="submit" class="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white px-4 py-2 rounded-lg transition-all duration-300">
+                            <i class="fas fa-code-branch mr-2"></i>Create Version
+                        </button>
+                    </form>
+                </div>
+                
+                <!-- Versions List -->
+                <div>
+                    <h4 class="font-semibold text-gray-800 dark:text-gray-200 mb-3">
+                        <i class="fas fa-history mr-2"></i>Version History
+                    </h4>
+                    <div id="versions-list">
+                        <!-- Versions will be loaded here -->
+                    </div>
+                </div>
+                
+                <!-- Comparison Section -->
+                <div id="version-comparison" class="mt-6 p-4 bg-gray-50 dark:bg-dark-700 rounded-lg border hidden">
+                    <h4 class="font-semibold text-gray-800 dark:text-gray-200 mb-3">
+                        <i class="fas fa-balance-scale mr-2"></i>Version Comparison
+                    </h4>
+                    <div id="comparison-content">
+                        <!-- Comparison data will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>

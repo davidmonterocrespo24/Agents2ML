@@ -1,0 +1,71 @@
+Execution Result for model_h2o_training_simple.py
+--------------------------------------------------
+=== Execution successful (attempt 1/3) in 20.97s ===
+LOG_START:Reading and preprocessing data:LOG_END
+LOG_START:Creating time series features:LOG_END
+LOG_START:DATA_SUMMARY
+{
+  "n_rows": 448,
+  "n_cols": 18,
+  "date_range": {
+    "start": "2023-12-29",
+    "end": "2025-08-07"
+  },
+  "target_stats": {
+    "mean": 315872.3375215848,
+    "std": 177184.88450683936,
+    "min": 0.0,
+    "max": 1163663.744
+  }
+}
+LOG_END:DATA_SUMMARY
+LOG_START:Initializing H2O:LOG_END
+Checking whether there is an H2O instance running at http://localhost:54321..... not found.
+Attempting to start a local H2O server...
+  Java Version: openjdk version "21.0.8" 2025-07-15; OpenJDK Runtime Environment (build 21.0.8+9-Debian-1); OpenJDK 64-Bit Server VM (build 21.0.8+9-Debian-1, mixed mode, sharing)
+  Starting server from /usr/local/lib/python3.11/site-packages/h2o/backend/bin/h2o.jar
+  Ice root: /tmp/tmpvaq42r2g
+  JVM stdout: /tmp/tmpvaq42r2g/h2o_unknownUser_started_from_python.out
+  JVM stderr: /tmp/tmpvaq42r2g/h2o_unknownUser_started_from_python.err
+  Server is running at http://127.0.0.1:54321
+Connecting to H2O server at http://127.0.0.1:54321 ... successful.
+Warning: Your H2O cluster version is (5 months and 8 days) old.  There may be a newer version available.
+Please download and install the latest version from: https://h2o-release.s3.amazonaws.com/h2o/latest_stable.html
+--------------------------  ----------------------------------
+H2O_cluster_uptime:         02 secs
+H2O_cluster_timezone:       Etc/UTC
+H2O_data_parsing_timezone:  UTC
+H2O_cluster_version:        3.46.0.7
+H2O_cluster_version_age:    5 months and 8 days
+H2O_cluster_name:           H2O_from_python_unknownUser_rul1x5
+H2O_cluster_total_nodes:    1
+H2O_cluster_free_memory:    3.984 Gb
+H2O_cluster_total_cores:    16
+H2O_cluster_allowed_cores:  16
+H2O_cluster_status:         locked, healthy
+H2O_connection_url:         http://127.0.0.1:54321
+H2O_connection_proxy:       {"http": null, "https": null}
+H2O_internal_security:      False
+Python_version:             3.11.13 final
+--------------------------  ----------------------------------
+Parse progress: |████████████████████████████████████████████████████████████████| (done) 100%
+LOG_START:Training AutoML models:LOG_END
+AutoML progress: |
+13:58:24.569: User specified a validation frame with cross-validation still enabled. Please note that the models will still be validated using cross-validation only, the validation frame will be used to provide purely informative validation metrics on the trained models.
+
+████████████████████████████████████████████████████████████████| (done) 100%
+MODEL_PATH_START:/workspace/pipeline_eeaff94b-29d3-4e76-b80d-a2e7513699a8/GBM_4_AutoML_1_20250905_135824:MODEL_PATH_END
+METRICS_START:{
+  "model_path": "/workspace/pipeline_eeaff94b-29d3-4e76-b80d-a2e7513699a8/GBM_4_AutoML_1_20250905_135824",
+  "metrics": {
+    "rmse": 98319.98671197923,
+    "mae": 71418.24177383562,
+    "r2": 0.7116505934505748,
+    "mse": 9666819787.043772
+  },
+  "training_time_secs": 18.69722890853882,
+  "rows_trained": 448,
+  "leader_model": "GBM_4_AutoML_1_20250905_135824"
+}:METRICS_END
+LOG_START:Training completed successfully:LOG_END
+H2O session _sid_b09b closed.

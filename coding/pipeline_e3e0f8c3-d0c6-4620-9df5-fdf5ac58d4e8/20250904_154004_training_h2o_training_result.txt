@@ -1,0 +1,87 @@
+Execution Result for h2o_training.py
+--------------------------------------------------
+=== Execution successful (attempt 1/3) in 216.24s ===
+/workspace/pipeline_e3e0f8c3-d0c6-4620-9df5-fdf5ac58d4e8/h2o_training.py:73: UserWarning: The argument 'infer_datetime_format' is deprecated and will be removed in a future version. A strict version of it is now the default, see https://pandas.pydata.org/pdeps/0004-consistent-to-datetime-parsing.html. You can safely remove this argument.
+  parsed = pd.to_datetime(df[col], errors='coerce', dayfirst=True, infer_datetime_format=True)
+/workspace/pipeline_e3e0f8c3-d0c6-4620-9df5-fdf5ac58d4e8/h2o_training.py:201: UserWarning: The argument 'infer_datetime_format' is deprecated and will be removed in a future version. A strict version of it is now the default, see https://pandas.pydata.org/pdeps/0004-consistent-to-datetime-parsing.html. You can safely remove this argument.
+  df[c] = pd.to_datetime(df[c], errors='coerce', dayfirst=True, infer_datetime_format=True)
+LOG_START:DATE_PARSING_WARNING
+26 dates failed to parse
+LOG_END:DATE_PARSING_WARNING
+LOG_START:DATA_SUMMARY
+{"n_rows": 503, "n_cols": 2, "dtypes": {"fecha": "datetime64[ns]", "monto total": "float64"}, "n_nulls": {"fecha": 26, "monto total": 0}, "sample": [{"fecha": "2023-11-16 00:00:00", "monto total": 1354.86}, {"fecha": "2023-11-21 00:00:00", "monto total": 15071.95}, {"fecha": "2023-11-22 00:00:00", "monto total": 34009.92}]}
+LOG_END:DATA_SUMMARY
+Checking whether there is an H2O instance running at http://localhost:54321..... not found.
+Attempting to start a local H2O server...
+  Java Version: openjdk version "21.0.8" 2025-07-15; OpenJDK Runtime Environment (build 21.0.8+9-Debian-1); OpenJDK 64-Bit Server VM (build 21.0.8+9-Debian-1, mixed mode, sharing)
+  Starting server from /usr/local/lib/python3.11/site-packages/h2o/backend/bin/h2o.jar
+  Ice root: /tmp/tmpb4gsqcmi
+  JVM stdout: /tmp/tmpb4gsqcmi/h2o_unknownUser_started_from_python.out
+  JVM stderr: /tmp/tmpb4gsqcmi/h2o_unknownUser_started_from_python.err
+  Server is running at http://127.0.0.1:54321
+Connecting to H2O server at http://127.0.0.1:54321 ... successful.
+Warning: Your H2O cluster version is (5 months and 8 days) old.  There may be a newer version available.
+Please download and install the latest version from: https://h2o-release.s3.amazonaws.com/h2o/latest_stable.html
+--------------------------  ----------------------------------
+H2O_cluster_uptime:         01 secs
+H2O_cluster_timezone:       Etc/UTC
+H2O_data_parsing_timezone:  UTC
+H2O_cluster_version:        3.46.0.7
+H2O_cluster_version_age:    5 months and 8 days
+H2O_cluster_name:           H2O_from_python_unknownUser_o2ha00
+H2O_cluster_total_nodes:    1
+H2O_cluster_free_memory:    3.984 Gb
+H2O_cluster_total_cores:    16
+H2O_cluster_allowed_cores:  16
+H2O_cluster_status:         locked, healthy
+H2O_connection_url:         http://127.0.0.1:54321
+H2O_connection_proxy:       {"http": null, "https": null}
+H2O_internal_security:      False
+Python_version:             3.11.13 final
+--------------------------  ----------------------------------
+Parse progress: |████████████████████████████████████████████████████████████████| (done) 100%
+AutoML progress: |
+18:40:11.460: User specified a validation frame with cross-validation still enabled. Please note that the models will still be validated using cross-validation only, the validation frame will be used to provide purely informative validation metrics on the trained models.
+18:40:11.501: _train param, Dropping bad and constant columns: [monto total__dayofweek, monto total__month, monto total__day, monto total__year, monto total__is_month_end, monto total__is_month_start, monto total__is_weekend]
+18:40:11.501: _response param, We have detected that your response column has only 2 unique values (0/1). If you wish to train a binary model instead of a regression model, convert your target column to categorical before training.
+
+█
+18:40:13.874: _train param, Dropping bad and constant columns: [monto total__dayofweek, monto total__month, monto total__day, monto total__year, monto total__is_month_end, monto total__is_month_start, monto total__is_weekend]
+18:40:13.874: _response param, We have detected that your response column has only 2 unique values (0/1). If you wish to train a binary model instead of a regression model, convert your target column to categorical before training.
+18:40:14.43: _train param, Dropping bad and constant columns: [monto total__dayofweek, monto total__month, monto total__day, monto total__year, monto total__is_month_end, monto total__is_month_start, monto total__is_weekend]
+18:40:14.43: _response param, We have detected that your response column has only 2 unique values (0/1). If you wish to train a binary model instead of a regression model, convert your target column to categorical before training.
+18:40:14.227: _train param, Dropping bad and constant columns: [monto total__dayofweek, monto total__month, monto total__day, monto total__year, monto total__is_month_end, monto total__is_month_start, monto total__is_weekend]
+18:40:14.227: _response param, We have detected that your response column has only 2 unique values (0/1). If you wish to train a binary model instead of a regression model, convert your target column to categorical before training.
+
+███
+18:40:17.215: _train param, Dropping bad and constant columns: [monto total__dayofweek, monto total__month, monto total__day, monto total__year, monto total__is_month_end, monto total__is_month_start, monto total__is_weekend]
+18:40:17.215: _response param, We have detected that your response column has only 2 unique values (0/1). If you wish to train a binary model instead of a regression model, convert your target column to categorical before training.
+18:40:17.364: _train param, Dropping bad and constant columns: [monto total__dayofweek, monto total__month, monto total__day, monto total__year, monto total__is_month_end, monto total__is_month_start, monto total__is_weekend]
+18:40:17.364: _response param, We have detected that your response column has only 2 unique values (0/1). If you wish to train a binary model instead of a regression model, convert your target column to categorical before training.
+18:40:17.501: _train param, Dropping bad and constant columns: [monto total__dayofweek, monto total__month, monto total__day, monto total__year, monto total__is_month_end, monto total__is_month_start, monto total__is_weekend]
+18:40:17.501: _response param, We have detected that your response column has only 2 unique values (0/1). If you wish to train a binary model instead of a regression model, convert your target column to categorical before training.
+18:40:17.611: _train param, Dropping bad and constant columns: [monto total__dayofweek, monto total__month, monto total__day, monto total__year, monto total__is_month_end, monto total__is_month_start, monto total__is_weekend]
+18:40:17.611: _response param, We have detected that your response column has only 2 unique values (0/1). If you wish to train a binary model instead of a regression model, convert your target column to categorical before training.
+
+█
+18:40:17.723: _train param, Dropping bad and constant columns: [monto total__dayofweek, monto total__month, monto total__day, monto total__year, monto total__is_month_end, monto total__is_month_start, monto total__is_weekend]
+18:40:17.723: _response param, We have detected that your response column has only 2 unique values (0/1). If you wish to train a binary model instead of a regression model, convert your target column to categorical before training.
+
+██
+18:40:19.160: _train param, Dropping bad and constant columns: [monto total__dayofweek, monto total__month, monto total__day, monto total__year, monto total__is_month_end, monto total__is_month_start, monto total__is_weekend]
+18:40:19.160: _response param, We have detected that your response column has only 2 unique values (0/1). If you wish to train a binary model instead of a regression model, convert your target column to categorical before training.
+18:40:19.325: _train param, Dropping bad and constant columns: [monto total__dayofweek, monto total__month, monto total__day, monto total__year, monto total__is_month_end, monto total__is_month_start, monto total__is_weekend]
+18:40:19.325: _response param, We have detected that your response column has only 2 unique values (0/1). If you wish to train a binary model instead of a regression model, convert your target column to categorical before training.
+18:40:19.456: _train param, Dropping bad and constant columns: [monto total__dayofweek, monto total__month, monto total__day, monto total__year, monto total__is_month_end, monto total__is_month_start, monto total__is_weekend]
+18:40:19.456: _response param, We have detected that your response column has only 2 unique values (0/1). If you wish to train a binary model instead of a regression model, convert your target column to categorical before training.
+
+████████████████████████████████████████████████████████| (done) 100%
+
+18:43:38.165: _train param, Dropping unused columns: [monto total__dayofweek, monto total__month, monto total__day, monto total__year, monto total__is_month_end, monto total__is_month_start, monto total__is_weekend]
+18:43:38.165: _response param, We have detected that your response column has only 2 unique values (0/1). If you wish to train a binary model instead of a regression model, convert your target column to categorical before training.
+18:43:38.459: _train param, Dropping unused columns: [monto total__dayofweek, monto total__month, monto total__day, monto total__year, monto total__is_month_end, monto total__is_month_start, monto total__is_weekend]
+18:43:38.459: _response param, We have detected that your response column has only 2 unique values (0/1). If you wish to train a binary model instead of a regression model, convert your target column to categorical before training.
+
+MODEL_PATH_START:/workspace/pipeline_e3e0f8c3-d0c6-4620-9df5-fdf5ac58d4e8/DeepLearning_grid_1_AutoML_1_20250904_184011_model_7:MODEL_PATH_END
+METRICS_START:{"model_path": "/workspace/pipeline_e3e0f8c3-d0c6-4620-9df5-fdf5ac58d4e8/DeepLearning_grid_1_AutoML_1_20250904_184011_model_7", "mojo_path": "/workspace/pipeline_e3e0f8c3-d0c6-4620-9df5-fdf5ac58d4e8/DeepLearning_grid_1_AutoML_1_20250904_184011_model_7", "metrics": {"rmse": 0.11395748247385852, "mae": 0.013014690776738549, "r2": -0.01310288179002983}, "rows_trained": 503, "n_cols": 9, "training_time_secs": 214.17201352119446, "seed": 42, "h2o_version": "3.46.0.7"}:METRICS_END
+H2O session _sid_9d8c closed.
