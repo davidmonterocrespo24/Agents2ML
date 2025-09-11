@@ -230,21 +230,6 @@ OLLAMA_MODEL=gpt-oss:20b
 DEBUG=false
 ```
 
-### Agent Configuration
-Each agent can be configured in `config.py`:
-```python
-AGENT_CONFIG = {
-    "data_processor": {
-        "max_sample_size": 10000,
-        "analysis_depth": "detailed"
-    },
-    "model_builder": {
-        "max_models": 10,
-        "training_time": 300
-    }
-}
-```
-
 ## Advanced Features
 
 ### Custom Models
