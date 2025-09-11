@@ -51,7 +51,7 @@ A complete automated Machine Learning system that uses **7 specialized AI agents
 
 1. **Clone/Download the project**
 ```bash
-git clone <repository-url>
+git clone https://github.com/davidmonterocrespo24/Agents2ML
 cd Agent-AutoML
 
 ```
