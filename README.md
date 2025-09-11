@@ -331,7 +331,6 @@ OSS/Apache License
 
 ### Version 2.0 (Planned)
 - [ ] Multi-modal data support (images, text)
-- [ ] AutoML for deep learning
 - [ ] Model interpretability tools
 - [ ] Advanced ensemble methods
 
