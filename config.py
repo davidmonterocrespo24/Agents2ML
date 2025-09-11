@@ -27,4 +27,4 @@ class Config:
 
     # Ollama LLM Configuration
     OLLAMA_BASE_URL = os.getenv("OLLAMA_BASE_URL", "http://127.0.0.1:11434")
-    OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "gpt-oss:20b")
+    OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "gpt-oss:120b")
