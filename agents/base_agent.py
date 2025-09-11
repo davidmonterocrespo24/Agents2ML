@@ -23,7 +23,7 @@ def create_model_client():
     api_key = "not-needed-for-local-ollama"
 
     return OpenAIChatCompletionClient(
-        model="gpt-oss:120b",
+        model="gpt-oss:20b",
         api_key=api_key,
         timeout=3000000,
         model_info={

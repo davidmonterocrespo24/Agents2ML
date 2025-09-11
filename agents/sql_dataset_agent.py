@@ -29,7 +29,10 @@ from langchain_ollama.llms import OllamaLLM
 from sqlalchemy import text
 from typing import Dict, Any, List, Optional
 
+from config import Config
+
 from .base_agent import create_model_client
+
 
 # Load environment variables
 load_dotenv()
@@ -49,7 +52,12 @@ class SQLDatabaseManager:
         self.get_schema_tool = None
         self.chroma_client = None
         self.collection = None
-        self.llm = OllamaLLM(model="gpt-oss:120B", request_timeout=30)
+        ollama_url = Config.OLLAMA_BASE_URL
+        ollama_model = Config.OLLAMA_MODEL
+        self.llm = OllamaLLM(
+                model=ollama_model,
+                base_url=ollama_url              
+            )
 
     def initialize_database(self, pg_uri: str):
         """Initialize database connection and tools"""
@@ -143,13 +151,19 @@ def generate_prompt_template(system_prompt: str, user_input: str):
     prompt_template = ChatPromptTemplate.from_messages(
         [("system", system_prompt), ("human", "{input}")]
     )
+    ollama_url = Config.OLLAMA_BASE_URL
+    ollama_model = Config.OLLAMA_MODEL
+    llm = OllamaLLM(
+                model=ollama_model,
+                base_url=ollama_url              
+            )
     return (
             {
                 "context": RunnablePassthrough(),
                 "input": RunnableLambda(lambda x: x.get("input", "")),
             }
             | prompt_template
-            | OllamaLLM(model="gpt-oss:120B", request_timeout=30)
+            | llm
             | StrOutputParser()
     )
 
