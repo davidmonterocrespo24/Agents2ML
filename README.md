@@ -195,11 +195,40 @@ Make predictions with trained model
 
 ## Configuration
 
+
 ### Environment Variables
-- `HF_TOKEN`: Hugging Face API key (if using Hugging Face for LLM)
-- `DOCKER_ENABLED`: Enable/disable Docker execution (default: true)
-- `MAX_TOKENS`: Maximum tokens per agent response (default: 4000)
-- `LOG_LEVEL`: Logging level (INFO, DEBUG, ERROR)
+Set the following variables in a `.env` file in the project root:
+
+- `HF_TOKEN`: Hugging Face API key (required if using Hugging Face for LLM)
+- `DATABASE_URL`: Path or URL to the SQLite database file (default: `automl_system.db`)
+- `DOCKER_IMAGE`: Name of the Docker image for code execution (default: `my-autogen-h2o:latest`)
+- `CODE_EXECUTOR_TIMEOUT`: Timeout (in ms) for code execution in Docker (default: `3000000`)
+- `UPLOAD_DIR`: Directory for uploaded datasets (default: `uploads`)
+- `MODELS_DIR`: Directory for storing trained models (default: `models`)
+- `RESULTS_DIR`: Directory for storing results (default: `results`)
+- `CODING_DIR`: Directory for temporary code execution files (default: `coding`)
+- `HOST`: Server host address (default: `0.0.0.0`)
+- `PORT`: Server port (default: `8006`)
+- `OLLAMA_BASE_URL`: Base URL for Ollama server (default: `http://127.0.0.1:11434`)
+- `OLLAMA_MODEL`: Name of the Ollama model to use (default: `gpt-oss:20b`)
+- `DEBUG`: Enable debug mode (`true` or `false`, default: `false`)
+
+Example `.env`:
+```env
+HF_TOKEN=your_huggingface_token
+DATABASE_URL=automl_system.db
+DOCKER_IMAGE=my-autogen-h2o:latest
+CODE_EXECUTOR_TIMEOUT=3000000
+UPLOAD_DIR=uploads
+MODELS_DIR=models
+RESULTS_DIR=results
+CODING_DIR=coding
+HOST=0.0.0.0
+PORT=8006
+OLLAMA_BASE_URL=http://127.0.0.1:11434
+OLLAMA_MODEL=gpt-oss:20b
+DEBUG=false
+```
 
 ### Agent Configuration
 Each agent can be configured in `config.py`:
@@ -304,13 +333,6 @@ python start.py
 
 ## Contributing
 
-### Development Setup
-```bash
-# Install development dependencies
-pip install -r requirements-dev.txt
-
-
-```
 
 ### Adding New Agents
 1. Create agent class inheriting from `BaseAgent`
