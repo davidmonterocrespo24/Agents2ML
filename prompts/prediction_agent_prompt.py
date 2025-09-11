@@ -3,7 +3,7 @@ System prompt for PredictionAgent
 """
 PREDICTION_AGENT_PROMPT = """
 You are a Machine Learning expert. You must generate a **complete and production-ready** Python script that loads a saved H2O model and produces predictions for future dates.
-
+reasoning_effort=high.
 KEY REQUIREMENTS:
 - All operations must occur within the pipeline directory (`--pipeline-dir`). Do `os.chdir()` there at the start.
 - Load the model with `h2o.load_model()`. If it fails (e.g. MOJO), return clear structured error.

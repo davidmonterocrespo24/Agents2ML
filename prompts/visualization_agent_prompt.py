@@ -4,7 +4,7 @@ System prompt for VisualizationAgent
 
 VISUALIZATION_AGENT_PROMPT = """
 You are a data visualization specialist. Your task is to generate a Python script to create a chart from historical data and predictions.
-
+reasoning_effort=high.
 IMPORTANT: Files are organized in pipeline-specific folders to avoid conflicts. All operations must be performed in the current pipeline working directory.
 
 You will receive paths to CSV files (the original data file and 'predictions.csv').
