@@ -25,7 +25,7 @@ from langchain_community.utilities import SQLDatabase
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.runnables import RunnableLambda, RunnablePassthrough
-from langchain_openai import ChatOpenAI
+from langchain_ollama.llms import OllamaLLM
 from sqlalchemy import text
 from typing import Dict, Any, List, Optional
 
@@ -49,7 +49,7 @@ class SQLDatabaseManager:
         self.get_schema_tool = None
         self.chroma_client = None
         self.collection = None
-        self.llm = ChatOpenAI(model="gpt-4o", request_timeout=30)
+        self.llm = OllamaLLM(model="gpt-oss:120B", request_timeout=30)
 
     def initialize_database(self, pg_uri: str):
         """Initialize database connection and tools"""
@@ -149,7 +149,7 @@ def generate_prompt_template(system_prompt: str, user_input: str):
                 "input": RunnableLambda(lambda x: x.get("input", "")),
             }
             | prompt_template
-            | ChatOpenAI(model="gpt-4o")
+            | OllamaLLM(model="gpt-oss:120B", request_timeout=30)
             | StrOutputParser()
     )
 

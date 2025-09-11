@@ -3,6 +3,7 @@ let currentJobId = null;
 // Chart variable removed
 let currentSection = 'dashboard';
 let previousSection = null;
+let isNavigatingFromHistory = false;
 
 // Connection editing variables
 let isEditingConnection = false;
@@ -51,6 +52,56 @@ function updateLastUpdated() {
     }
 }
 
+// Routing functions
+function updateUrl(section, jobId = null) {
+    if (isNavigatingFromHistory) return;
+    
+    let hash = `#${section}`;
+    if (jobId) {
+        hash += `/${jobId}`;
+    }
+    
+    // Use pushState for clean URLs or fallback to hash
+    if (history.pushState) {
+        history.pushState({ section, jobId }, '', hash);
+    } else {
+        window.location.hash = hash;
+    }
+}
+
+function parseUrl() {
+    const hash = window.location.hash.substring(1); // Remove #
+    if (!hash) return { section: 'dashboard', jobId: null };
+    
+    const parts = hash.split('/');
+    return {
+        section: parts[0] || 'dashboard',
+        jobId: parts[1] || null
+    };
+}
+
+function handleRouteChange() {
+    isNavigatingFromHistory = true;
+    const { section, jobId } = parseUrl();
+    
+    if (jobId) {
+        currentJobId = jobId;
+        if (section === 'process-report') {
+            showSection('process-report');
+            showProcessReport(jobId);
+        } else {
+            showSection('job-details');
+            loadJobDetails(jobId);
+        }
+    } else {
+        showSection(section);
+    }
+    
+    setTimeout(() => {
+        isNavigatingFromHistory = false;
+    }, 100);
+}
+
 // Initialize the application
 document.addEventListener('DOMContentLoaded', function() {
     initDarkMode();
@@ -63,23 +114,54 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    showSection('dashboard');
-    loadDashboard();
+    // Set up routing
+    window.addEventListener('popstate', handleRouteChange);
+    window.addEventListener('hashchange', handleRouteChange);
+    
+    // Initialize from URL or default to dashboard
+    const { section, jobId } = parseUrl();
+    if (jobId) {
+        currentJobId = jobId;
+        if (section === 'process-report') {
+            showSection('process-report');
+            showProcessReport(jobId);
+        } else {
+            showSection('job-details');
+            loadJobDetails(jobId);
+        }
+    } else {
+        showSection(section || 'dashboard');
+    }
     
     // Set up form submission
     document.getElementById('job-form').addEventListener('submit', createJob);
     
     // Set up navigation event listeners
-    document.getElementById('nav-dashboard').addEventListener('click', (e) => showSection('dashboard', e));
-    document.getElementById('nav-create-job').addEventListener('click', (e) => showSection('create-job', e));
-    document.getElementById('nav-jobs').addEventListener('click', (e) => showSection('jobs', e));
-    document.getElementById('nav-dataset-sql').addEventListener('click', (e) => showSection('dataset-sql', e));
-    document.getElementById('nav-configuration').addEventListener('click', (e) => showSection('configuration', e));
+    document.getElementById('nav-dashboard').addEventListener('click', (e) => {
+        e.preventDefault();
+        navigate('dashboard', e);
+    });
+    document.getElementById('nav-create-job').addEventListener('click', (e) => {
+        e.preventDefault();
+        navigate('create-job', e);
+    });
+    document.getElementById('nav-jobs').addEventListener('click', (e) => {
+        e.preventDefault();
+        navigate('jobs', e);
+    });
+    document.getElementById('nav-dataset-sql').addEventListener('click', (e) => {
+        e.preventDefault();
+        navigate('dataset-sql', e);
+    });
+    document.getElementById('nav-configuration').addEventListener('click', (e) => {
+        e.preventDefault();
+        navigate('configuration', e);
+    });
+    
     const chatContainer = document.getElementById('job-chat-messages');
     if (chatContainer) {
         chatContainer.addEventListener('scroll', handleChatScroll);
     }
-
 });
 
 function handleChatScroll() {
@@ -95,6 +177,11 @@ function handleChatScroll() {
 }
 
 // Navigation functions
+function navigate(sectionName, event = null, jobId = null) {
+    updateUrl(sectionName, jobId);
+    showSection(sectionName, event);
+}
+
 function showSection(sectionName, event = null) {
     // Hide all sections
     const sections = ['dashboard-section', 'create-job-section', 'jobs-section', 'job-details-section', 'dataset-sql-section', 'configuration-section', 'process-report-section'];
@@ -112,7 +199,7 @@ function showSection(sectionName, event = null) {
     }
     
     // Update nav buttons (only for main navigation, not job details)
-    if (sectionName !== 'job-details') {
+    if (sectionName !== 'job-details' && sectionName !== 'process-report') {
         document.querySelectorAll('.nav-btn').forEach(btn => {
             btn.classList.remove('bg-white/30');
             btn.classList.add('bg-white/20');
@@ -143,16 +230,16 @@ function showSection(sectionName, event = null) {
 // Navigation helper functions
 function goBack() {
     if (previousSection) {
-        showSection(previousSection);
+        navigate(previousSection);
         stopChatAutoRefresh();
     } else {
-        showSection('jobs');
+        navigate('jobs');
     }
 }
 
 function openJobDetails(jobId) {
     currentJobId = jobId;
-    showSection('job-details');
+    navigate('job-details', null, jobId);
     loadJobDetails(jobId);
 }
 
@@ -194,7 +281,7 @@ function updateRecentJobs(jobs) {
             <div class="text-center py-12">
                 <i class="fas fa-inbox text-4xl text-gray-400 dark:text-gray-600 mb-4"></i>
                 <p class="text-gray-500 dark:text-gray-400">No jobs found</p>
-                <button onclick="showSection('create-job')" class="mt-4 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-sm">
+                <button onclick="navigate('create-job')" class="mt-4 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-sm">
                     Create your first job
                 </button>
             </div>
@@ -335,7 +422,7 @@ async function createJob(event) {
         
         showNotification('Job created successfully!', 'success');
         resetForm();
-        showSection('jobs');
+        navigate('jobs');
         loadJobs();
         
     } catch (error) {
@@ -456,7 +543,11 @@ function displayJobs(jobs) {
 async function showProcessReport(jobId) {
     try {
         currentJobId = jobId;
-        showSection('process-report');
+        
+        // Only navigate if not already navigating from history
+        if (!isNavigatingFromHistory) {
+            navigate('process-report', null, jobId);
+        }
         
         // Show loading state
         document.getElementById('process-report-content').innerHTML = `

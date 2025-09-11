@@ -763,7 +763,7 @@ async def retry_job(job_id: str, background_tasks: BackgroundTasks):
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
 
-    # Check if job exists and is failed
+    # Check if job exists and get current status
     cursor.execute("SELECT status FROM jobs WHERE id = ?", (job_id,))
     result = cursor.fetchone()
 
@@ -771,22 +771,33 @@ async def retry_job(job_id: str, background_tasks: BackgroundTasks):
         conn.close()
         raise HTTPException(status_code=404, detail="Job not found")
 
-    # Reset job status to processing
+    current_status = result[0]
+    
+    # Only allow retry for failed jobs or jobs that are not currently processing
+    if current_status == 'processing':
+        conn.close()
+        raise HTTPException(status_code=400, detail="Cannot retry a job that is currently processing")
+    
+    # Log the retry attempt (keep all previous history)
     cursor.execute("""
-        UPDATE jobs SET status = 'processing', progress = 0, error_message = NULL, updated_at = CURRENT_TIMESTAMP
+        INSERT INTO logs (job_id, message, level)
+        VALUES (?, ?, ?)
+    """, (job_id, f"Job retry initiated. Continuing from previous state. Previous status: {current_status}", "INFO"))
+
+    # Reset job status to processing and clear only the error message
+    # Keep progress to show continuation, don't reset to 0
+    cursor.execute("""
+        UPDATE jobs SET status = 'processing', error_message = NULL, updated_at = CURRENT_TIMESTAMP
         WHERE id = ?
     """, (job_id,))
-
-    # Clear previous logs for this job
-    cursor.execute("DELETE FROM logs WHERE job_id = ?", (job_id,))
 
     conn.commit()
     conn.close()
 
-    # Restart the pipeline
+    # Restart the pipeline (it should continue from where it left off)
     background_tasks.add_task(process_job_pipeline, job_id)
 
-    return {"message": "Job retry initiated successfully"}
+    return {"message": "Job retry initiated successfully - continuing from previous state", "previous_status": current_status}
 
 
 @app.delete("/jobs/{job_id}")
